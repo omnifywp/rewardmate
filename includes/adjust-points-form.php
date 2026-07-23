@@ -13,18 +13,18 @@ if (!defined('ABSPATH')) {
 add_action('admin_menu', 'rewardmate_admin_menus');
 function rewardmate_admin_menus() {
     add_submenu_page(
-        'rewardmate',
-        esc_html__('Adjust User Points', 'rewardmate'),
-        esc_html__('Adjust Points', 'rewardmate'),
+        'omnify-customer-rewards',
+        esc_html__('Adjust User Points', 'omnify-customer-rewards'),
+        esc_html__('Adjust Points', 'omnify-customer-rewards'),
         'manage_woocommerce',
         'rewardmate-adjust-user-points',
         'rewardmate_render_points_adjustment_page'
     );
 
     add_submenu_page(
-        'rewardmate',
-        esc_html__('Points History', 'rewardmate'),
-        esc_html__('Points History', 'rewardmate'),
+        'omnify-customer-rewards',
+        esc_html__('Points History', 'omnify-customer-rewards'),
+        esc_html__('Points History', 'omnify-customer-rewards'),
         'manage_woocommerce',
         'rewardmate-points-history',
         'rewardmate_render_point_history_page'
@@ -33,7 +33,7 @@ function rewardmate_admin_menus() {
 
 function rewardmate_render_points_adjustment_page() {
     if (!current_user_can('manage_woocommerce')) {
-        wp_die(esc_html__('You do not have permission to access this page.', 'rewardmate'));
+        wp_die(esc_html__('You do not have permission to access this page.', 'omnify-customer-rewards'));
     }
 
     // Handle form submission
@@ -54,7 +54,7 @@ function rewardmate_render_points_adjustment_page() {
                 if ($order_id > 0 && function_exists('rewardmate_add_order_ledger_entry')) {
                     rewardmate_add_order_ledger_entry($order_id, 'adjusted', $points, $reason !== '' ? $reason : 'Admin points increase', ['user_id' => $user_id]);
                 }
-                echo '<div class="updated"><p>' . esc_html__('Points increased successfully!', 'rewardmate') . '</p></div>';
+                echo '<div class="updated"><p>' . esc_html__('Points increased successfully!', 'omnify-customer-rewards') . '</p></div>';
             } elseif ($action === 'decrease') {
                 $new_points = max(0, $current_points - $points);
                 update_user_meta($user_id, '_user_points', $new_points);
@@ -62,10 +62,10 @@ function rewardmate_render_points_adjustment_page() {
                 if ($order_id > 0 && function_exists('rewardmate_add_order_ledger_entry')) {
                     rewardmate_add_order_ledger_entry($order_id, 'adjusted', -$points, $reason !== '' ? $reason : 'Admin points decrease', ['user_id' => $user_id]);
                 }
-                echo '<div class="updated"><p>' . esc_html__('Points decreased successfully!', 'rewardmate') . '</p></div>';
+                echo '<div class="updated"><p>' . esc_html__('Points decreased successfully!', 'omnify-customer-rewards') . '</p></div>';
             }
         } else {
-            echo '<div class="error"><p>' . esc_html__('Invalid user or points value.', 'rewardmate') . '</p></div>';
+            echo '<div class="error"><p>' . esc_html__('Invalid user or points value.', 'omnify-customer-rewards') . '</p></div>';
         }
     }
 
@@ -75,13 +75,13 @@ function rewardmate_render_points_adjustment_page() {
         <?php
         if (function_exists('rewardmate_render_admin_page_header')) {
             rewardmate_render_admin_page_header(
-                __('Adjust User Points', 'rewardmate'),
-                __('Add or deduct loyalty points and optionally attach an adjustment to an order ledger.', 'rewardmate'),
+                __('Adjust User Points', 'omnify-customer-rewards'),
+                __('Add or deduct loyalty points and optionally attach an adjustment to an order ledger.', 'omnify-customer-rewards'),
                 admin_url('admin.php?page=rewardmate-points-history'),
-                __('View History', 'rewardmate')
+                __('View History', 'omnify-customer-rewards')
             );
         } else {
-            echo '<h1 class="settings-title">' . esc_html__('Adjust User Points', 'rewardmate') . '</h1>';
+            echo '<h1 class="settings-title">' . esc_html__('Adjust User Points', 'omnify-customer-rewards') . '</h1>';
         }
         ?>
         <div class="rewardmate-admin-card">
@@ -91,9 +91,9 @@ function rewardmate_render_points_adjustment_page() {
             <div class="form-section rewardmate-admin-grid">
 
                 <div class="form-group rewardmate-admin-field">
-                    <label for="user_id" class="form-label"><strong><?php esc_html_e('User', 'rewardmate'); ?></strong></label>
+                    <label for="user_id" class="form-label"><strong><?php esc_html_e('User', 'omnify-customer-rewards'); ?></strong></label>
                     <select name="user_id" id="user_id" class="form-select regular-text" required>
-                        <option value=""><?php esc_html_e('-- Select User --', 'rewardmate'); ?></option>
+                        <option value=""><?php esc_html_e('-- Select User --', 'omnify-customer-rewards'); ?></option>
                         <?php
                         $users = get_users();
                         foreach ($users as $user) {
@@ -109,31 +109,31 @@ function rewardmate_render_points_adjustment_page() {
                 </div>
 
                 <div class="form-group rewardmate-admin-field">
-                    <label for="points" class="form-label"><strong><?php esc_html_e('Points', 'rewardmate'); ?></strong></label>
+                    <label for="points" class="form-label"><strong><?php esc_html_e('Points', 'omnify-customer-rewards'); ?></strong></label>
                     <input type="number" name="points" id="points" class="form-input regular-text" min="1" required>
                 </div>
 
                 <div class="form-group rewardmate-admin-field">
-                    <label for="action" class="form-label"><strong><?php esc_html_e('Action', 'rewardmate'); ?></strong></label>
+                    <label for="action" class="form-label"><strong><?php esc_html_e('Action', 'omnify-customer-rewards'); ?></strong></label>
                     <select name="action" id="action" class="form-select regular-text" required>
-                        <option value="increase"><?php esc_html_e('Increase', 'rewardmate'); ?></option>
-                        <option value="decrease"><?php esc_html_e('Decrease', 'rewardmate'); ?></option>
+                        <option value="increase"><?php esc_html_e('Increase', 'omnify-customer-rewards'); ?></option>
+                        <option value="decrease"><?php esc_html_e('Decrease', 'omnify-customer-rewards'); ?></option>
                     </select>
                 </div>
 
                 <div class="form-group rewardmate-admin-field">
-                    <label for="reason" class="form-label"><strong><?php esc_html_e('Reason', 'rewardmate'); ?></strong></label>
+                    <label for="reason" class="form-label"><strong><?php esc_html_e('Reason', 'omnify-customer-rewards'); ?></strong></label>
                     <input type="text" name="reason" id="reason" class="form-input regular-text" required>
                 </div>
 
                 <div class="form-group rewardmate-admin-field">
-                    <label for="order_id" class="form-label"><strong><?php esc_html_e('Order ID (optional, for ledger link)', 'rewardmate'); ?></strong></label>
+                    <label for="order_id" class="form-label"><strong><?php esc_html_e('Order ID (optional, for ledger link)', 'omnify-customer-rewards'); ?></strong></label>
                     <input type="number" name="order_id" id="order_id" class="form-input regular-text" min="0" step="1">
                 </div>
 
             </div>
             <div class="rewardmate-admin-actions">
-                <input type="submit" name="adjust_points" class="button button-primary" value="<?php esc_attr_e('Adjust Points', 'rewardmate'); ?>">
+                <input type="submit" name="adjust_points" class="button button-primary" value="<?php esc_attr_e('Adjust Points', 'omnify-customer-rewards'); ?>">
             </div>
         </form>
         </div>

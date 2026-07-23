@@ -57,44 +57,44 @@ function rewardmate_add_user_points_metabox($user) {
     $first_purchase_date = (string) get_user_meta($user->ID, '_rewardmate_first_purchase_date', true);
     $max_date = current_time('Y-m-d');
     ?>
-    <h3><?php esc_html_e('User Reward Points', 'rewardmate'); ?></h3>
+    <h3><?php esc_html_e('User Reward Points', 'omnify-customer-rewards'); ?></h3>
     <table class="form-table">
         <tr>
-            <th><label for="edit_user_points"><?php esc_html_e('Current Points', 'rewardmate'); ?></label></th>
+            <th><label for="edit_user_points"><?php esc_html_e('Current Points', 'omnify-customer-rewards'); ?></label></th>
             <td><input type="number" name="edit_user_points" id="edit_user_points" value="<?php echo esc_attr($user_points); ?>" class="regular-text" /></td>
         </tr>
         <tr>
-            <th><label for="gift_points"><?php esc_html_e('Gift Points', 'rewardmate'); ?></label></th>
+            <th><label for="gift_points"><?php esc_html_e('Gift Points', 'omnify-customer-rewards'); ?></label></th>
             <td><input type="number" name="gift_points" id="gift_points" value="0" class="regular-text" /></td>
         </tr>
         <tr>
-            <th><label for="admin_reason"><?php esc_html_e('Reason', 'rewardmate'); ?></label></th>
-            <td><input type="text" name="admin_reason" id="admin_reason" class="regular-text" placeholder="<?php esc_attr_e('Enter reason for point adjustment or gift', 'rewardmate'); ?>" /></td>
+            <th><label for="admin_reason"><?php esc_html_e('Reason', 'omnify-customer-rewards'); ?></label></th>
+            <td><input type="text" name="admin_reason" id="admin_reason" class="regular-text" placeholder="<?php esc_attr_e('Enter reason for point adjustment or gift', 'omnify-customer-rewards'); ?>" /></td>
         </tr>
     </table>
 
-    <h3><?php esc_html_e('Omnify Customer Rewards WooCommerce Profile Dates', 'rewardmate'); ?></h3>
-    <p class="description"><?php esc_html_e('These dates are used for birthday, account anniversary, and first purchase anniversary rewards when those automation settings are enabled.', 'rewardmate'); ?></p>
+    <h3><?php esc_html_e('Omnify Customer Rewards WooCommerce Profile Dates', 'omnify-customer-rewards'); ?></h3>
+    <p class="description"><?php esc_html_e('These dates are used for birthday, account anniversary, and first purchase anniversary rewards when those automation settings are enabled.', 'omnify-customer-rewards'); ?></p>
     <table class="form-table rewardmate-profile-fields" role="presentation">
         <tr>
-            <th><label for="rewardmate_birthday"><?php esc_html_e('Birthday', 'rewardmate'); ?></label></th>
+            <th><label for="rewardmate_birthday"><?php esc_html_e('Birthday', 'omnify-customer-rewards'); ?></label></th>
             <td>
                 <input type="date" name="rewardmate_birthday" id="rewardmate_birthday" value="<?php echo esc_attr($birthday); ?>" max="<?php echo esc_attr($max_date); ?>" class="regular-text" />
-                <p class="description"><?php esc_html_e('Awards birthday points once per year when Birthday Rewards are enabled.', 'rewardmate'); ?></p>
+                <p class="description"><?php esc_html_e('Awards birthday points once per year when Birthday Rewards are enabled.', 'omnify-customer-rewards'); ?></p>
             </td>
         </tr>
         <tr>
-            <th><label for="rewardmate_account_anniversary_date"><?php esc_html_e('Account Anniversary Date', 'rewardmate'); ?></label></th>
+            <th><label for="rewardmate_account_anniversary_date"><?php esc_html_e('Account Anniversary Date', 'omnify-customer-rewards'); ?></label></th>
             <td>
                 <input type="date" name="rewardmate_account_anniversary_date" id="rewardmate_account_anniversary_date" value="<?php echo esc_attr($account_anniversary_date); ?>" max="<?php echo esc_attr($max_date); ?>" class="regular-text" />
-                <p class="description"><?php esc_html_e('Optional override for account anniversary rewards. Leave empty to use the WordPress registration date.', 'rewardmate'); ?></p>
+                <p class="description"><?php esc_html_e('Optional override for account anniversary rewards. Leave empty to use the WordPress registration date.', 'omnify-customer-rewards'); ?></p>
             </td>
         </tr>
         <tr>
-            <th><label for="rewardmate_first_purchase_date"><?php esc_html_e('First Purchase Anniversary Date', 'rewardmate'); ?></label></th>
+            <th><label for="rewardmate_first_purchase_date"><?php esc_html_e('First Purchase Anniversary Date', 'omnify-customer-rewards'); ?></label></th>
             <td>
                 <input type="date" name="rewardmate_first_purchase_date" id="rewardmate_first_purchase_date" value="<?php echo esc_attr($first_purchase_date); ?>" max="<?php echo esc_attr($max_date); ?>" class="regular-text" />
-                <p class="description"><?php esc_html_e('Optional override for first purchase anniversary rewards. Leave empty to auto-detect the first completed order.', 'rewardmate'); ?></p>
+                <p class="description"><?php esc_html_e('Optional override for first purchase anniversary rewards. Leave empty to auto-detect the first completed order.', 'omnify-customer-rewards'); ?></p>
             </td>
         </tr>
     </table>
@@ -178,16 +178,16 @@ function rewardmate_render_account_profile_date_fields() {
     $max_date = current_time('Y-m-d');
     ?>
     <fieldset class="rewardmate-account-profile-fields">
-        <legend><?php esc_html_e('Omnify Customer Rewards Dates', 'rewardmate'); ?></legend>
+        <legend><?php esc_html_e('Omnify Customer Rewards Dates', 'omnify-customer-rewards'); ?></legend>
         <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
-            <label for="rewardmate_birthday"><?php esc_html_e('Birthday', 'rewardmate'); ?></label>
+            <label for="rewardmate_birthday"><?php esc_html_e('Birthday', 'omnify-customer-rewards'); ?></label>
             <input type="date" class="woocommerce-Input woocommerce-Input--text input-text" name="rewardmate_birthday" id="rewardmate_birthday" value="<?php echo esc_attr($birthday); ?>" max="<?php echo esc_attr($max_date); ?>" />
-            <span class="description"><?php esc_html_e('Used for annual birthday rewards when enabled.', 'rewardmate'); ?></span>
+            <span class="description"><?php esc_html_e('Used for annual birthday rewards when enabled.', 'omnify-customer-rewards'); ?></span>
         </p>
         <p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
-            <label for="rewardmate_account_anniversary_date"><?php esc_html_e('Account Anniversary Date', 'rewardmate'); ?></label>
+            <label for="rewardmate_account_anniversary_date"><?php esc_html_e('Account Anniversary Date', 'omnify-customer-rewards'); ?></label>
             <input type="date" class="woocommerce-Input woocommerce-Input--text input-text" name="rewardmate_account_anniversary_date" id="rewardmate_account_anniversary_date" value="<?php echo esc_attr($account_anniversary_date); ?>" max="<?php echo esc_attr($max_date); ?>" />
-            <span class="description"><?php esc_html_e('Optional date for account anniversary rewards.', 'rewardmate'); ?></span>
+            <span class="description"><?php esc_html_e('Optional date for account anniversary rewards.', 'omnify-customer-rewards'); ?></span>
         </p>
         <div class="clear"></div>
     </fieldset>

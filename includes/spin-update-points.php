@@ -18,7 +18,7 @@ function rewardmate_update_points_callback() {
 
     // Check nonce for security
     if (empty($nonce) || !wp_verify_nonce($nonce, 'rewardmate_spin_nonce')) {
-        wp_send_json_error(['message' => esc_html__('Invalid security token.', 'rewardmate')]);
+        wp_send_json_error(['message' => esc_html__('Invalid security token.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
@@ -26,12 +26,12 @@ function rewardmate_update_points_callback() {
     $user_id = get_current_user_id();
 
     if (!$user_id) {
-        wp_send_json_error(['message' => esc_html__('User not logged in.', 'rewardmate')]);
+        wp_send_json_error(['message' => esc_html__('User not logged in.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
     if (function_exists('rewardmate_allow_action_rate_limited') && !rewardmate_allow_action_rate_limited($user_id, 'spin')) {
-        wp_send_json_error(['message' => esc_html__('Too many spin attempts. Please try again later.', 'rewardmate')]);
+        wp_send_json_error(['message' => esc_html__('Too many spin attempts. Please try again later.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
@@ -39,12 +39,12 @@ function rewardmate_update_points_callback() {
         if (function_exists('rewardmate_flag_suspicious_activity')) {
             rewardmate_flag_suspicious_activity($user_id, 'spin', 'invalid_points_payload');
         }
-        wp_send_json_error(['message' => esc_html__('Invalid points value.', 'rewardmate')]);
+        wp_send_json_error(['message' => esc_html__('Invalid points value.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
     if (!function_exists('rewardmate_user_can_spin') || !rewardmate_user_can_spin()) {
-        wp_send_json_error(['message' => esc_html__('You are not eligible to spin right now.', 'rewardmate')]);
+        wp_send_json_error(['message' => esc_html__('You are not eligible to spin right now.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
@@ -53,7 +53,7 @@ function rewardmate_update_points_callback() {
         if (function_exists('rewardmate_flag_suspicious_activity')) {
             rewardmate_flag_suspicious_activity($user_id, 'spin', 'points_not_in_allowed_values');
         }
-        wp_send_json_error(['message' => esc_html__('Invalid spin result submitted.', 'rewardmate')]);
+        wp_send_json_error(['message' => esc_html__('Invalid spin result submitted.', 'omnify-customer-rewards')]);
         wp_die();
     }
 

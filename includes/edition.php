@@ -217,7 +217,7 @@ function rewardmate_admin_page_enabled($slug) {
     }
 
     $enabled = in_array($slug, [
-        'rewardmate',
+        'omnify-customer-rewards',
         'rewardmate-settings',
         'rewardmate-adjust-user-points',
         'rewardmate-points-history',

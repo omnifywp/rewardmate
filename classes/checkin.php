@@ -32,7 +32,7 @@ class rewardmate_Daily_Checkin {
                 $streak_bonus = absint(get_option('rewardmate_checkin_streak_bonus', 50));
                 
                 $streak_info = '<p class="rewardmate-streak-info" style="font-size:0.9em; margin-top:5px; color:#c88719;">' . sprintf(
-                    __('Current Streak: %1$d/%2$d days (Streak Bonus: +%3$d points)', 'rewardmate'),
+                    __('Current Streak: %1$d/%2$d days (Streak Bonus: +%3$d points)', 'omnify-customer-rewards'),
                     $consecutive,
                     $streak_days,
                     $streak_bonus
@@ -42,15 +42,15 @@ class rewardmate_Daily_Checkin {
             echo '<section class="rewardmate-card rewardmate-checkin-card">';
             echo '<div class="rewardmate-card-icon" aria-hidden="true">C</div>';
             echo '<div class="rewardmate-card-body">';
-            echo '<div class="rewardmate-card-heading"><div><h3>' . esc_html__('Daily Check-In', 'rewardmate') . '</h3><p class="rewardmate-muted">' . esc_html__('Keep your loyalty streak moving with a daily reward.', 'rewardmate') . '</p>' . $streak_info . '</div><span class="rewardmate-reward-chip">+' . esc_html(number_format_i18n($checkin_points)) . ' ' . esc_html__('points', 'rewardmate') . '</span></div>';
+            echo '<div class="rewardmate-card-heading"><div><h3>' . esc_html__('Daily Check-In', 'omnify-customer-rewards') . '</h3><p class="rewardmate-muted">' . esc_html__('Keep your loyalty streak moving with a daily reward.', 'omnify-customer-rewards') . '</p>' . $streak_info . '</div><span class="rewardmate-reward-chip">+' . esc_html(number_format_i18n($checkin_points)) . ' ' . esc_html__('points', 'omnify-customer-rewards') . '</span></div>';
 
             if ($last_checkin !== $today) {
                 echo '<div class="rewardmate-checkin-actions">';
-                echo '<button id="daily-checkin-btn" class="button button-primary wp-element-button">' . esc_html__('Daily Check-In', 'rewardmate') . '</button>';
+                echo '<button id="daily-checkin-btn" class="button button-primary wp-element-button">' . esc_html__('Daily Check-In', 'omnify-customer-rewards') . '</button>';
                 echo '</div>';
-                echo '<div id="rewardmate-checkin-status" class="rewardmate-inline-notice info" aria-live="polite">' . esc_html__('Claim your daily bonus points with one click.', 'rewardmate') . '</div>';
+                echo '<div id="rewardmate-checkin-status" class="rewardmate-inline-notice info" aria-live="polite">' . esc_html__('Claim your daily bonus points with one click.', 'omnify-customer-rewards') . '</div>';
             } else {
-                echo '<p class="rewardmate-checkin-done">' . esc_html__('You have already checked in today. Come back tomorrow!', 'rewardmate') . '</p>';
+                echo '<p class="rewardmate-checkin-done">' . esc_html__('You have already checked in today. Come back tomorrow!', 'omnify-customer-rewards') . '</p>';
             }
 
             echo '</div>';
@@ -64,7 +64,7 @@ class rewardmate_Daily_Checkin {
 
         $user_id = get_current_user_id();
         if (!$user_id) {
-            wp_send_json_error(['message' => esc_html__('You must be logged in to check in.', 'rewardmate')]);
+            wp_send_json_error(['message' => esc_html__('You must be logged in to check in.', 'omnify-customer-rewards')]);
             wp_die();
         }
 
@@ -72,7 +72,7 @@ class rewardmate_Daily_Checkin {
         $today = current_time('Y-m-d');
 
         if (function_exists('rewardmate_allow_action_rate_limited') && !rewardmate_allow_action_rate_limited($user_id, 'checkin')) {
-            wp_send_json_error(['message' => esc_html__('Too many check-in attempts. Please try again later.', 'rewardmate')]);
+            wp_send_json_error(['message' => esc_html__('Too many check-in attempts. Please try again later.', 'omnify-customer-rewards')]);
             wp_die();
         }
 
@@ -114,27 +114,27 @@ class rewardmate_Daily_Checkin {
             if (function_exists('rewardmate_log_point_history')) {
                 rewardmate_log_point_history($user_id, $points, 'checkin', 'Daily check-in reward');
                 if ($streak_completed) {
-                    rewardmate_log_point_history($user_id, $streak_bonus, 'checkin', sprintf(__('Daily check-in streak bonus (%d days)', 'rewardmate'), $streak_days));
+                    rewardmate_log_point_history($user_id, $streak_bonus, 'checkin', sprintf(__('Daily check-in streak bonus (%d days)', 'omnify-customer-rewards'), $streak_days));
                 }
             }
 
             if ($streak_completed) {
                 $msg = sprintf(
-                    __('You have earned %1$d points for checking in today, plus an extra %2$d points streak bonus!', 'rewardmate'),
+                    __('You have earned %1$d points for checking in today, plus an extra %2$d points streak bonus!', 'omnify-customer-rewards'),
                     $points,
                     $streak_bonus
                 );
             } else {
                 if (get_option('rewardmate_checkin_streak_enabled', 'no') === 'yes') {
                     $msg = sprintf(
-                        __('You have earned %1$d points for checking in today! (Streak: %2$d/%3$d days)', 'rewardmate'),
+                        __('You have earned %1$d points for checking in today! (Streak: %2$d/%3$d days)', 'omnify-customer-rewards'),
                         $points,
                         $consecutive,
                         $streak_days
                     );
                 } else {
                     $msg = sprintf(
-                        __('You have earned %d points for checking in today!', 'rewardmate'),
+                        __('You have earned %d points for checking in today!', 'omnify-customer-rewards'),
                         $points
                     );
                 }
@@ -144,7 +144,7 @@ class rewardmate_Daily_Checkin {
                 'message' => $msg,
             ]);
         } else {
-            wp_send_json_error(['message' => __('You have already checked in today!', 'rewardmate')]);
+            wp_send_json_error(['message' => __('You have already checked in today!', 'omnify-customer-rewards')]);
         }
 
         wp_die(); // Required to terminate and return proper response

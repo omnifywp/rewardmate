@@ -75,7 +75,7 @@ function rewardmate_set_spun_flag() {
     $user_id = get_current_user_id();
     if (!$user_id) {
         wp_send_json_error([
-            'message' => esc_html__('User not logged in.', 'rewardmate'),
+            'message' => esc_html__('User not logged in.', 'omnify-customer-rewards'),
         ]);
         wp_die();
     }
@@ -87,7 +87,7 @@ function rewardmate_set_spun_flag() {
         wp_send_json_success();
     } else {
         wp_send_json_error([
-            'message' => esc_html__('No completed orders found.', 'rewardmate'),
+            'message' => esc_html__('No completed orders found.', 'omnify-customer-rewards'),
         ]);
     }
     wp_die();

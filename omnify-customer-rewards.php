@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: Omnify Customer Rewards WooCommerce
-Description: Loyalty rewards, points, and coin functionality for WooCommerce — earn, redeem, check-in, and spin-to-win.
-Version: 1.4.0
+Plugin Name: RewardMate - Points & Rewards for WooCommerce
+Description: A plugin that adds reward points and coin functionality to WooCommerce.
+Version: 1.0.0
 WC requires at least: 8.0
 WC tested up to: 10.5.2
 Author: Omnify WP
 Author URI: https://omnifywp.com
-Text Domain: rewardmate
+Text Domain: omnify-customer-rewards
 License: GPLv2 or later
 */
 
@@ -29,7 +29,7 @@ if (!defined('REWARDMATE_EDITION')) {
 }
 
 function rewardmate_add_settings_link($links) {
-    $settings_link = '<a href="' . esc_url(admin_url('admin.php?page=rewardmate-settings')) . '">' . esc_html__('Settings', 'rewardmate') . '</a>';
+    $settings_link = '<a href="' . esc_url(admin_url('admin.php?page=rewardmate-settings')) . '">' . esc_html__('Settings', 'omnify-customer-rewards') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
@@ -37,7 +37,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'rewardmate_add_s
 
 // Load plugin text domain for translations
 function rewardmate_load_textdomain() {
-    load_plugin_textdomain('rewardmate', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    load_plugin_textdomain('omnify-customer-rewards', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 }
 add_action('plugins_loaded', 'rewardmate_load_textdomain');
 
@@ -103,6 +103,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 } else {
     add_action('admin_notices', function () {
-        echo '<div class="notice notice-error"><p><strong>' . esc_html__('Omnify Customer Rewards WooCommerce requires WooCommerce to be installed and active.', 'rewardmate') . '</strong></p></div>';
+        echo '<div class="notice notice-error"><p><strong>' . esc_html__('Omnify Customer Rewards WooCommerce requires WooCommerce to be installed and active.', 'omnify-customer-rewards') . '</strong></p></div>';
     });
 }

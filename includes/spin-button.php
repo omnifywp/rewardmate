@@ -18,37 +18,37 @@ function rewardmate_spin_wheel_html() {
         echo '<section class="rewardmate-card rewardmate-spin-card">';
         echo '<div class="rewardmate-card-icon" aria-hidden="true">S</div>';
         echo '<div class="rewardmate-card-body">';
-        echo '<div class="rewardmate-card-heading"><div><h3>' . esc_html__('Lucky Spin Wheel', 'rewardmate') . '</h3><p class="rewardmate-muted">' . esc_html__('Try your luck and win bonus points instantly.', 'rewardmate') . '</p></div><span class="rewardmate-reward-chip">' . esc_html($user_can_spin ? __('Spin ready', 'rewardmate') : __('Order required', 'rewardmate')) . '</span></div>';
+        echo '<div class="rewardmate-card-heading"><div><h3>' . esc_html__('Lucky Spin Wheel', 'omnify-customer-rewards') . '</h3><p class="rewardmate-muted">' . esc_html__('Try your luck and win bonus points instantly.', 'omnify-customer-rewards') . '</p></div><span class="rewardmate-reward-chip">' . esc_html($user_can_spin ? __('Spin ready', 'omnify-customer-rewards') : __('Order required', 'omnify-customer-rewards')) . '</span></div>';
 
         if (!$user_can_spin) {
-            echo '<div id="spin-message" class="rewardmate-inline-notice warning rewardmate-locked-notice">' . esc_html__('Place a completed order to unlock your next spin.', 'rewardmate') . '</div>';
+            echo '<div id="spin-message" class="rewardmate-inline-notice warning rewardmate-locked-notice">' . esc_html__('Place a completed order to unlock your next spin.', 'omnify-customer-rewards') . '</div>';
             echo '</div></section>';
             return;
         }
         ?>
         <div class="rewardmate-spin-cta">
-            <button id="show-spin-wheel" class="button wp-element-button"><?php echo esc_html__('Show Spin Wheel', 'rewardmate'); ?></button>
-            <span><?php echo esc_html__('One spin unlocks after each completed order.', 'rewardmate'); ?></span>
+            <button id="show-spin-wheel" class="button wp-element-button"><?php echo esc_html__('Show Spin Wheel', 'omnify-customer-rewards'); ?></button>
+            <span><?php echo esc_html__('One spin unlocks after each completed order.', 'omnify-customer-rewards'); ?></span>
         </div>
         <div id="spin-wheel" class="rewardmate-spin-wheel" style="display:none;">
             <div class="rewardmate-spin-stage">
                 <div id="wheel-pointer" aria-hidden="true"></div>
-                <canvas id="wheel" width="440" height="440" role="img" aria-label="<?php echo esc_attr__('Reward points spin wheel', 'rewardmate'); ?>"></canvas>
-                <span class="rewardmate-spin-hub" aria-hidden="true"><?php echo esc_html__('SPIN', 'rewardmate'); ?></span>
+                <canvas id="wheel" width="440" height="440" role="img" aria-label="<?php echo esc_attr__('Reward points spin wheel', 'omnify-customer-rewards'); ?>"></canvas>
+                <span class="rewardmate-spin-hub" aria-hidden="true"><?php echo esc_html__('SPIN', 'omnify-customer-rewards'); ?></span>
             </div>
             <div class="rewardmate-spin-panel">
-                <span class="rewardmate-spin-eyebrow"><?php echo esc_html__('Possible rewards', 'rewardmate'); ?></span>
-                <div class="rewardmate-spin-prizes" aria-label="<?php echo esc_attr__('Available spin rewards', 'rewardmate'); ?>">
+                <span class="rewardmate-spin-eyebrow"><?php echo esc_html__('Possible rewards', 'omnify-customer-rewards'); ?></span>
+                <div class="rewardmate-spin-prizes" aria-label="<?php echo esc_attr__('Available spin rewards', 'omnify-customer-rewards'); ?>">
                     <?php foreach ($wheel_values as $wheel_value) : ?>
-                        <span><?php echo esc_html(sprintf(_n('%d point', '%d points', absint($wheel_value), 'rewardmate'), absint($wheel_value))); ?></span>
+                        <span><?php echo esc_html(sprintf(_n('%d point', '%d points', absint($wheel_value), 'omnify-customer-rewards'), absint($wheel_value))); ?></span>
                     <?php endforeach; ?>
                 </div>
-                <button id="spin-button" class="button button-primary wp-element-button"><?php echo esc_html__('Spin Now', 'rewardmate'); ?></button>
+                <button id="spin-button" class="button button-primary wp-element-button"><?php echo esc_html__('Spin Now', 'omnify-customer-rewards'); ?></button>
             </div>
         </div>
         <div id="rewardmate-confetti" class="rewardmate-confetti" aria-hidden="true"></div>
         <div id="spin-result" class="rewardmate-spin-result" style="display:none;"></div>
-        <div id="spin-message" class="rewardmate-inline-notice info" aria-live="polite"><?php echo esc_html__('Click "Show Spin Wheel" to start.', 'rewardmate'); ?></div>
+        <div id="spin-message" class="rewardmate-inline-notice info" aria-live="polite"><?php echo esc_html__('Click "Show Spin Wheel" to start.', 'omnify-customer-rewards'); ?></div>
         <?php
         echo '</div>';
         echo '</section>';

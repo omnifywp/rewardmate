@@ -102,7 +102,7 @@ function rewardmate_deduct_points_on_order_refund($order_id, $old_status = '', $
     $order->add_order_note(
         sprintf(
             /* translators: %d is deducted points. */
-            __('Omnify Customer Rewards: Deducted %d points after refund/cancellation.', 'rewardmate'),
+            __('Omnify Customer Rewards: Deducted %d points after refund/cancellation.', 'omnify-customer-rewards'),
             $points_to_deduct
         )
     );

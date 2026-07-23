@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
  */
 function rewardmate_render_point_history_page() {
     if (!current_user_can('manage_woocommerce')) {
-        wp_die(esc_html__('You do not have permission to access this page.', 'rewardmate'));
+        wp_die(esc_html__('You do not have permission to access this page.', 'omnify-customer-rewards'));
     }
 
     $type_filter = isset($_GET['rewardmate_history_type']) ? sanitize_key(wp_unslash($_GET['rewardmate_history_type'])) : '';
@@ -43,37 +43,37 @@ function rewardmate_render_point_history_page() {
 
     $users_with_points = get_users($args);
     $history_types = [
-        '' => __('All activity', 'rewardmate'),
-        'earned' => __('Earned', 'rewardmate'),
-        'spent' => __('Spent', 'rewardmate'),
-        'gifted' => __('Gifted', 'rewardmate'),
-        'checkin' => __('Check-in', 'rewardmate'),
-        'edited' => __('Edited', 'rewardmate'),
+        '' => __('All activity', 'omnify-customer-rewards'),
+        'earned' => __('Earned', 'omnify-customer-rewards'),
+        'spent' => __('Spent', 'omnify-customer-rewards'),
+        'gifted' => __('Gifted', 'omnify-customer-rewards'),
+        'checkin' => __('Check-in', 'omnify-customer-rewards'),
+        'edited' => __('Edited', 'omnify-customer-rewards'),
     ];
 
     echo '<div class="wrap">';
     if (function_exists('rewardmate_render_admin_page_header')) {
         rewardmate_render_admin_page_header(
-            __('Points History', 'rewardmate'),
-            __('Browse customer-level point changes with filters for user, type, and date.', 'rewardmate'),
+            __('Points History', 'omnify-customer-rewards'),
+            __('Browse customer-level point changes with filters for user, type, and date.', 'omnify-customer-rewards'),
             admin_url('admin.php?page=rewardmate-points-history'),
-            __('Reset Filters', 'rewardmate')
+            __('Reset Filters', 'omnify-customer-rewards')
         );
     } else {
-        echo '<h1>' . esc_html__('Points History', 'rewardmate') . '</h1>';
+        echo '<h1>' . esc_html__('Points History', 'omnify-customer-rewards') . '</h1>';
     }
     echo '<div class="rewardmate-admin-card rewardmate-admin-filter-card">';
     echo '<form method="get" class="rewardmate-admin-filters">';
     echo '<input type="hidden" name="page" value="rewardmate-points-history" />';
-    echo '<label><span>' . esc_html__('User ID', 'rewardmate') . '</span><input type="number" min="0" step="1" name="rewardmate_user" value="' . esc_attr((string) $user_filter) . '" placeholder="12" /></label>';
-    echo '<label><span>' . esc_html__('Type', 'rewardmate') . '</span><select name="rewardmate_history_type">';
+    echo '<label><span>' . esc_html__('User ID', 'omnify-customer-rewards') . '</span><input type="number" min="0" step="1" name="rewardmate_user" value="' . esc_attr((string) $user_filter) . '" placeholder="12" /></label>';
+    echo '<label><span>' . esc_html__('Type', 'omnify-customer-rewards') . '</span><select name="rewardmate_history_type">';
     foreach ($history_types as $type_key => $type_label) {
         echo '<option value="' . esc_attr($type_key) . '" ' . selected($type_filter, $type_key, false) . '>' . esc_html($type_label) . '</option>';
     }
     echo '</select></label>';
-    echo '<label><span>' . esc_html__('From', 'rewardmate') . '</span><input type="date" name="rewardmate_from" value="' . esc_attr($from) . '" /></label>';
-    echo '<label><span>' . esc_html__('To', 'rewardmate') . '</span><input type="date" name="rewardmate_to" value="' . esc_attr($to) . '" /></label>';
-    echo '<button class="button button-primary" type="submit">' . esc_html__('Apply Filters', 'rewardmate') . '</button>';
+    echo '<label><span>' . esc_html__('From', 'omnify-customer-rewards') . '</span><input type="date" name="rewardmate_from" value="' . esc_attr($from) . '" /></label>';
+    echo '<label><span>' . esc_html__('To', 'omnify-customer-rewards') . '</span><input type="date" name="rewardmate_to" value="' . esc_attr($to) . '" /></label>';
+    echo '<button class="button button-primary" type="submit">' . esc_html__('Apply Filters', 'omnify-customer-rewards') . '</button>';
     echo '</form></div>';
 
     echo '<div class="rewardmate-admin-card rewardmate-admin-table-card">';
@@ -83,11 +83,11 @@ function rewardmate_render_point_history_page() {
         echo '<table class="widefat fixed striped rewardmate-admin-table">';
         echo '<thead>
                 <tr>
-                    <th>' . esc_html__('User', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Action', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Points', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Date', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Reason', 'rewardmate') . '</th>
+                    <th>' . esc_html__('User', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Action', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Points', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Date', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Reason', 'omnify-customer-rewards') . '</th>
                 </tr>
               </thead>
               <tbody>';
@@ -126,27 +126,27 @@ function rewardmate_render_point_history_page() {
                 if (isset($history['previous_points'], $history['new_points'])) {
                     $action = sprintf(
                         /* translators: 1: old points, 2: new points */
-                        __('Edited (From %1$d to %2$d)', 'rewardmate'),
+                        __('Edited (From %1$d to %2$d)', 'omnify-customer-rewards'),
                         intval($history['previous_points']),
                         intval($history['new_points'])
                     );
                 } elseif (isset($history['gifted_points'])) {
                     $action = sprintf(
                         /* translators: %d gifted points */
-                        __('Gifted %d points', 'rewardmate'),
+                        __('Gifted %d points', 'omnify-customer-rewards'),
                         intval($history['gifted_points'])
                     );
                 } else {
                     $reason = isset($history['reason']) ? (string) $history['reason'] : '';
 
                     if ($type === 'spent' && strpos($reason, 'Points redeemed for order #') === 0) {
-                        $action = __('Order Redemption', 'rewardmate');
+                        $action = __('Order Redemption', 'omnify-customer-rewards');
                     } elseif ($type === 'spent') {
-                        $action = __('Spent', 'rewardmate');
+                        $action = __('Spent', 'omnify-customer-rewards');
                     } elseif ($type === 'earned') {
-                        $action = __('Earned', 'rewardmate');
+                        $action = __('Earned', 'omnify-customer-rewards');
                     } else {
-                        $action = __('Earned or Spent', 'rewardmate');
+                        $action = __('Earned or Spent', 'omnify-customer-rewards');
                     }
                 }
 
@@ -166,13 +166,13 @@ function rewardmate_render_point_history_page() {
         }
 
         if (!$has_rows) {
-            echo '<tr><td colspan="5">' . esc_html__('No points history matched your filters.', 'rewardmate') . '</td></tr>';
+            echo '<tr><td colspan="5">' . esc_html__('No points history matched your filters.', 'omnify-customer-rewards') . '</td></tr>';
         }
 
         echo '</tbody></table>';
         echo '</div>';
     } else {
-        echo '<p class="rewardmate-admin-empty">' . esc_html__('No points history found.', 'rewardmate') . '</p>';
+        echo '<p class="rewardmate-admin-empty">' . esc_html__('No points history found.', 'omnify-customer-rewards') . '</p>';
     }
 
     echo '</div>';

@@ -22,7 +22,7 @@ function rewardmate_display_points_history_on_my_account() {
     echo '<div class="rewardmate-card-icon" aria-hidden="true">H</div>';
     echo '<div class="rewardmate-card-body">';
     echo '<div class="rewardmate-history-head">';
-    echo '<div class="rewardmate-card-heading"><div><h3>' . esc_html__('Point History', 'rewardmate') . '</h3><p class="rewardmate-summary">' . esc_html__('Recent reward activity and redemptions.', 'rewardmate') . '</p></div><span class="rewardmate-reward-chip">' . esc_html(number_format_i18n($total_points)) . ' ' . esc_html__('points', 'rewardmate') . '</span></div>';
+    echo '<div class="rewardmate-card-heading"><div><h3>' . esc_html__('Point History', 'omnify-customer-rewards') . '</h3><p class="rewardmate-summary">' . esc_html__('Recent reward activity and redemptions.', 'omnify-customer-rewards') . '</p></div><span class="rewardmate-reward-chip">' . esc_html(number_format_i18n($total_points)) . ' ' . esc_html__('points', 'omnify-customer-rewards') . '</span></div>';
     echo '</div>';
 
     if ($point_history && is_array($point_history)) {
@@ -30,10 +30,10 @@ function rewardmate_display_points_history_on_my_account() {
         echo '<table class="shop_table shop_table_responsive my_account_orders rewardmate-history-table">';
         echo '<thead>
                 <tr>
-                    <th>' . esc_html__('Action', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Points', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Date', 'rewardmate') . '</th>
-                    <th>' . esc_html__('Reason', 'rewardmate') . '</th>
+                    <th>' . esc_html__('Action', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Points', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Date', 'omnify-customer-rewards') . '</th>
+                    <th>' . esc_html__('Reason', 'omnify-customer-rewards') . '</th>
                 </tr>
               </thead>
               <tbody>';
@@ -46,23 +46,23 @@ function rewardmate_display_points_history_on_my_account() {
 
             if (isset($history['previous_points'])) {
                 $action_text = sprintf(
-                    __('Edited (From %d to %d)', 'rewardmate'),
+                    __('Edited (From %d to %d)', 'omnify-customer-rewards'),
                     (int) $history['previous_points'],
                     $points
                 );
             } elseif ($type === 'earned') {
-                $action_text = __('Earned', 'rewardmate');
+                $action_text = __('Earned', 'omnify-customer-rewards');
             } elseif ($type === 'spent') {
                 $reason_text = isset($history['reason']) ? (string) $history['reason'] : '';
                 if (strpos($reason_text, 'Points redeemed for order #') === 0) {
-                    $action_text = __('Order Redemption', 'rewardmate');
+                    $action_text = __('Order Redemption', 'omnify-customer-rewards');
                 } else {
-                    $action_text = __('Spent', 'rewardmate');
+                    $action_text = __('Spent', 'omnify-customer-rewards');
                 }
             } elseif ($type === 'checkin') {
-                $action_text = __('Daily Check-in', 'rewardmate');
+                $action_text = __('Daily Check-in', 'omnify-customer-rewards');
             } elseif ($type === 'gifted') {
-                $action_text = __('Gifted', 'rewardmate');
+                $action_text = __('Gifted', 'omnify-customer-rewards');
             } else {
                 $action_text = ucfirst($type);
             }
@@ -86,7 +86,7 @@ function rewardmate_display_points_history_on_my_account() {
 
         echo '</tbody></table></div>';
     } else {
-        echo '<p class="rewardmate-muted">' . esc_html__('No points history available.', 'rewardmate') . '</p>';
+        echo '<p class="rewardmate-muted">' . esc_html__('No points history available.', 'omnify-customer-rewards') . '</p>';
     }
 
     echo '</div>';

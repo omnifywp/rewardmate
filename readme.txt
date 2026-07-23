@@ -1,12 +1,12 @@
-=== Omnify Customer Rewards WooCommerce ===
+=== RewardMate - Points & Rewards for WooCommerce ===
 Contributors: omnifywp
-Tags: WooCommerce, reward points, loyalty program, coins, discounts, points system, checkout
+Tags: WooCommerce, reward points, loyalty program, discounts, points system
 Requires at least: 5.0
-Tested up to: 6.9.1
+Tested up to: 7.0
 WC requires at least: 8.0
 WC tested up to: 10.5.2
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,11 +14,13 @@ Omnify Customer Rewards WooCommerce lets you reward customers with points and co
 
 == Description ==
 
-**Omnify Customer Rewards WooCommerce** is a comprehensive loyalty program plugin for WooCommerce that lets store owners reward customers with points for purchases, daily check-ins, and other interactions. These points can then be redeemed for discounts on future orders, providing an incentive for customers to return and make more purchases.
+**RewardMate** is a comprehensive loyalty program plugin for WooCommerce that lets store owners reward customers with points for purchases, daily check-ins, and other interactions. These points can then be redeemed for discounts on future orders, providing an incentive for customers to return and make more purchases.
 
-The WordPress admin menu appears as **RewardMate**.
+== Live Demo ==
 
-**Omnify Customer Rewards WooCommerce (Free Features):**
+[Try Live Demo (No Setup Required)](https://playground.wordpress.net/?https://raw.githubusercontent.com/omnifywp/rewardmate/refs/heads/main/blueprint.json)
+
+**RewardMate (Free Features):**
 * **Core Point Earning**: Set a global purchase earn ratio (e.g. 1 point per $1 spent).
 * **Redeemable Discounts**: Customers use accumulated points for discounts during checkout.
 * **Checkout Redemption Slider**: Let customers choose exactly how many points to apply at checkout.
@@ -29,7 +31,7 @@ The WordPress admin menu appears as **RewardMate**.
 * **Admin Point Control**: Easily increase or decrease points from the admin panel.
 * **Automatic Refund Adjustments**: Adjust customers' points balances automatically when an order is refunded.
 
-**Omnify Customer Rewards WooCommerce Pro (Premium Add-on Features):**
+**RewardMate Pro (Premium Add-on Features):**
 * **Points Expiry & Grace Recovery**: Expire inactive balances automatically after a defined period, with grace recovery on next purchase.
 * **Automation & Milestone Rewards**: Reward birthdays, account anniversaries, and first purchase anniversaries.
 * **Email Notification Controls**: Customizable notification templates for points earned, points redeemed, expiry reminders, tier upgrades, referral rewards, and manual adjustments.

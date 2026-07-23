@@ -18,7 +18,7 @@ class rewardmate_Points_Rewards {
     private $points_fee_label;
 
     public function __construct() {
-        $this->points_fee_label = __('Points Discount (will be deducted on order)', 'rewardmate');
+        $this->points_fee_label = __('Points Discount (will be deducted on order)', 'omnify-customer-rewards');
 
         add_action('woocommerce_order_status_completed', [$this, 'apply_purchase_points'], 10, 1);
         add_action('woocommerce_before_cart_totals', [$this, 'redeem_points_display']);
@@ -96,13 +96,13 @@ class rewardmate_Points_Rewards {
         $order->add_order_note(
             sprintf(
                 /* translators: %d is awarded points. */
-                __('Omnify Customer Rewards: Awarded %d points on order completion.', 'rewardmate'),
+                __('Omnify Customer Rewards: Awarded %d points on order completion.', 'omnify-customer-rewards'),
                 $applied_points
             )
         );
 
         if (!is_admin()) {
-            wc_add_notice(sprintf(esc_html__('You have earned %d points for your purchase!', 'rewardmate'), $applied_points));
+            wc_add_notice(sprintf(esc_html__('You have earned %d points for your purchase!', 'omnify-customer-rewards'), $applied_points));
         }
     }
 
@@ -186,7 +186,7 @@ class rewardmate_Points_Rewards {
         $context = $this->get_redeem_context(WC()->cart, $user_id);
 
         echo '<tr class="points-redeem rewardmate-points-redeem-row">';
-        echo '<th>' . esc_html__('Reward Points', 'rewardmate') . '</th>';
+        echo '<th>' . esc_html__('Reward Points', 'omnify-customer-rewards') . '</th>';
         echo '<td>';
         $this->render_redeem_control($context, $points, $points_value, $currency);
         echo '</td>';
@@ -214,7 +214,7 @@ class rewardmate_Points_Rewards {
         $context = $this->get_redeem_context(WC()->cart, $user_id);
 
         echo '<section class="rewardmate-checkout-redeem">';
-        echo '<h3>' . esc_html__('Use Reward Points', 'rewardmate') . '</h3>';
+        echo '<h3>' . esc_html__('Use Reward Points', 'omnify-customer-rewards') . '</h3>';
         $this->render_redeem_control($context, $points, $points_value, $currency);
         echo '</section>';
     }
@@ -237,8 +237,8 @@ class rewardmate_Points_Rewards {
 
         echo '<div class="rewardmate-redeem-control" data-max-points="' . esc_attr((string) $max_points) . '" data-step-points="' . esc_attr((string) $step_points) . '">';
         echo '<div class="rewardmate-redeem-summary">';
-        echo '<strong>' . esc_html(number_format_i18n($points)) . ' ' . esc_html__('points available', 'rewardmate') . '</strong>';
-        echo '<span>' . wp_kses_post(wc_price($points_value, ['currency' => $currency])) . ' ' . esc_html__('total value', 'rewardmate') . '</span>';
+        echo '<strong>' . esc_html(number_format_i18n($points)) . ' ' . esc_html__('points available', 'omnify-customer-rewards') . '</strong>';
+        echo '<span>' . wp_kses_post(wc_price($points_value, ['currency' => $currency])) . ' ' . esc_html__('total value', 'omnify-customer-rewards') . '</span>';
         echo '</div>';
 
         if (!empty($context['reason_message'])) {
@@ -249,20 +249,20 @@ class rewardmate_Points_Rewards {
             echo '<div class="rewardmate-redeem-slider-row">';
             echo '<input type="range" class="rewardmate-redeem-range" min="0" max="' . esc_attr((string) $max_points) . '" step="' . esc_attr((string) $step_points) . '" value="' . esc_attr((string) $selected_points) . '" />';
             echo '<input type="number" class="rewardmate-redeem-number" min="0" max="' . esc_attr((string) $max_points) . '" step="' . esc_attr((string) $step_points) . '" value="' . esc_attr((string) $selected_points) . '" />';
-            echo '<button type="button" class="button wp-element-button rewardmate-redeem-apply">' . esc_html__('Apply Points', 'rewardmate') . '</button>';
+            echo '<button type="button" class="button wp-element-button rewardmate-redeem-apply">' . esc_html__('Apply Points', 'omnify-customer-rewards') . '</button>';
             echo '</div>';
             echo '<div class="rewardmate-redeem-meta">';
-            echo '<span>' . esc_html(sprintf(__('Maximum for this order: %d points', 'rewardmate'), $max_points)) . '</span>';
+            echo '<span>' . esc_html(sprintf(__('Maximum for this order: %d points', 'omnify-customer-rewards'), $max_points)) . '</span>';
             if ($minimum_points > 0) {
-                echo '<span>' . esc_html(sprintf(__('Minimum: %d points', 'rewardmate'), $minimum_points)) . '</span>';
+                echo '<span>' . esc_html(sprintf(__('Minimum: %d points', 'omnify-customer-rewards'), $minimum_points)) . '</span>';
             }
-            echo '<span>' . esc_html(sprintf(__('Step: %d points', 'rewardmate'), $step_points)) . '</span>';
+            echo '<span>' . esc_html(sprintf(__('Step: %d points', 'omnify-customer-rewards'), $step_points)) . '</span>';
             echo '</div>';
             echo '<p class="rewardmate-redeem-status" aria-live="polite">';
             if ($selected_points > 0 && $discount > 0) {
-                echo esc_html(sprintf(__('Applying %1$d points for %2$s discount.', 'rewardmate'), $selected_points, wp_strip_all_tags(wc_price($discount, ['currency' => $currency]))));
+                echo esc_html(sprintf(__('Applying %1$d points for %2$s discount.', 'omnify-customer-rewards'), $selected_points, wp_strip_all_tags(wc_price($discount, ['currency' => $currency]))));
             } else {
-                echo esc_html__('Choose how many points to redeem on this order.', 'rewardmate');
+                echo esc_html__('Choose how many points to redeem on this order.', 'omnify-customer-rewards');
             }
             echo '</p>';
         }
@@ -302,7 +302,7 @@ class rewardmate_Points_Rewards {
 
         $allow_with_coupons = get_option('rewardmate_allow_points_with_coupons', 'yes');
         if ($allow_with_coupons !== 'yes' && method_exists($cart, 'get_applied_coupons') && !empty($cart->get_applied_coupons())) {
-            $context['reason_message'] = __('Points cannot be redeemed when coupons are applied.', 'rewardmate');
+            $context['reason_message'] = __('Points cannot be redeemed when coupons are applied.', 'omnify-customer-rewards');
             return $context;
         }
 
@@ -314,7 +314,7 @@ class rewardmate_Points_Rewards {
         if ($minimum_points > 0 && $available_points < $minimum_points) {
             $context['reason_message'] = sprintf(
                 /* translators: %d minimum points */
-                __('Minimum %d points required to redeem.', 'rewardmate'),
+                __('Minimum %d points required to redeem.', 'omnify-customer-rewards'),
                 $minimum_points
             );
             return $context;
@@ -324,7 +324,7 @@ class rewardmate_Points_Rewards {
         if ($minimum_points > 0 && $redeemable_points < $minimum_points) {
             $context['reason_message'] = sprintf(
                 /* translators: %d step points */
-                __('Redeem points in steps of %d.', 'rewardmate'),
+                __('Redeem points in steps of %d.', 'omnify-customer-rewards'),
                 $step_points
             );
             return $context;
@@ -359,7 +359,7 @@ class rewardmate_Points_Rewards {
         if ($minimum_points > 0 && $max_points_for_cart < $minimum_points) {
             $context['reason_message'] = sprintf(
                 /* translators: %d minimum points */
-                __('This order total does not support minimum redemption of %d points.', 'rewardmate'),
+                __('This order total does not support minimum redemption of %d points.', 'omnify-customer-rewards'),
                 $minimum_points
             );
             return $context;
@@ -387,7 +387,7 @@ class rewardmate_Points_Rewards {
         if ($minimum_points > 0 && $selected_points < $minimum_points) {
             $context['reason_message'] = sprintf(
                 /* translators: %d minimum points */
-                __('Minimum %d points required to redeem.', 'rewardmate'),
+                __('Minimum %d points required to redeem.', 'omnify-customer-rewards'),
                 $minimum_points
             );
             return $context;
@@ -417,11 +417,11 @@ class rewardmate_Points_Rewards {
 
         $user_id = get_current_user_id();
         if (!$user_id) {
-            wp_send_json_error(['message' => esc_html__('Please log in to redeem points.', 'rewardmate')]);
+            wp_send_json_error(['message' => esc_html__('Please log in to redeem points.', 'omnify-customer-rewards')]);
         }
 
         if (!function_exists('WC')) {
-            wp_send_json_error(['message' => esc_html__('WooCommerce is not available.', 'rewardmate')]);
+            wp_send_json_error(['message' => esc_html__('WooCommerce is not available.', 'omnify-customer-rewards')]);
         }
 
         if (!WC()->cart && function_exists('wc_load_cart')) {
@@ -429,7 +429,7 @@ class rewardmate_Points_Rewards {
         }
 
         if (!WC()->cart || !WC()->session) {
-            wp_send_json_error(['message' => esc_html__('Cart session is not available.', 'rewardmate')]);
+            wp_send_json_error(['message' => esc_html__('Cart session is not available.', 'omnify-customer-rewards')]);
         }
 
         $requested_points = isset($_POST['points']) ? absint(wp_unslash($_POST['points'])) : 0;
@@ -444,14 +444,14 @@ class rewardmate_Points_Rewards {
             wp_send_json_success([
                 'points' => 0,
                 'discount' => 0,
-                'message' => esc_html__('Points redemption cleared.', 'rewardmate'),
+                'message' => esc_html__('Points redemption cleared.', 'omnify-customer-rewards'),
             ]);
         }
 
         if (empty($context['eligible']) || empty($context['points_to_use'])) {
             WC()->session->set('rewardmate_selected_redeem_points', 0);
             wp_send_json_error([
-                'message' => !empty($context['reason_message']) ? esc_html((string) $context['reason_message']) : esc_html__('These points cannot be applied to the current cart.', 'rewardmate'),
+                'message' => !empty($context['reason_message']) ? esc_html((string) $context['reason_message']) : esc_html__('These points cannot be applied to the current cart.', 'omnify-customer-rewards'),
             ]);
         }
 
@@ -463,7 +463,7 @@ class rewardmate_Points_Rewards {
             'discount' => (float) $context['discount'],
             'message' => sprintf(
                 /* translators: 1: points, 2: discount amount. */
-                esc_html__('Applied %1$d points for %2$s discount.', 'rewardmate'),
+                esc_html__('Applied %1$d points for %2$s discount.', 'omnify-customer-rewards'),
                 (int) $context['points_to_use'],
                 wp_strip_all_tags(wc_price((float) $context['discount'], ['currency' => (string) $context['currency']]))
             ),
@@ -641,7 +641,7 @@ class rewardmate_Points_Rewards {
                 $order->add_order_note(
                     sprintf(
                         /* translators: %d points pending approval. */
-                        __('Omnify Customer Rewards: Redemption of %d points queued for manual approval.', 'rewardmate'),
+                        __('Omnify Customer Rewards: Redemption of %d points queued for manual approval.', 'omnify-customer-rewards'),
                         $points_to_deduct
                     )
                 );
@@ -720,7 +720,7 @@ class rewardmate_Points_Rewards {
             $order->add_order_note(
                 sprintf(
                     /* translators: 1: deducted points, 2: expected points, 3: discount. */
-                    __('Omnify Customer Rewards: Reserved %1$d of %2$d requested points for redeemed discount (%3$s).', 'rewardmate'),
+                    __('Omnify Customer Rewards: Reserved %1$d of %2$d requested points for redeemed discount (%3$s).', 'omnify-customer-rewards'),
                     $deduct_points,
                     $points_to_deduct,
                     $discount_display
@@ -730,7 +730,7 @@ class rewardmate_Points_Rewards {
             $order->add_order_note(
                 sprintf(
                     /* translators: 1: deducted points, 2: discount amount. */
-                    __('Omnify Customer Rewards: Reserved %1$d points for redeemed discount (%2$s).', 'rewardmate'),
+                    __('Omnify Customer Rewards: Reserved %1$d points for redeemed discount (%2$s).', 'omnify-customer-rewards'),
                     $deduct_points,
                     $discount_display
                 )
@@ -782,7 +782,7 @@ class rewardmate_Points_Rewards {
 
         $order->update_meta_data('_rewardmate_points_deducted', 'yes');
         $order->update_meta_data('_rewardmate_points_reservation_finalized', 'yes');
-        $order->add_order_note(__('Omnify Customer Rewards: Reserved points finalized for this order.', 'rewardmate'));
+        $order->add_order_note(__('Omnify Customer Rewards: Reserved points finalized for this order.', 'omnify-customer-rewards'));
 
         if (function_exists('rewardmate_add_order_ledger_entry')) {
             rewardmate_add_order_ledger_entry($order_id, 'redeem_finalized', 0, 'Reserved points finalized');
@@ -845,7 +845,7 @@ class rewardmate_Points_Rewards {
         $order->add_order_note(
             sprintf(
                 /* translators: %d points released. */
-                __('Omnify Customer Rewards: Released %d reserved points because the order did not complete.', 'rewardmate'),
+                __('Omnify Customer Rewards: Released %d reserved points because the order did not complete.', 'omnify-customer-rewards'),
                 $reserved_points
             )
         );
@@ -891,7 +891,7 @@ class rewardmate_Points_Rewards {
             }
 
             $fee_name = (string) $fee_item->get_name();
-            if ($fee_name !== $this->points_fee_label && strpos($fee_name, __('Points Discount', 'rewardmate')) !== 0) {
+            if ($fee_name !== $this->points_fee_label && strpos($fee_name, __('Points Discount', 'omnify-customer-rewards')) !== 0) {
                 continue;
             }
 
@@ -918,7 +918,7 @@ class rewardmate_Points_Rewards {
         $points = (int) get_user_meta($user_id, '_user_points', true);
         $points_value = rewardmate_points_to_currency_value($points, get_woocommerce_currency());
 
-        $tier_name = __('None', 'rewardmate');
+        $tier_name = __('None', 'omnify-customer-rewards');
         if (function_exists('rewardmate_get_user_tier_data')) {
             $tier_data = rewardmate_get_user_tier_data($user_id);
             if (!empty($tier_data['label'])) {
@@ -929,14 +929,14 @@ class rewardmate_Points_Rewards {
         echo '<section class="rewardmate-card rewardmate-points-display rewardmate-balance-card">';
         echo '<div class="rewardmate-card-icon" aria-hidden="true">R</div>';
         echo '<div class="rewardmate-balance-content">';
-        echo '<span class="rewardmate-eyebrow">' . esc_html__('Omnify Customer Rewards Balance', 'rewardmate') . '</span>';
-        echo '<h3>' . esc_html__('Your Points Balance', 'rewardmate') . '</h3>';
+        echo '<span class="rewardmate-eyebrow">' . esc_html__('Omnify Customer Rewards Balance', 'omnify-customer-rewards') . '</span>';
+        echo '<h3>' . esc_html__('Your Points Balance', 'omnify-customer-rewards') . '</h3>';
         echo '<div class="rewardmate-balance-grid">';
-        echo '<div><span>' . esc_html__('Available Points', 'rewardmate') . '</span><strong>' . esc_html(number_format_i18n($points)) . '</strong><small>' . esc_html__('ready to use', 'rewardmate') . '</small></div>';
-        echo '<div><span>' . esc_html__('Reward Value', 'rewardmate') . '</span><strong>' . wp_kses_post(wc_price($points_value)) . '</strong><small>' . esc_html(get_woocommerce_currency()) . '</small></div>';
-        echo '<div><span>' . esc_html__('Loyalty Tier', 'rewardmate') . '</span><strong>' . esc_html($tier_name) . '</strong><small>' . esc_html__('current level', 'rewardmate') . '</small></div>';
+        echo '<div><span>' . esc_html__('Available Points', 'omnify-customer-rewards') . '</span><strong>' . esc_html(number_format_i18n($points)) . '</strong><small>' . esc_html__('ready to use', 'omnify-customer-rewards') . '</small></div>';
+        echo '<div><span>' . esc_html__('Reward Value', 'omnify-customer-rewards') . '</span><strong>' . wp_kses_post(wc_price($points_value)) . '</strong><small>' . esc_html(get_woocommerce_currency()) . '</small></div>';
+        echo '<div><span>' . esc_html__('Loyalty Tier', 'omnify-customer-rewards') . '</span><strong>' . esc_html($tier_name) . '</strong><small>' . esc_html__('current level', 'omnify-customer-rewards') . '</small></div>';
         echo '</div>';
-        echo '<p class="rewardmate-muted rewardmate-balance-note">' . esc_html__('Earn more by shopping, checking in daily, and using eligible rewards at checkout.', 'rewardmate') . '</p>';
+        echo '<p class="rewardmate-muted rewardmate-balance-note">' . esc_html__('Earn more by shopping, checking in daily, and using eligible rewards at checkout.', 'omnify-customer-rewards') . '</p>';
         echo '</div>';
         echo '</section>';
     }
@@ -956,5 +956,5 @@ function check_woocommerce_dependency() {
 }
 
 function show_woocommerce_required_notice() {
-    echo '<div class="notice notice-error"><p><strong>' . esc_html__('This plugin requires WooCommerce to be installed and activated.', 'rewardmate') . '</strong></p></div>';
+    echo '<div class="notice notice-error"><p><strong>' . esc_html__('This plugin requires WooCommerce to be installed and activated.', 'omnify-customer-rewards') . '</strong></p></div>';
 }

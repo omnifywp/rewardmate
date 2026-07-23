@@ -96,7 +96,7 @@ function rewardmate_enqueue_admin_styles() {
     wp_add_inline_style('rewardmate-admin-style', rewardmate_get_theme_inline_css());
 
     $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
-    if (strpos($page, 'rewardmate') !== 0) {
+    if (strpos($page, 'omnify-customer-rewards') !== 0) {
         return;
     }
 

@@ -14,8 +14,8 @@ function rewardmate_add_custom_product_points_field() {
     woocommerce_wp_text_input(
         array(
             'id' => '_custom_product_points', 
-            'label' => __('Points for this product', 'rewardmate'), 
-            'description' => __('Enter the points users will earn for buying this product. Leave blank to use global settings.', 'rewardmate'),
+            'label' => __('Points for this product', 'omnify-customer-rewards'), 
+            'description' => __('Enter the points users will earn for buying this product. Leave blank to use global settings.', 'omnify-customer-rewards'),
             'desc_tip' => true,
             'type' => 'number',
             'custom_attributes' => array(
@@ -26,7 +26,7 @@ function rewardmate_add_custom_product_points_field() {
     );
 
     // Add required tier field
-    $options = array('none' => __('No restriction', 'rewardmate'));
+    $options = array('none' => __('No restriction', 'omnify-customer-rewards'));
     if (function_exists('rewardmate_get_tier_rules')) {
         foreach (rewardmate_get_tier_rules() as $rule) {
             $options[$rule['key']] = $rule['label'];
@@ -36,8 +36,8 @@ function rewardmate_add_custom_product_points_field() {
     woocommerce_wp_select(
         array(
             'id' => '_rewardmate_required_tier', 
-            'label' => __('Required Loyalty Tier', 'rewardmate'), 
-            'description' => __('Restricts purchase of this product to customers at or above this loyalty tier.', 'rewardmate'),
+            'label' => __('Required Loyalty Tier', 'omnify-customer-rewards'), 
+            'description' => __('Restricts purchase of this product to customers at or above this loyalty tier.', 'omnify-customer-rewards'),
             'desc_tip' => true,
             'options' => $options,
         )
