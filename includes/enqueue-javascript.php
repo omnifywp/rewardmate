@@ -1,6 +1,6 @@
 <?php
 /**
- * Enqueue JavaScript files for RewardMate plugin
+ * Enqueue JavaScript files for Omnify Customer Rewards plugin
  *
  * @since 1.0.1
  */

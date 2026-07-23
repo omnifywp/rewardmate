@@ -38,8 +38,8 @@ function rewardmate_display_earnable_points_on_checkout() {
 
     if ( $cart_total_points > 0 ) {
         echo '<tr class="earnable-points">
-                <th>' . esc_html__( 'Earnable Points', 'omnify-customer-rewards' ) . '</th>
-                <td>' . esc_html( sprintf( __( 'You will earn %d points from this order!', 'omnify-customer-rewards' ), $cart_total_points ) ) . '</td>
+                <th>' . esc_html__( 'Earnable Points', 'omnify-customer-rewards') . '</th>
+                <td>' . esc_html( sprintf( __( 'You will earn %d points from this order!', 'omnify-customer-rewards'), $cart_total_points ) ) . '</td>
               </tr>';
     }
 }

@@ -40,7 +40,7 @@ msgid "You have no points available."
 msgstr ""
 
 #: classes/settings.php:49
-msgid "RewardMates Settings"
+msgid "Omnify Customer Rewardss Settings"
 msgstr ""
 
 #: classes/settings.php:57

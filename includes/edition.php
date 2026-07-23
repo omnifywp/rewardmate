@@ -1,6 +1,6 @@
 <?php
 /**
- * RewardMate edition helpers.
+ * Omnify Customer Rewards edition helpers.
  *
  * @since 1.4.0
  */
@@ -217,7 +217,7 @@ function rewardmate_admin_page_enabled($slug) {
     }
 
     $enabled = in_array($slug, [
-        'omnify-customer-rewards',
+        'rewardmate',
         'rewardmate-settings',
         'rewardmate-adjust-user-points',
         'rewardmate-points-history',

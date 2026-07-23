@@ -29,7 +29,7 @@ if (!defined('REWARDMATE_EDITION')) {
 }
 
 function rewardmate_add_settings_link($links) {
-    $settings_link = '<a href="' . esc_url(_url('admin.php?page=rewardmate-settings')) . '">' . esc_html__('Settings', 'omnify-customer-rewards') . '</a>';
+    $settings_link = '<a href="' . esc_url(admin_url('admin.php?page=rewardmate-settings')) . '">' . esc_html__('Settings', 'omnify-customer-rewards') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
@@ -103,6 +103,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
 } else {
     add_action('admin_notices', function () {
-        echo '<div class="notice notice-error"><p><strong>' . esc_html__('RewardMate WooCommerce requires WooCommerce to be installed and active.', 'omnify-customer-rewards') . '</strong></p></div>';
+        echo '<div class="notice notice-error"><p><strong>' . esc_html__('Omnify Customer Rewards WooCommerce requires WooCommerce to be installed and active.', 'omnify-customer-rewards') . '</strong></p></div>';
     });
 }

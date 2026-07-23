@@ -749,7 +749,7 @@
 
     wrapper.className = "rewardmate-id-selector";
     title.textContent = label;
-    note.textContent = "Select one or more items. RewardMate stores the matching IDs automatically.";
+    note.textContent = "Select one or more items. Omnify Customer Rewards stores the matching IDs automatically.";
     wrapper.appendChild(title);
     wrapper.appendChild(selector);
     wrapper.appendChild(note);

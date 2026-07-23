@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 add_action('admin_menu', 'rewardmate_admin_menus');
 function rewardmate_admin_menus() {
     add_submenu_page(
-        'omnify-customer-rewards',
+        'rewardmate',
         esc_html__('Adjust User Points', 'omnify-customer-rewards'),
         esc_html__('Adjust Points', 'omnify-customer-rewards'),
         'manage_woocommerce',
@@ -22,7 +22,7 @@ function rewardmate_admin_menus() {
     );
 
     add_submenu_page(
-        'omnify-customer-rewards',
+        'rewardmate',
         esc_html__('Points History', 'omnify-customer-rewards'),
         esc_html__('Points History', 'omnify-customer-rewards'),
         'manage_woocommerce',

@@ -26,7 +26,7 @@ function rewardmate_display_earnable_points_on_product_page() {
     $points = rewardmate_calculate_earnable_points( $product_id, $price, get_current_user_id() );
 
     if ( $points > 0 ) {
-        echo '<p class="rewardmate-earnable-points">' . esc_html( sprintf( __( 'You will earn %d points when you buy this product!', 'omnify-customer-rewards' ), $points ) ) . '</p>';
+        echo '<p class="rewardmate-earnable-points">' . esc_html( sprintf( __( 'You will earn %d points when you buy this product!', 'omnify-customer-rewards'), $points ) ) . '</p>';
     }
 }
 add_action( 'woocommerce_single_product_summary', 'rewardmate_display_earnable_points_on_product_page', 25 );

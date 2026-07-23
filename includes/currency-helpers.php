@@ -1,6 +1,6 @@
 <?php
 /**
- * Currency helper functions for RewardMate.
+ * Currency helper functions for Omnify Customer Rewards.
  *
  * @since 1.0.2
  */
