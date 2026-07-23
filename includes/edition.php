@@ -1,6 +1,6 @@
 <?php
 /**
- * Omnify Customer Rewards edition helpers.
+ * RewardMate edition helpers.
  *
  * @since 1.4.0
  */

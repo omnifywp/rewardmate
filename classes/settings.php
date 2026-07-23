@@ -1,6 +1,6 @@
 <?php
 /**
- * Omnify Customer Rewards admin settings integration.
+ * RewardMate admin settings integration.
  *
  * @since 1.0.2
  */
@@ -16,14 +16,14 @@ class Omnify_Customer_Rewards_Settings {
     }
 
     /**
-     * Add Settings under the top-level Omnify Customer Rewards menu.
+     * Add Settings under the top-level RewardMate menu.
      *
      * @return void
      */
     public function register_settings_menu() {
         add_submenu_page(
             'omnify-customer-rewards',
-            esc_html__('Omnify Customer Rewards Settings', 'omnify-customer-rewards'),
+            esc_html__('RewardMate Settings', 'omnify-customer-rewards'),
             esc_html__('Settings', 'omnify-customer-rewards'),
             'manage_woocommerce',
             'rewardmate-settings',
@@ -32,7 +32,7 @@ class Omnify_Customer_Rewards_Settings {
     }
 
     /**
-     * Save Omnify Customer Rewards settings fields.
+     * Save RewardMate settings fields.
      *
      * @return void
      */
@@ -348,7 +348,7 @@ class Omnify_Customer_Rewards_Settings {
                 __('Back to Dashboard', 'omnify-customer-rewards')
             );
         } else {
-            echo '<h1>' . esc_html__('Omnify Customer Rewards Settings', 'omnify-customer-rewards') . '</h1>';
+            echo '<h1>' . esc_html__('RewardMate Settings', 'omnify-customer-rewards') . '</h1>';
         }
         $this->render_settings_tabs($active_tab);
         $this->render_settings_selector_data();
@@ -591,7 +591,7 @@ class Omnify_Customer_Rewards_Settings {
         echo '<h2>' . esc_html($tab_label) . '</h2>';
         echo '<p>' . esc_html__('This settings area is not available in the current package.', 'omnify-customer-rewards') . '</p>';
         echo '<ul class="rewardmate-feature-list">';
-        echo '<li>' . esc_html__('Install the complete Omnify Customer Rewards package to use these settings.', 'omnify-customer-rewards') . '</li>';
+        echo '<li>' . esc_html__('Install the complete RewardMate package to use these settings.', 'omnify-customer-rewards') . '</li>';
         echo '</ul>';
         echo '</div>';
     }
@@ -683,7 +683,7 @@ class Omnify_Customer_Rewards_Settings {
 
         return [
             [
-                'title' => __('Omnify Customer Rewards Settings', 'omnify-customer-rewards'),
+                'title' => __('RewardMate Settings', 'omnify-customer-rewards'),
                 'type'  => 'title',
                 'id'    => 'rewardmate_settings_section',
             ],
@@ -852,7 +852,7 @@ class Omnify_Customer_Rewards_Settings {
                 'title' => __('Design Customization', 'omnify-customer-rewards'),
                 'type'  => 'title',
                 'id'    => 'rewardmate_customization_section',
-                'desc'  => __('Control Omnify Customer Rewards colors, spacing, and shape from one place. These settings apply to admin screens, customer wallet, charts, buttons, notices, and the spin wheel.', 'omnify-customer-rewards'),
+                'desc'  => __('Control RewardMate colors, spacing, and shape from one place. These settings apply to admin screens, customer wallet, charts, buttons, notices, and the spin wheel.', 'omnify-customer-rewards'),
             ],
             [
                 'title'             => __('Primary Brand Color', 'omnify-customer-rewards'),
@@ -928,7 +928,7 @@ class Omnify_Customer_Rewards_Settings {
                     'max'  => 32,
                     'step' => 1,
                 ],
-                'desc'              => __('Controls Omnify Customer Rewards button shape across admin and frontend.', 'omnify-customer-rewards'),
+                'desc'              => __('Controls RewardMate button shape across admin and frontend.', 'omnify-customer-rewards'),
                 'desc_tip'          => true,
                 'sanitize_callback' => [$this, 'sanitize_brand_button_radius_setting'],
             ],
@@ -942,7 +942,7 @@ class Omnify_Customer_Rewards_Settings {
                     'max'  => 360,
                     'step' => 1,
                 ],
-                'desc'              => __('Changes the direction of Omnify Customer Rewards hero gradients. Use 135 for the default diagonal style.', 'omnify-customer-rewards'),
+                'desc'              => __('Changes the direction of RewardMate hero gradients. Use 135 for the default diagonal style.', 'omnify-customer-rewards'),
                 'desc_tip'          => true,
                 'sanitize_callback' => [$this, 'sanitize_brand_gradient_angle_setting'],
             ],
@@ -956,7 +956,7 @@ class Omnify_Customer_Rewards_Settings {
                     'max'  => 1600,
                     'step' => 10,
                 ],
-                'desc'              => __('Maximum width in pixels for Omnify Customer Rewards admin pages and customer wallet blocks.', 'omnify-customer-rewards'),
+                'desc'              => __('Maximum width in pixels for RewardMate admin pages and customer wallet blocks.', 'omnify-customer-rewards'),
                 'desc_tip'          => true,
                 'sanitize_callback' => [$this, 'sanitize_brand_container_width_setting'],
             ],
@@ -969,7 +969,7 @@ class Omnify_Customer_Rewards_Settings {
                     'no'  => __('No', 'omnify-customer-rewards'),
                 ],
                 'default' => 'yes',
-                'desc'    => __('Shows the slim gradient accent line on Omnify Customer Rewards cards and wallet sections.', 'omnify-customer-rewards'),
+                'desc'    => __('Shows the slim gradient accent line on RewardMate cards and wallet sections.', 'omnify-customer-rewards'),
                 'desc_tip' => true,
             ],
             [
@@ -1349,7 +1349,7 @@ class Omnify_Customer_Rewards_Settings {
                     'no'  => __('No', 'omnify-customer-rewards'),
                 ],
                 'default' => 'no',
-                'desc'    => __('Birthdays are read from the Omnify Customer Rewards Birthday field on the customer profile.', 'omnify-customer-rewards'),
+                'desc'    => __('Birthdays are read from the RewardMate Birthday field on the customer profile.', 'omnify-customer-rewards'),
                 'desc_tip' => true,
             ],
             [
@@ -1371,7 +1371,7 @@ class Omnify_Customer_Rewards_Settings {
                     'no'  => __('No', 'omnify-customer-rewards'),
                 ],
                 'default' => 'no',
-                'desc'    => __('Account anniversary dates can be set on the customer profile. If empty, Omnify Customer Rewards uses the WordPress registration date.', 'omnify-customer-rewards'),
+                'desc'    => __('Account anniversary dates can be set on the customer profile. If empty, RewardMate uses the WordPress registration date.', 'omnify-customer-rewards'),
                 'desc_tip' => true,
             ],
             [
@@ -1393,7 +1393,7 @@ class Omnify_Customer_Rewards_Settings {
                     'no'  => __('No', 'omnify-customer-rewards'),
                 ],
                 'default' => 'no',
-                'desc'    => __('First purchase dates can be set on the customer profile. If empty, Omnify Customer Rewards auto-detects the first completed order.', 'omnify-customer-rewards'),
+                'desc'    => __('First purchase dates can be set on the customer profile. If empty, RewardMate auto-detects the first completed order.', 'omnify-customer-rewards'),
                 'desc_tip' => true,
             ],
             [
@@ -1542,8 +1542,8 @@ class Omnify_Customer_Rewards_Settings {
                 'title'       => __('Tier Upgrade Message', 'omnify-customer-rewards'),
                 'id'          => 'rewardmate_email_tier_upgrade_message',
                 'type'        => 'textarea',
-                'default'     => __('Your Omnify Customer Rewards tier was upgraded. Your current balance is {balance}.', 'omnify-customer-rewards'),
-                'placeholder' => __('Your Omnify Customer Rewards tier was upgraded. Your current balance is {balance}.', 'omnify-customer-rewards'),
+                'default'     => __('Your RewardMate tier was upgraded. Your current balance is {balance}.', 'omnify-customer-rewards'),
+                'placeholder' => __('Your RewardMate tier was upgraded. Your current balance is {balance}.', 'omnify-customer-rewards'),
                 'css'         => 'min-height:90px;',
             ],
             [

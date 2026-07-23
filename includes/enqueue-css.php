@@ -1,6 +1,6 @@
 <?php
 /**
- * Enqueue CSS for Omnify Customer Rewards plugin
+ * Enqueue CSS for RewardMate plugin
  *
  * @since 1.0.1
  */

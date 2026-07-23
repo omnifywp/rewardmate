@@ -1,6 +1,6 @@
 <?php
 /**
- * Omnify Customer Rewards Class
+ * RewardMate Class
  *
  * @since 1.0.0
  */
@@ -96,7 +96,7 @@ class rewardmate_Points_Rewards {
         $order->add_order_note(
             sprintf(
                 /* translators: %d is awarded points. */
-                __('Omnify Customer Rewards: Awarded %d points on order completion.', 'omnify-customer-rewards'),
+                __('RewardMate: Awarded %d points on order completion.', 'omnify-customer-rewards'),
                 $applied_points
             )
         );
@@ -641,7 +641,7 @@ class rewardmate_Points_Rewards {
                 $order->add_order_note(
                     sprintf(
                         /* translators: %d points pending approval. */
-                        __('Omnify Customer Rewards: Redemption of %d points queued for manual approval.', 'omnify-customer-rewards'),
+                        __('RewardMate: Redemption of %d points queued for manual approval.', 'omnify-customer-rewards'),
                         $points_to_deduct
                     )
                 );
@@ -720,7 +720,7 @@ class rewardmate_Points_Rewards {
             $order->add_order_note(
                 sprintf(
                     /* translators: 1: deducted points, 2: expected points, 3: discount. */
-                    __('Omnify Customer Rewards: Reserved %1$d of %2$d requested points for redeemed discount (%3$s).', 'omnify-customer-rewards'),
+                    __('RewardMate: Reserved %1$d of %2$d requested points for redeemed discount (%3$s).', 'omnify-customer-rewards'),
                     $deduct_points,
                     $points_to_deduct,
                     $discount_display
@@ -730,7 +730,7 @@ class rewardmate_Points_Rewards {
             $order->add_order_note(
                 sprintf(
                     /* translators: 1: deducted points, 2: discount amount. */
-                    __('Omnify Customer Rewards: Reserved %1$d points for redeemed discount (%2$s).', 'omnify-customer-rewards'),
+                    __('RewardMate: Reserved %1$d points for redeemed discount (%2$s).', 'omnify-customer-rewards'),
                     $deduct_points,
                     $discount_display
                 )
@@ -782,7 +782,7 @@ class rewardmate_Points_Rewards {
 
         $order->update_meta_data('_rewardmate_points_deducted', 'yes');
         $order->update_meta_data('_rewardmate_points_reservation_finalized', 'yes');
-        $order->add_order_note(__('Omnify Customer Rewards: Reserved points finalized for this order.', 'omnify-customer-rewards'));
+        $order->add_order_note(__('RewardMate: Reserved points finalized for this order.', 'omnify-customer-rewards'));
 
         if (function_exists('rewardmate_add_order_ledger_entry')) {
             rewardmate_add_order_ledger_entry($order_id, 'redeem_finalized', 0, 'Reserved points finalized');
@@ -845,7 +845,7 @@ class rewardmate_Points_Rewards {
         $order->add_order_note(
             sprintf(
                 /* translators: %d points released. */
-                __('Omnify Customer Rewards: Released %d reserved points because the order did not complete.', 'omnify-customer-rewards'),
+                __('RewardMate: Released %d reserved points because the order did not complete.', 'omnify-customer-rewards'),
                 $reserved_points
             )
         );
@@ -929,7 +929,7 @@ class rewardmate_Points_Rewards {
         echo '<section class="rewardmate-card rewardmate-points-display rewardmate-balance-card">';
         echo '<div class="rewardmate-card-icon" aria-hidden="true">R</div>';
         echo '<div class="rewardmate-balance-content">';
-        echo '<span class="rewardmate-eyebrow">' . esc_html__('Omnify Customer Rewards Balance', 'omnify-customer-rewards') . '</span>';
+        echo '<span class="rewardmate-eyebrow">' . esc_html__('RewardMate Balance', 'omnify-customer-rewards') . '</span>';
         echo '<h3>' . esc_html__('Your Points Balance', 'omnify-customer-rewards') . '</h3>';
         echo '<div class="rewardmate-balance-grid">';
         echo '<div><span>' . esc_html__('Available Points', 'omnify-customer-rewards') . '</span><strong>' . esc_html(number_format_i18n($points)) . '</strong><small>' . esc_html__('ready to use', 'omnify-customer-rewards') . '</small></div>';

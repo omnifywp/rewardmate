@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Validate an Omnify Customer Rewards profile date.
+ * Validate an RewardMate profile date.
  *
  * @param string $date Date in YYYY-MM-DD format.
  * @return bool
@@ -73,7 +73,7 @@ function rewardmate_add_user_points_metabox($user) {
         </tr>
     </table>
 
-    <h3><?php esc_html_e('Omnify Customer Rewards WooCommerce Profile Dates', 'omnify-customer-rewards'); ?></h3>
+    <h3><?php esc_html_e('RewardMate WooCommerce Profile Dates', 'omnify-customer-rewards'); ?></h3>
     <p class="description"><?php esc_html_e('These dates are used for birthday, account anniversary, and first purchase anniversary rewards when those automation settings are enabled.', 'omnify-customer-rewards'); ?></p>
     <table class="form-table rewardmate-profile-fields" role="presentation">
         <tr>
@@ -163,7 +163,7 @@ add_action('personal_options_update', 'rewardmate_save_user_points_metabox');
 add_action('edit_user_profile_update', 'rewardmate_save_user_points_metabox');
 
 /**
- * Render customer-editable Omnify Customer Rewards dates on My Account > Account details.
+ * Render customer-editable RewardMate dates on My Account > Account details.
  *
  * @return void
  */
@@ -178,7 +178,7 @@ function rewardmate_render_account_profile_date_fields() {
     $max_date = current_time('Y-m-d');
     ?>
     <fieldset class="rewardmate-account-profile-fields">
-        <legend><?php esc_html_e('Omnify Customer Rewards Dates', 'omnify-customer-rewards'); ?></legend>
+        <legend><?php esc_html_e('RewardMate Dates', 'omnify-customer-rewards'); ?></legend>
         <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
             <label for="rewardmate_birthday"><?php esc_html_e('Birthday', 'omnify-customer-rewards'); ?></label>
             <input type="date" class="woocommerce-Input woocommerce-Input--text input-text" name="rewardmate_birthday" id="rewardmate_birthday" value="<?php echo esc_attr($birthday); ?>" max="<?php echo esc_attr($max_date); ?>" />
@@ -196,7 +196,7 @@ function rewardmate_render_account_profile_date_fields() {
 add_action('woocommerce_edit_account_form', 'rewardmate_render_account_profile_date_fields');
 
 /**
- * Save customer-editable Omnify Customer Rewards dates from My Account.
+ * Save customer-editable RewardMate dates from My Account.
  *
  * @param int $user_id User ID.
  * @return void
