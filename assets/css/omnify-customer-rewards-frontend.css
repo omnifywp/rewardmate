@@ -1,0 +1,1262 @@
+:root {
+  --rewardmate-surface: #ffffff;
+  --rewardmate-surface-soft: #f7fafc;
+  --rewardmate-border: #dce6ee;
+  --rewardmate-text: #17212b;
+  --rewardmate-muted: #657486;
+  --rewardmate-primary: #1f6f68;
+  --rewardmate-primary-dark: #17324d;
+  --rewardmate-accent: #c88719;
+  --rewardmate-success: #178a4c;
+  --rewardmate-success-bg: #ecf8f1;
+  --rewardmate-error: #b73535;
+  --rewardmate-error-bg: #fff1f1;
+  --rewardmate-warning: #9a6a12;
+  --rewardmate-warning-bg: #fff8e8;
+  --rewardmate-info: #1f6f68;
+  --rewardmate-info-bg: #edf7f6;
+  --rewardmate-shadow: 0 24px 54px rgba(23, 33, 43, 0.12);
+  --rewardmate-shadow-soft: 0 14px 34px rgba(23, 33, 43, 0.08);
+  --rewardmate-focus: 0 0 0 3px rgba(31, 111, 104, 0.16);
+  --rewardmate-radius: 22px;
+  --rewardmate-button-radius: 16px;
+  --rewardmate-gradient-angle: 135deg;
+  --rewardmate-container-width: 1240px;
+  --rewardmate-accent-strip-width: 4px;
+}
+
+.rewardmate-card,
+.rewardmate-wallet {
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rewardmate-border);
+  border-radius: var(--rewardmate-radius);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(200, 135, 25, 0.1), transparent 28%),
+    linear-gradient(145deg, var(--rewardmate-surface) 0%, #fbfdfd 72%, #f4faf9 100%);
+  box-shadow: var(--rewardmate-shadow-soft);
+}
+
+.rewardmate-card *,
+.rewardmate-wallet * {
+  box-sizing: border-box;
+}
+
+.rewardmate-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  margin: 0 0 16px;
+}
+
+.rewardmate-card::before,
+.rewardmate-wallet::before {
+  content: "";
+  position: absolute;
+  inset: 16px auto 16px 0;
+  width: var(--rewardmate-accent-strip-width);
+  background: linear-gradient(180deg, var(--rewardmate-primary), var(--rewardmate-accent));
+  border-radius: 0 999px 999px 0;
+}
+
+.rewardmate-card-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  background: linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary-dark), var(--rewardmate-primary));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow:
+    0 14px 30px rgba(31, 111, 104, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.rewardmate-card-body,
+.rewardmate-balance-content {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.rewardmate-card h3,
+.rewardmate-card h4,
+.rewardmate-wallet h3 {
+  margin: 0 0 8px;
+  color: var(--rewardmate-text);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 850;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.rewardmate-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: var(--rewardmate-primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rewardmate-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary), var(--rewardmate-accent));
+  box-shadow: 0 0 0 4px rgba(31, 111, 104, 0.08);
+}
+
+.rewardmate-muted {
+  color: var(--rewardmate-muted);
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.rewardmate-balance-card {
+  background:
+    radial-gradient(circle at 92% 14%, rgba(200, 135, 25, 0.16), transparent 30%),
+    radial-gradient(circle at 5% 110%, rgba(31, 111, 104, 0.1), transparent 34%),
+    linear-gradient(145deg, #fff 0%, #f7fbfa 100%);
+}
+
+.rewardmate-balance-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 2px 0 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(31, 111, 104, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--rewardmate-text);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+  box-shadow: 0 8px 18px rgba(23, 33, 43, 0.05);
+}
+
+.rewardmate-wallet {
+  padding: 0;
+  margin: 0 0 20px;
+  max-width: var(--rewardmate-container-width);
+}
+
+.rewardmate-wallet-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 92% 10%, rgba(255, 255, 255, 0.2), transparent 24%),
+    linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary-dark), var(--rewardmate-primary) 62%, var(--rewardmate-accent));
+  color: #fff;
+}
+
+.rewardmate-wallet-hero .rewardmate-eyebrow,
+.rewardmate-wallet-hero h3,
+.rewardmate-wallet-hero p {
+  color: #fff;
+}
+
+.rewardmate-wallet-hero h3 {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.22em;
+  margin: 0;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -0.035em;
+}
+
+.rewardmate-wallet-balance-label {
+  font-size: 0.72em;
+  letter-spacing: -0.02em;
+}
+
+.rewardmate-wallet-hero p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.rewardmate-tier-badge {
+  flex: 0 0 auto;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-weight: 800;
+}
+
+.rewardmate-wallet-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px 18px 0;
+}
+
+.rewardmate-wallet-stats div {
+  padding: 14px;
+  border: 1px solid var(--rewardmate-border);
+  border-radius: var(--rewardmate-button-radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(247, 250, 252, 0.92));
+}
+
+.rewardmate-wallet-stats > div > span,
+.rewardmate-referral-box > span {
+  display: block;
+  color: var(--rewardmate-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-wallet-stats strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--rewardmate-text);
+  font-size: 18px;
+}
+
+.rewardmate-wallet-stats strong .woocommerce-Price-amount,
+.rewardmate-wallet-stats strong .woocommerce-Price-currencySymbol {
+  display: inline;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.rewardmate-referral-box {
+  display: grid;
+  gap: 8px;
+  margin: 14px 18px 0;
+  padding: 16px;
+  border: 1px dashed rgba(31, 111, 104, 0.38);
+  border-radius: var(--rewardmate-button-radius);
+  background: rgba(31, 111, 104, 0.06);
+}
+
+.rewardmate-referral-box code {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  padding: 10px 12px;
+  border-radius: var(--rewardmate-button-radius);
+  background: #fff;
+  color: var(--rewardmate-primary-dark);
+  font-size: 13px;
+}
+
+.rewardmate-wallet-filter {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 18px 0;
+}
+
+.rewardmate-wallet-filter label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--rewardmate-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-wallet-filter select {
+  min-height: 42px;
+  border-color: var(--rewardmate-border);
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.rewardmate-wallet-filter button.button,
+.rewardmate-wallet-filter .button.wp-element-button {
+  border: 0;
+  background: linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary), var(--rewardmate-primary-dark));
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(31, 111, 104, 0.2);
+}
+
+.rewardmate-wallet-filter select:focus {
+  border-color: var(--rewardmate-primary);
+  box-shadow: var(--rewardmate-focus);
+  outline: 0;
+}
+
+.rewardmate-history-shell {
+  margin: 14px 0 0;
+  overflow-x: auto;
+  border: 1px solid var(--rewardmate-border);
+  border-radius: var(--rewardmate-button-radius);
+  background: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.rewardmate-wallet .rewardmate-history-shell,
+.rewardmate-wallet .rewardmate-empty-state {
+  margin: 14px 18px 20px;
+}
+
+.rewardmate-history-shell .rewardmate-history-table,
+.rewardmate-history-table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.rewardmate-history-table th {
+  border: 0;
+  border-bottom: 1px solid var(--rewardmate-border);
+  padding: 12px 14px;
+  background: #f4f8fa;
+  color: var(--rewardmate-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.rewardmate-history-table td {
+  border: 0;
+  border-bottom: 1px solid rgba(220, 230, 238, 0.82);
+  padding: 13px 14px;
+  color: var(--rewardmate-text);
+  font-size: 14px;
+  line-height: 1.45;
+  vertical-align: top;
+}
+
+.rewardmate-history-table th + th,
+.rewardmate-history-table td + td {
+  border-left: 1px solid rgba(220, 230, 238, 0.72);
+}
+
+.rewardmate-history-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.rewardmate-history-table tbody tr:hover td {
+  background: #f9fcfb;
+}
+
+.rewardmate-history-head {
+  margin-bottom: 8px;
+}
+
+.rewardmate-summary {
+  margin: 0;
+  color: var(--rewardmate-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.rewardmate-history-table td.rewardmate-points-plus {
+  color: var(--rewardmate-success);
+  font-weight: 800;
+}
+
+.rewardmate-history-table td.rewardmate-points-minus {
+  color: var(--rewardmate-error);
+  font-weight: 800;
+}
+
+.rewardmate-checkin-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rewardmate-checkin-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(23, 138, 76, 0.18);
+  border-radius: 999px;
+  background: var(--rewardmate-success-bg);
+  color: var(--rewardmate-success);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.rewardmate-checkin-done::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 4px rgba(23, 138, 76, 0.12);
+}
+
+.rewardmate-inline-notice {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rewardmate-inline-notice.info {
+  color: var(--rewardmate-info);
+  background: var(--rewardmate-info-bg);
+  border-color: rgba(31, 111, 104, 0.18);
+}
+
+.rewardmate-inline-notice.success {
+  color: var(--rewardmate-success);
+  background: var(--rewardmate-success-bg);
+  border-color: rgba(23, 138, 76, 0.22);
+}
+
+.rewardmate-inline-notice.error {
+  color: var(--rewardmate-error);
+  background: var(--rewardmate-error-bg);
+  border-color: rgba(183, 53, 53, 0.22);
+}
+
+.rewardmate-inline-notice.warning {
+  color: var(--rewardmate-warning);
+  background: var(--rewardmate-warning-bg);
+  border-color: rgba(154, 106, 18, 0.24);
+}
+
+.rewardmate-spin-card {
+  position: relative;
+  background:
+    radial-gradient(circle at 82% 10%, rgba(200, 135, 25, 0.16), transparent 30%),
+    radial-gradient(circle at 12% 92%, rgba(31, 111, 104, 0.14), transparent 28%),
+    linear-gradient(145deg, #ffffff 0%, #f9fcfb 58%, #eef8f6 100%);
+}
+
+.rewardmate-spin-card .rewardmate-card-body {
+  display: grid;
+  gap: 12px;
+}
+
+.rewardmate-spin-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.rewardmate-spin-cta span,
+.rewardmate-spin-eyebrow {
+  color: var(--rewardmate-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.rewardmate-spin-eyebrow {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rewardmate-spin-wheel {
+  display: none;
+  grid-template-columns: minmax(240px, 420px) minmax(190px, 1fr);
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+  padding: 18px;
+  border: 1px solid rgba(31, 111, 104, 0.16);
+  border-radius: var(--rewardmate-radius);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.68)),
+    radial-gradient(circle at 20% 20%, rgba(31, 111, 104, 0.12), transparent 32%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.rewardmate-spin-wheel.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rewardmate-spin-stage {
+  position: relative;
+  display: grid;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  place-items: center;
+}
+
+.rewardmate-spin-stage::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 135, 25, 0.24), transparent 66%);
+  filter: blur(20px);
+  opacity: 0.72;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.rewardmate-spin-stage::after {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border: 1px dashed rgba(31, 111, 104, 0.22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.rewardmate-spin-wheel.is-spinning .rewardmate-spin-stage::before {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+#wheel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 410px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border: 12px solid #fff;
+  border-radius: 50%;
+  box-shadow:
+    0 24px 44px rgba(23, 33, 43, 0.18),
+    0 0 0 1px var(--rewardmate-border),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.52);
+  background: radial-gradient(circle at center, #ffffff 0%, #f6fafb 70%, #e8f0f5 100%);
+  transition: transform 4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.rewardmate-spin-wheel.is-spinning #wheel {
+  filter: saturate(1.08) contrast(1.03);
+}
+
+#wheel-pointer {
+  position: absolute;
+  z-index: 4;
+  top: -2px;
+  left: 50%;
+  width: 32px;
+  height: 40px;
+  border: 3px solid #fff;
+  border-radius: 999px 999px 6px 6px;
+  background: linear-gradient(180deg, #f0b23f, var(--rewardmate-accent));
+  box-shadow: 0 10px 20px rgba(23, 33, 43, 0.22);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  transform: translateX(-50%);
+  animation: rewardmate-pointerPulse 1.2s ease-in-out infinite;
+}
+
+.rewardmate-spin-hub {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.35), transparent 30%),
+    linear-gradient(145deg, var(--rewardmate-primary-dark), var(--rewardmate-primary));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  box-shadow:
+    0 14px 26px rgba(23, 33, 43, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.rewardmate-spin-wheel.is-spinning .rewardmate-spin-hub {
+  animation: rewardmate-hubPulse 780ms ease-in-out infinite;
+}
+
+.rewardmate-spin-panel {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+}
+
+.rewardmate-spin-prizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rewardmate-spin-prizes span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid rgba(31, 111, 104, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--rewardmate-primary-dark);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+#spin-button,
+#show-spin-wheel,
+#daily-checkin-btn,
+.rewardmate-redeem-apply,
+.rewardmate-wallet-filter .button {
+  min-height: 42px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary), var(--rewardmate-primary-dark));
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow: 0 12px 24px rgba(31, 111, 104, 0.2);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+#spin-button:hover,
+#show-spin-wheel:hover,
+#daily-checkin-btn:hover,
+.rewardmate-redeem-apply:hover,
+.rewardmate-wallet-filter .button:hover {
+  background: linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary-dark), var(--rewardmate-primary));
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+#spin-button:focus,
+#show-spin-wheel:focus,
+#daily-checkin-btn:focus,
+.rewardmate-redeem-apply:focus,
+.rewardmate-wallet-filter .button:focus {
+  outline: 0;
+  box-shadow: var(--rewardmate-focus), 0 12px 24px rgba(31, 111, 104, 0.2);
+}
+
+#spin-button:disabled,
+#show-spin-wheel:disabled,
+.rewardmate-redeem-apply:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
+.rewardmate-checkout-redeem {
+  position: relative;
+  margin: 0 0 18px;
+  padding: 18px;
+  border: 1px solid var(--rewardmate-border);
+  border-radius: var(--rewardmate-radius);
+  background:
+    radial-gradient(circle at 96% 4%, rgba(200, 135, 25, 0.12), transparent 26%),
+    linear-gradient(145deg, #ffffff 0%, #f7fbfa 100%);
+  box-shadow: var(--rewardmate-shadow-soft);
+}
+
+.rewardmate-checkout-redeem h3 {
+  margin: 0 0 12px;
+  color: var(--rewardmate-text);
+  font-size: 20px;
+  font-weight: 850;
+}
+
+.rewardmate-redeem-control {
+  display: grid;
+  gap: 12px;
+}
+
+.rewardmate-redeem-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(31, 111, 104, 0.14);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.rewardmate-redeem-summary strong {
+  color: var(--rewardmate-text);
+  font-weight: 850;
+}
+
+.rewardmate-redeem-summary span,
+.rewardmate-redeem-meta,
+.rewardmate-redeem-status {
+  color: var(--rewardmate-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.rewardmate-redeem-slider-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(96px, 120px) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.rewardmate-redeem-range {
+  width: 100%;
+  accent-color: var(--rewardmate-primary);
+}
+
+.rewardmate-redeem-number {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--rewardmate-border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--rewardmate-text);
+  font-weight: 800;
+  text-align: center;
+}
+
+.rewardmate-redeem-number:focus {
+  border-color: var(--rewardmate-primary);
+  box-shadow: var(--rewardmate-focus);
+  outline: 0;
+}
+
+.rewardmate-redeem-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rewardmate-redeem-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(31, 111, 104, 0.08);
+  color: var(--rewardmate-primary-dark);
+  font-weight: 800;
+}
+
+.rewardmate-redeem-status {
+  margin: 0;
+  font-weight: 800;
+}
+
+.rewardmate-redeem-status.is-success {
+  color: var(--rewardmate-success);
+}
+
+.rewardmate-redeem-status.is-error {
+  color: var(--rewardmate-error);
+}
+
+.rewardmate-redeem-status.is-loading {
+  color: var(--rewardmate-info);
+}
+
+.rewardmate-spin-result {
+  display: none;
+  margin-top: 12px;
+  padding: 13px 15px;
+  border-radius: 12px;
+  font-weight: 800;
+}
+
+.rewardmate-spin-result.success {
+  color: var(--rewardmate-success);
+  background: var(--rewardmate-success-bg);
+  border: 1px solid rgba(23, 138, 76, 0.22);
+  animation: rewardmate-popIn 260ms ease-out;
+}
+
+.rewardmate-spin-result.error {
+  color: var(--rewardmate-error);
+  background: var(--rewardmate-error-bg);
+  border: 1px solid rgba(183, 53, 53, 0.22);
+  animation: rewardmate-popIn 260ms ease-out;
+}
+
+.rewardmate-confetti {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.rewardmate-confetti-piece {
+  position: absolute;
+  top: -10%;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0.95;
+  animation: rewardmate-confettiFall 1200ms linear forwards;
+}
+
+.rewardmate-earnable-points {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(31, 111, 104, 0.18);
+  background: var(--rewardmate-info-bg);
+  border-radius: 12px;
+  color: var(--rewardmate-primary-dark);
+  font-weight: 800;
+}
+
+tr.earnable-points th,
+tr.points-redeem th {
+  color: var(--rewardmate-text);
+}
+
+tr.earnable-points td,
+tr.points-redeem td {
+  font-weight: 800;
+}
+
+.rewardmate-empty-state {
+  margin: 14px 0 0;
+  padding: 18px;
+  border: 1px dashed var(--rewardmate-border);
+  border-radius: var(--rewardmate-button-radius);
+  background: var(--rewardmate-surface-soft);
+}
+
+.woocommerce-account .rewardmate-card,
+.woocommerce-account .rewardmate-wallet,
+.rewardmate-card,
+.rewardmate-wallet {
+  border-color: rgba(31, 111, 104, 0.16);
+  border-radius: var(--rewardmate-radius);
+  background:
+    radial-gradient(circle at 96% 4%, rgba(200, 135, 25, 0.12), transparent 24%),
+    radial-gradient(circle at 0% 100%, rgba(31, 111, 104, 0.1), transparent 26%),
+    linear-gradient(145deg, #ffffff 0%, #fbfdfc 60%, #f1faf8 100%);
+  box-shadow:
+    0 22px 52px rgba(23, 33, 43, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.woocommerce-account .rewardmate-card,
+.rewardmate-card {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  padding: 26px;
+  margin-bottom: 24px;
+}
+
+.woocommerce-account .rewardmate-card::before,
+.rewardmate-card::before,
+.rewardmate-wallet::before {
+  inset: 22px auto 22px 0;
+  width: var(--rewardmate-accent-strip-width);
+  background: linear-gradient(180deg, var(--rewardmate-primary), #2e8f82 48%, var(--rewardmate-accent));
+}
+
+.woocommerce-account .rewardmate-card-icon,
+.rewardmate-card-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.24), transparent 34%),
+    linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary-dark), var(--rewardmate-primary));
+  font-size: 17px;
+  box-shadow:
+    0 16px 34px rgba(31, 111, 104, 0.2),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.woocommerce-account .rewardmate-card-body,
+.woocommerce-account .rewardmate-balance-content,
+.rewardmate-card-body,
+.rewardmate-balance-content {
+  display: grid;
+  gap: 16px;
+}
+
+.woocommerce-account .rewardmate-card h3,
+.woocommerce-account .rewardmate-wallet h3,
+.rewardmate-card h3,
+.rewardmate-wallet h3 {
+  margin: 0;
+  color: var(--rewardmate-text);
+  font-size: clamp(28px, 3.1vw, 42px) !important;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.woocommerce-account .rewardmate-wallet-hero .rewardmate-eyebrow,
+.woocommerce-account .rewardmate-wallet-hero h3,
+.woocommerce-account .rewardmate-wallet-hero p,
+.woocommerce-account .rewardmate-wallet-hero .rewardmate-wallet-balance-number,
+.woocommerce-account .rewardmate-wallet-hero .rewardmate-wallet-balance-label,
+.rewardmate-wallet-hero .rewardmate-eyebrow,
+.rewardmate-wallet-hero h3,
+.rewardmate-wallet-hero p,
+.rewardmate-wallet-hero .rewardmate-wallet-balance-number,
+.rewardmate-wallet-hero .rewardmate-wallet-balance-label {
+  color: #fff !important;
+}
+
+.rewardmate-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.rewardmate-card-heading .rewardmate-muted,
+.rewardmate-card-heading .rewardmate-summary {
+  margin-top: 10px;
+}
+
+.rewardmate-reward-chip {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid rgba(31, 111, 104, 0.16);
+  border-radius: 999px;
+  background: rgba(31, 111, 104, 0.08);
+  color: var(--rewardmate-primary-dark);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.rewardmate-balance-card .rewardmate-eyebrow {
+  margin-bottom: 0;
+}
+
+.rewardmate-balance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.rewardmate-balance-grid > div {
+  min-height: 118px;
+  padding: 16px;
+  border: 1px solid rgba(31, 111, 104, 0.13);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 251, 250, 0.96));
+  box-shadow: 0 12px 28px rgba(23, 33, 43, 0.05);
+}
+
+.rewardmate-balance-grid span,
+.rewardmate-balance-grid small {
+  display: block;
+  color: var(--rewardmate-muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rewardmate-balance-grid strong {
+  display: block;
+  margin: 12px 0 5px;
+  color: var(--rewardmate-text);
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 950;
+  line-height: 1;
+}
+
+.rewardmate-balance-grid strong .woocommerce-Price-amount,
+.rewardmate-balance-grid strong .woocommerce-Price-currencySymbol {
+  display: inline;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.rewardmate-balance-note {
+  max-width: 720px;
+}
+
+.rewardmate-checkin-card .rewardmate-checkin-actions,
+.rewardmate-spin-card .rewardmate-spin-cta {
+  margin-top: 0;
+}
+
+#spin-button,
+#show-spin-wheel,
+#daily-checkin-btn,
+.rewardmate-redeem-apply,
+.rewardmate-wallet-filter .button {
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: var(--rewardmate-button-radius);
+  background:
+    linear-gradient(var(--rewardmate-gradient-angle), var(--rewardmate-primary), var(--rewardmate-primary-dark));
+  box-shadow: 0 16px 28px rgba(31, 111, 104, 0.2);
+}
+
+.rewardmate-inline-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 14px 16px;
+  border-radius: var(--rewardmate-radius);
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.rewardmate-checkin-card .rewardmate-inline-notice {
+  width: fit-content;
+  max-width: 100%;
+  padding-right: 22px;
+}
+
+.rewardmate-inline-notice::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 5px rgba(31, 111, 104, 0.12);
+}
+
+.rewardmate-locked-notice {
+  max-width: 720px;
+}
+
+.rewardmate-history-card .rewardmate-history-shell {
+  margin-top: 4px;
+}
+
+.rewardmate-history-shell {
+  padding: 10px;
+  border-color: rgba(31, 111, 104, 0.12);
+  border-radius: var(--rewardmate-radius);
+  background:
+    linear-gradient(180deg, rgba(31, 111, 104, 0.04), rgba(255, 255, 255, 0.76));
+}
+
+.rewardmate-history-shell .rewardmate-history-table,
+.rewardmate-history-table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  table-layout: auto;
+}
+
+.rewardmate-history-table th {
+  padding: 7px 16px;
+  border: 0;
+  background: transparent;
+  color: var(--rewardmate-muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.rewardmate-history-table td {
+  padding: 13px 16px;
+  border-top: 1px solid rgba(220, 230, 238, 0.78);
+  border-bottom: 1px solid rgba(220, 230, 238, 0.78);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.rewardmate-history-table th:first-child,
+.rewardmate-history-table td:first-child {
+  min-width: 156px;
+  white-space: nowrap;
+}
+
+.rewardmate-history-table th:nth-child(2),
+.rewardmate-history-table td:nth-child(2) {
+  width: 88px;
+  white-space: nowrap;
+}
+
+.rewardmate-history-table th:nth-child(3),
+.rewardmate-history-table td:nth-child(3) {
+  width: 176px;
+  white-space: nowrap;
+}
+
+.rewardmate-history-table th + th,
+.rewardmate-history-table td + td {
+  border-left: 0;
+}
+
+.rewardmate-history-table tbody tr td:first-child {
+  border-left: 1px solid rgba(220, 230, 238, 0.78);
+  border-radius: var(--rewardmate-button-radius) 0 0 var(--rewardmate-button-radius);
+  font-weight: 800;
+}
+
+.rewardmate-history-table tbody tr td:last-child {
+  border-right: 1px solid rgba(220, 230, 238, 0.78);
+  border-radius: 0 16px 16px 0;
+}
+
+.rewardmate-history-table td.rewardmate-points-plus,
+.rewardmate-history-table td.rewardmate-points-minus {
+  font-size: 17px;
+  font-weight: 950;
+}
+
+@keyframes rewardmate-pointerPulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.08);
+  }
+}
+
+@keyframes rewardmate-popIn {
+  0% {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes rewardmate-hubPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes rewardmate-confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(130%) rotate(480deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .rewardmate-card,
+  .rewardmate-wallet-hero {
+    flex-direction: column;
+  }
+
+  .rewardmate-card {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .rewardmate-card-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .rewardmate-card-heading {
+    flex-direction: column;
+  }
+
+  .rewardmate-balance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .woocommerce-account .rewardmate-card h3,
+  .woocommerce-account .rewardmate-wallet h3,
+  .rewardmate-card h3,
+  .rewardmate-wallet h3 {
+    font-size: 30px !important;
+    line-height: 1.05;
+  }
+
+  .rewardmate-wallet-hero h3 {
+    font-size: 28px;
+  }
+
+  .rewardmate-history-table th:nth-child(2),
+  .rewardmate-history-table td:nth-child(2),
+  .rewardmate-history-table th:nth-child(3),
+  .rewardmate-history-table td:nth-child(3) {
+    width: auto;
+    white-space: normal;
+  }
+
+  .rewardmate-history-table th:first-child,
+  .rewardmate-history-table td:first-child {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .rewardmate-wallet-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .rewardmate-wallet-filter {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .rewardmate-spin-cta {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .rewardmate-spin-wheel {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  #spin-button,
+  #show-spin-wheel,
+  #daily-checkin-btn,
+  .rewardmate-redeem-apply,
+  .rewardmate-wallet-filter .button {
+    width: 100%;
+  }
+
+  .rewardmate-redeem-summary,
+  .rewardmate-redeem-slider-row {
+    grid-template-columns: 1fr;
+  }
+
+  .rewardmate-redeem-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

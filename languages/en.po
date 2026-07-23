@@ -1,0 +1,202 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2024-11-01 17:09+0600\n"
+"PO-Revision-Date: 2024-11-01 17:09+0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/omnify-customer-rewards.php:42
+msgid "You have earned "
+msgstr ""
+
+#: classes/omnify-customer-rewards.php:52
+msgid "Your Points"
+msgstr ""
+
+#: classes/omnify-customer-rewards.php:80
+msgid "Points Discount"
+msgstr ""
+
+#: classes/omnify-customer-rewards.php:94 classes/omnify-customer-rewards.php:99
+msgid "Your Points Balance"
+msgstr ""
+
+#: classes/omnify-customer-rewards.php:95
+#, php-format
+msgid "You have %d points, worth %s."
+msgstr ""
+
+#: classes/omnify-customer-rewards.php:100
+msgid "You have no points available."
+msgstr ""
+
+#: classes/settings.php:49
+msgid "Omnify Customer Rewardss Settings"
+msgstr ""
+
+#: classes/settings.php:57
+msgid "Enable Daily Check-In Points"
+msgstr ""
+
+#: classes/settings.php:60 classes/settings.php:99 classes/settings.php:109
+msgid "Yes"
+msgstr ""
+
+#: classes/settings.php:61 classes/settings.php:100 classes/settings.php:110
+msgid "No"
+msgstr ""
+
+#: classes/settings.php:66
+msgid "Daily Check-In Points"
+msgstr ""
+
+#: classes/settings.php:74
+msgid "Points per Purchase ("
+msgstr ""
+
+#: classes/settings.php:81
+msgid "Max Redemption Percentage"
+msgstr ""
+
+#: classes/settings.php:89
+msgid "Points Value (e.g. 1000 points = "
+msgstr ""
+
+#: classes/settings.php:96
+msgid ""
+"Select whether to decrease points when an order is refunded or canceled."
+msgstr ""
+
+#: classes/settings.php:106
+msgid "Enable Spin Wheel"
+msgstr ""
+
+#: classes/settings.php:116
+msgid "Minimum Order Amount to Spin"
+msgstr ""
+
+#: classes/settings.php:121
+msgid "Spin Wheel Values (Comma Separated)"
+msgstr ""
+
+#: includes/adjust-points-form.php:31
+msgid "Points increased successfully!"
+msgstr ""
+
+#: includes/adjust-points-form.php:37
+msgid "Points decreased successfully!"
+msgstr ""
+
+#: includes/adjust-points-form.php:43
+msgid "Adjust User Points"
+msgstr ""
+
+#: includes/adjust-points-form.php:48
+msgid "User"
+msgstr ""
+
+#: includes/adjust-points-form.php:60
+msgid "Points"
+msgstr ""
+
+#: includes/adjust-points-form.php:66
+msgid "Action"
+msgstr ""
+
+#: includes/adjust-points-form.php:68
+msgid "Increase"
+msgstr ""
+
+#: includes/adjust-points-form.php:69
+msgid "Decrease"
+msgstr ""
+
+#: includes/adjust-points-form.php:75 metabox/user.php:26
+msgid "Reason"
+msgstr ""
+
+#: includes/adjust-points-form.php:79
+msgid "Adjust Points"
+msgstr ""
+
+#: includes/earnable-points-checkout.php:25
+msgid "Earnable Points"
+msgstr ""
+
+#: includes/earnable-points-checkout.php:26
+#, php-format
+msgid "You will earn %d points from this order!"
+msgstr ""
+
+#: includes/earnable-points-product.php:19
+#, php-format
+msgid "You will earn %d points when you buy this product!"
+msgstr ""
+
+#: includes/point-history-admin.php:20
+msgid "Points History"
+msgstr ""
+
+#: includes/point-history-admin.php:33 includes/point-history-myaccount.php:28
+msgid "Edited (From "
+msgstr ""
+
+#: includes/point-history-admin.php:37 includes/point-history-myaccount.php:32
+msgid "Gifted "
+msgstr ""
+
+#: includes/point-history-admin.php:41 includes/point-history-myaccount.php:36
+msgid "Earned or Spent"
+msgstr ""
+
+#: includes/point-history-admin.php:53
+msgid "No points history found."
+msgstr ""
+
+#: includes/point-history-myaccount.php:17
+msgid "Point History"
+msgstr ""
+
+#: includes/point-history-myaccount.php:20
+#, php-format
+msgid "You have a total of %d points."
+msgstr ""
+
+#: includes/point-history-myaccount.php:46
+msgid "No points history available."
+msgstr ""
+
+#: metabox/product.php:17
+msgid "Points for this product"
+msgstr ""
+
+#: metabox/product.php:18
+msgid ""
+"Enter the points users will earn for buying this product. Leave blank to use "
+"global settings."
+msgstr ""
+
+#: metabox/user.php:15
+msgid "User Reward Points"
+msgstr ""
+
+#: metabox/user.php:18
+msgid "Current Points"
+msgstr ""
+
+#: metabox/user.php:22
+msgid "Gift Points"
+msgstr ""
+
+#: metabox/user.php:27
+msgid "Enter reason for point adjustment or gift"
+msgstr ""

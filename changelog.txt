@@ -1,0 +1,87 @@
+*** Omnify Customer Rewards WooCommerce Changelog ***
+
+2026-07-21 - version 1.4.0
+* Rebranded product name to Omnify Customer Rewards WooCommerce (admin menu remains RewardMate).
+* Renamed main plugin and asset files to omnify-customer-rewards*.
+* REST/webhook headers use X-Omnify-Customer-Rewards-* with legacy X-RewardMate-* support.
+
+
+2026-04-30 - version 1.3.11
+* Fixed expanded filter panels overflowing admin cards on ledger, analytics, and tools screens.
+* Improved adjust-points form alignment, settings builder widths, campaign selector heights, and customer history table readability.
+* Strengthened customer wallet filter button styling so it stays consistent with Omnify Customer Rewards buttons.
+
+2026-04-30 - version 1.3.10
+* Added dynamic category and product selectors for multiplier rules, exclusions, and scheduled campaigns.
+* Preserved backward-compatible saved formats while adding stricter sanitization for multiplier, CSV ID, campaign, and tier settings.
+* Polished admin filter buttons, CSV import buttons, wallet balance spacing, point history tables, and duplicate daily check-in messaging.
+
+2026-04-30 - version 1.3.9
+* Rebuilt loyalty tiers as dynamic admin-configurable rules instead of fixed Silver/Gold/Platinum fields.
+* Updated tier assignment, admin filters, CSV exports, REST responses, wallet displays, and tier-upgrade emails to use custom tier labels.
+
+2026-04-30 - version 1.3.8
+* Added Omnify Customer Rewards date fields to user profiles for birthday, account anniversary, and first purchase anniversary rewards.
+* Updated milestone reward automation to use the profile account anniversary date when provided.
+
+2026-04-30 - version 1.3.7
+* Redesigned the customer My Account reward cards with compact balance stats, aligned headers, reward chips, modern notices, and cleaner point history rows.
+* Improved locked spin and daily check-in states for clearer customer-facing guidance.
+
+2026-04-30 - version 1.3.6
+* Standardized Omnify Customer Rewards admin button sizing and styling so buttons align with input fields.
+* Added expanded Analytics filters for event, user, status, product, role, tier, direction, and point ranges.
+
+2026-04-30 - version 1.3.5
+* Fixed Tools page layout width so import, export, bulk adjustment, and ledger filter panels no longer stretch or float incorrectly.
+* Improved CSV export button spacing and bulk adjustment field grouping for a cleaner responsive admin layout.
+
+2026-04-30 - version 1.3.4
+* Normalized segmented toggles, steppers, selects, and filter field sizing across admin screens.
+* Redesigned the customer spin wheel with a modern stage, prize chips, improved canvas styling, and active spinning feedback.
+
+2026-04-29 - version 1.3.3
+* Improved bulk adjustment and ledger filter layouts with compact primary controls and expandable advanced filters.
+* Reduced the bulk user selector height and grouped secondary targeting controls behind More Filters.
+
+2026-04-29 - version 1.3.2
+* Added a dedicated API admin screen with setup instructions, endpoint reference, copyable examples, API key generation/rotation/revocation, and webhook testing.
+* Added external write controls, max API point change limit, allowed IP address restrictions, and configurable webhook events.
+* Added REST endpoints for API status, user search, and point history.
+
+2026-04-29 - version 1.3.1
+* Replaced raw User ID inputs with admin user selectors on bulk adjustment and ledger filters.
+* Added expanded filters for bulk adjustments, ledger review, and liability exports.
+
+2026-04-29 - version 1.3.0
+* Added point expiry with grace-period recovery when customers complete an order during the grace window.
+* Added CSV import/export for user balances, point history, ledger entries, and liability reports.
+* Added bulk points adjustment for selected users, roles, loyalty tiers, and customers who purchased a product.
+* Added birthday, account anniversary, and first purchase anniversary rewards.
+* Added separate email notification toggles and templates for loyalty events.
+* Added secure REST API endpoints and outbound webhooks for point balance integrations.
+* Added Fraud Review dashboard for suspicious activity flags and manual review status.
+* Added a checkout redemption slider with server-side caps for balance, minimum, step size, coupons, and max redemption percent.
+
+2026-04-28 - version 1.2.0
+* Converted settings into modern multi-tab panels with interactive steppers, toggle controls, and textarea counters.
+* Added a visual campaign builder for easier scheduled boost configuration.
+* Redesigned admin and customer-facing UI with a modern plugin-suite layout, tab navigation, refined cards, and upgraded wallet visuals.
+* Improved admin UI/UX with dashboard KPIs, charts, filters, cleaner tables, and responsive admin layouts.
+* Improved dashboard chart rendering for sparse data, labels, and responsive sizing.
+* Fixed pending approval KPI counts so only unapproved redemption requests are included.
+* Added user filter and user column to the Points Ledger audit table.
+* Suppressed third-party plugin and theme notices on Omnify Customer Rewards admin pages.
+* Moved admin pages into a dedicated top-level RewardMate menu.
+* Added tiered loyalty levels (Silver/Gold/Platinum).
+* Added referral rewards on first completed order.
+* Added category/product multipliers, exclusions, and campaign scheduler.
+* Added coupon stacking controls, minimum redeem points, and redeem steps.
+* Added manual approval queue for high redemptions.
+* Added per-order points ledger and analytics dashboard.
+* Added customer wallet endpoint with history filters.
+* Added abuse protection rate limits and suspicious activity flags.
+* Improved redemption and refund flows for product-specific points.
+
+2025-06-05 - version 1.0.0
+* Initial release.

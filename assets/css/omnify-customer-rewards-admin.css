@@ -1,0 +1,1684 @@
+:root {
+  --rm-admin-bg: #f2f5f8;
+  --rm-admin-surface: #ffffff;
+  --rm-admin-surface-soft: #f8fafc;
+  --rm-admin-border: #d9e2ea;
+  --rm-admin-border-strong: #bfd0dc;
+  --rm-admin-text: #17212b;
+  --rm-admin-muted: #61707f;
+  --rm-admin-primary: #1f6f68;
+  --rm-admin-primary-dark: #17324d;
+  --rm-admin-accent: #c88719;
+  --rm-admin-good: #178a4c;
+  --rm-admin-bad: #b73535;
+  --rm-admin-shadow: 0 18px 40px rgba(23, 33, 43, 0.08);
+  --rm-admin-shadow-soft: 0 8px 22px rgba(23, 33, 43, 0.06);
+  --rm-admin-field-height: 46px;
+  --rm-admin-compact-control-width: 260px;
+  --rm-admin-radius: 22px;
+  --rm-admin-button-radius: 16px;
+  --rm-admin-gradient-angle: 135deg;
+  --rm-admin-container-width: 1240px;
+  --rm-admin-accent-strip-width: 4px;
+}
+
+.toplevel_page_rewardmate #wpcontent,
+body[class*="rewardmate_page_rewardmate-"] #wpcontent {
+  background:
+    linear-gradient(180deg, rgba(31, 111, 104, 0.08), rgba(31, 111, 104, 0) 260px),
+    var(--rm-admin-bg);
+}
+
+.toplevel_page_rewardmate .wrap,
+body[class*="rewardmate_page_rewardmate-"] .wrap {
+  max-width: var(--rm-admin-container-width);
+}
+
+.rewardmate-admin-shell {
+  max-width: var(--rm-admin-container-width);
+  margin: 20px 0 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: var(--rm-admin-radius);
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.22), transparent 24%),
+    linear-gradient(var(--rm-admin-gradient-angle), var(--rm-admin-primary-dark) 0%, var(--rm-admin-primary) 58%, var(--rm-admin-accent) 100%);
+  box-shadow: var(--rm-admin-shadow);
+}
+
+.rewardmate-admin-brandbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 28px;
+  color: #fff;
+}
+
+body.toplevel_page_rewardmate #wpbody-content > .notice:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate #wpbody-content > .updated:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate #wpbody-content > .error:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate #wpbody-content > .update-nag,
+body.toplevel_page_rewardmate #wpbody-content > [class*="notice"]:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate .wrap > .notice:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate .wrap > .updated:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate .wrap > .error:not(.rewardmate-admin-notice),
+body.toplevel_page_rewardmate .wrap > .update-nag,
+body.toplevel_page_rewardmate .wrap > [class*="notice"]:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] #wpbody-content > .notice:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] #wpbody-content > .updated:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] #wpbody-content > .error:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] #wpbody-content > .update-nag,
+body[class*="rewardmate_page_rewardmate-"] #wpbody-content > [class*="notice"]:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] .wrap > .notice:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] .wrap > .updated:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] .wrap > .error:not(.rewardmate-admin-notice),
+body[class*="rewardmate_page_rewardmate-"] .wrap > .update-nag,
+body[class*="rewardmate_page_rewardmate-"] .wrap > [class*="notice"]:not(.rewardmate-admin-notice),
+.rewardmate-admin-shell .notice:not(.rewardmate-admin-notice),
+.rewardmate-admin-shell .updated:not(.rewardmate-admin-notice),
+.rewardmate-admin-shell .error:not(.rewardmate-admin-notice),
+.rewardmate-admin-shell .update-nag,
+.rewardmate-admin-shell [class*="notice"]:not(.rewardmate-admin-notice),
+.rewardmate-admin-shell [id*="notice"]:not(.rewardmate-admin-notice) {
+  display: none !important;
+}
+
+.rewardmate-admin-notice {
+  max-width: var(--rm-admin-container-width);
+  margin: 16px 0 0;
+  border-radius: 12px;
+  border-left-width: 4px;
+  box-shadow: var(--rm-admin-shadow-soft);
+}
+
+.rewardmate-admin-brandmark {
+  display: grid;
+  flex: 0 0 auto;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--rm-admin-radius);
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.rewardmate-admin-brandmark .dashicons {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+}
+
+.rewardmate-admin-brandcopy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.rewardmate-admin-brandcopy > span {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-admin-brandcopy h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.rewardmate-admin-brandcopy p {
+  max-width: 720px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 15px;
+}
+
+.rewardmate-admin-primary-action,
+.rewardmate-admin-shell .button.button-primary {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  min-height: var(--rm-admin-field-height);
+  padding: 0 18px;
+  border: 0;
+  border-radius: var(--rm-admin-button-radius);
+  background: #fff;
+  color: var(--rm-admin-primary-dark);
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.rewardmate-admin-primary-action:hover,
+.rewardmate-admin-primary-action:focus {
+  color: var(--rm-admin-primary-dark);
+  transform: translateY(-1px);
+}
+
+.rewardmate-admin-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 0 20px 18px;
+}
+
+.rewardmate-admin-tabs a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--rm-admin-button-radius);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.rewardmate-admin-tabs a:hover,
+.rewardmate-admin-tabs a:focus,
+.rewardmate-admin-tabs a.is-active {
+  background: #fff;
+  color: var(--rm-admin-primary-dark);
+}
+
+.rewardmate-settings-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: var(--rm-admin-container-width);
+  margin: 18px 0 0;
+  padding: 8px;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: var(--rm-admin-shadow-soft);
+}
+
+.rewardmate-settings-tabs a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  color: var(--rm-admin-muted);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.rewardmate-settings-tabs a:hover,
+.rewardmate-settings-tabs a:focus,
+.rewardmate-settings-tabs a.is-active {
+  background: var(--rm-admin-primary);
+  color: #fff;
+}
+
+.rewardmate-settings-panel {
+  max-width: var(--rm-admin-container-width);
+  margin-top: 14px;
+}
+
+.rewardmate-admin-card,
+.rewardmate-admin-panel,
+.rewardmate-admin-kpi {
+  background: var(--rm-admin-surface);
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  box-shadow: var(--rm-admin-shadow-soft);
+}
+
+.rewardmate-admin-card {
+  max-width: var(--rm-admin-container-width);
+  padding: 22px;
+  margin-top: 16px;
+}
+
+.rewardmate-admin-card h2,
+.rewardmate-admin-panel h2 {
+  margin: 0;
+  color: var(--rm-admin-text);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.rewardmate-admin-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  max-width: var(--rm-admin-container-width);
+  margin-top: 18px;
+}
+
+.rewardmate-admin-title-row h1 {
+  margin: 0;
+}
+
+.rewardmate-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.rewardmate-admin-field-wide {
+  grid-column: 1 / -1;
+}
+
+.rewardmate-admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.rewardmate-admin-field label {
+  color: var(--rm-admin-text);
+  font-weight: 700;
+}
+
+.rewardmate-admin-field input,
+.rewardmate-admin-field select,
+.rewardmate-admin-field textarea,
+.rewardmate-tool-form input,
+.rewardmate-tool-form select,
+.rewardmate-admin-filters input,
+.rewardmate-admin-filters select,
+.rewardmate-profile-fields input,
+.rewardmate_page_rewardmate-settings input[type="text"],
+.rewardmate_page_rewardmate-settings input[type="number"],
+.rewardmate_page_rewardmate-settings input[type="color"],
+.rewardmate_page_rewardmate-settings select,
+.rewardmate_page_rewardmate-settings textarea {
+  width: 100%;
+  min-height: var(--rm-admin-field-height);
+  box-sizing: border-box;
+  border-color: var(--rm-admin-border-strong);
+  border-radius: var(--rm-admin-button-radius);
+  background: #fff;
+  box-shadow: none;
+}
+
+.rewardmate-admin-field input:focus,
+.rewardmate-admin-field select:focus,
+.rewardmate-admin-field textarea:focus,
+.rewardmate-tool-form input:focus,
+.rewardmate-tool-form select:focus,
+.rewardmate-admin-filters input:focus,
+.rewardmate-admin-filters select:focus,
+.rewardmate-profile-fields input:focus,
+.rewardmate_page_rewardmate-settings input:focus,
+.rewardmate_page_rewardmate-settings select:focus,
+.rewardmate_page_rewardmate-settings textarea:focus {
+  border-color: var(--rm-admin-primary);
+  box-shadow: 0 0 0 2px rgba(31, 111, 104, 0.15);
+}
+
+.rewardmate_page_rewardmate-settings input::placeholder,
+.rewardmate_page_rewardmate-settings textarea::placeholder {
+  color: #8b9baa;
+  opacity: 0.88;
+}
+
+.rewardmate-profile-fields input[type="date"] {
+  max-width: 260px;
+}
+
+.rewardmate-admin-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.rewardmate-tool-form {
+  display: grid;
+  gap: 14px;
+}
+
+.rewardmate-tool-form > .button {
+  justify-self: start;
+  min-width: 180px;
+}
+
+.rewardmate-filter-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.rewardmate-filter-card-head p {
+  margin: 6px 0 0;
+  color: var(--rm-admin-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.rewardmate-filter-primary,
+.rewardmate-filter-advanced {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rewardmate-filter-primary-inline,
+.rewardmate-filter-advanced-inline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: end;
+  gap: 14px;
+}
+
+.rewardmate-admin-filters.rewardmate-filterable-form {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.rewardmate-filterable-form .rewardmate-filter-primary-inline {
+  grid-template-columns: repeat(4, minmax(180px, 1fr)) minmax(280px, auto);
+}
+
+.rewardmate-filterable-form .rewardmate-filter-advanced-inline {
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+
+.rewardmate-bulk-primary-grid {
+  grid-template-columns: minmax(280px, 0.72fr) minmax(360px, 1fr);
+  align-items: start;
+}
+
+.rewardmate-bulk-users {
+  grid-row: span 3;
+}
+
+.rewardmate-bulk-adjustment-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.rewardmate-bulk-adjustment-fields .rewardmate-admin-field-wide {
+  grid-column: 1 / -1;
+}
+
+.points-adjustment-form .rewardmate-admin-grid {
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  align-items: end;
+}
+
+.points-adjustment-form .rewardmate-admin-field label {
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.points-adjustment-form .rewardmate-admin-field label strong {
+  font: inherit;
+}
+
+.points-adjustment-form .rewardmate-admin-field:last-child {
+  grid-column: span 2;
+}
+
+.points-adjustment-form .rewardmate-admin-actions {
+  margin-top: 20px;
+}
+
+.rewardmate-filter-advanced.rewardmate-admin-grid {
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+}
+
+.rewardmate-filter-advanced {
+  margin-top: 2px;
+  padding: 18px;
+  border: 1px solid rgba(31, 111, 104, 0.14);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(31, 111, 104, 0.035), rgba(255, 255, 255, 0.9));
+  overflow: hidden;
+}
+
+.rewardmate-filter-advanced.is-hidden {
+  display: none;
+}
+
+.rewardmate-tool-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.rewardmate-tool-form small {
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.rewardmate-tool-form label span {
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.rewardmate-tool-form input[type="file"] {
+  padding: 10px;
+  border: 1px dashed var(--rm-admin-border-strong);
+  background: var(--rm-admin-surface-soft);
+}
+
+.rewardmate-user-multi-select {
+  width: 100%;
+  max-width: 100%;
+  min-height: 124px;
+}
+
+.rewardmate-user-multi-select option {
+  padding: 7px 9px;
+}
+
+.rewardmate-admin-filters select[name="rewardmate_user_id"],
+.rewardmate-admin-filters select[name="rewardmate_product_id"] {
+  max-width: none;
+}
+
+.rewardmate-admin-help {
+  margin: 0;
+  color: var(--rm-admin-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.rewardmate-filter-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.rewardmate-filter-actions-inline {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 10px;
+  align-self: end;
+  min-height: var(--rm-admin-field-height);
+}
+
+.rewardmate-filter-actions-inline .button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.rewardmate-more-filters-button {
+  color: var(--rm-admin-primary-dark);
+}
+
+.rewardmate-api-kpis .rewardmate-admin-kpi small {
+  overflow-wrap: anywhere;
+}
+
+.rewardmate-api-card,
+.rewardmate-api-code-panel,
+.rewardmate-api-docs {
+  overflow: hidden;
+}
+
+.rewardmate-api-key-box {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+  padding: 14px;
+  border: 1px dashed rgba(31, 111, 104, 0.35);
+  border-radius: 14px;
+  background: rgba(31, 111, 104, 0.06);
+}
+
+.rewardmate-api-key-box span,
+.rewardmate-api-webhook-grid strong {
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-api-key-box code,
+.rewardmate-api-webhook-grid code {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  padding: 10px 12px;
+  border-radius: var(--rm-admin-button-radius);
+  background: #fff;
+  color: var(--rm-admin-primary-dark);
+  font-size: 12px;
+}
+
+.rewardmate-api-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rewardmate-api-steps {
+  margin: 14px 0 0 20px;
+  color: var(--rm-admin-text);
+  line-height: 1.7;
+}
+
+.rewardmate-api-code-panel pre {
+  max-width: 100%;
+  overflow: auto;
+  margin: 14px 0 0;
+  padding: 16px;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: 14px;
+  background: #0f1f2d;
+  color: #eaf2f7;
+}
+
+.rewardmate-api-code-panel code {
+  color: inherit;
+  white-space: pre;
+}
+
+.rewardmate-api-webhook-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.rewardmate-admin-empty {
+  margin-top: 14px;
+  color: var(--rm-admin-muted);
+}
+
+.rewardmate-admin-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.rewardmate-admin-dashboard-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 130px;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  background:
+    linear-gradient(145deg, #fff 0%, #f8fafc 100%);
+  color: var(--rm-admin-text);
+  text-decoration: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.rewardmate-admin-dashboard-link::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -26px;
+  width: 86px;
+  height: 86px;
+  border-radius: var(--rm-admin-radius);
+  background: rgba(31, 111, 104, 0.08);
+  transform: rotate(18deg);
+}
+
+.rewardmate-admin-dashboard-link:hover,
+.rewardmate-admin-dashboard-link:focus {
+  border-color: var(--rm-admin-primary);
+  box-shadow: 0 16px 32px rgba(31, 111, 104, 0.14);
+  color: var(--rm-admin-text);
+  transform: translateY(-2px);
+}
+
+.rewardmate-admin-dashboard-link strong {
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+}
+
+.rewardmate-admin-dashboard-link span {
+  position: relative;
+  z-index: 1;
+  color: var(--rm-admin-muted);
+  line-height: 1.5;
+}
+
+.rewardmate-admin-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  gap: 16px;
+  max-width: var(--rm-admin-container-width);
+  margin: 16px 0;
+}
+
+.rewardmate-admin-kpi {
+  position: relative;
+  min-height: 118px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.rewardmate-admin-kpi::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 12px;
+  height: 36px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--rm-admin-primary), var(--rm-admin-accent));
+  opacity: 0.28;
+}
+
+.rewardmate-admin-kpi > span,
+.rewardmate-admin-kpi > small {
+  display: block;
+  color: var(--rm-admin-muted);
+}
+
+.rewardmate-admin-kpi > span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-admin-kpi strong {
+  display: block;
+  margin: 10px 0 6px;
+  color: var(--rm-admin-text);
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.rewardmate-admin-kpi strong .woocommerce-Price-amount,
+.rewardmate-admin-kpi strong .woocommerce-Price-currencySymbol {
+  display: inline;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.rewardmate-admin-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.85fr);
+  align-items: start;
+  gap: 18px;
+  max-width: var(--rm-admin-container-width);
+  margin: 18px 0;
+}
+
+.rewardmate-admin-panel {
+  min-width: 0;
+  padding: 20px;
+}
+
+.rewardmate-admin-panel-wide {
+  min-height: 400px;
+}
+
+.rewardmate-admin-panel canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-top: 14px;
+  border: 1px solid #e8eef3;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.rewardmate-admin-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rewardmate-admin-panel-head span {
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rewardmate-admin-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+  color: var(--rm-admin-muted);
+}
+
+.rewardmate-admin-chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rewardmate-admin-chart-legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.rewardmate-admin-chart-legend .is-issued {
+  background: var(--rm-admin-primary);
+}
+
+.rewardmate-admin-chart-legend .is-redeemed {
+  background: #b73535;
+}
+
+.rewardmate-admin-chart-legend .is-refunded {
+  background: var(--rm-admin-accent);
+}
+
+.rewardmate-admin-filter-card {
+  padding: 16px;
+  background: #fff;
+}
+
+.rewardmate-admin-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: end;
+  gap: 14px;
+}
+
+.rewardmate-admin-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rewardmate-admin-filters label span {
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.rewardmate-admin-filters .button,
+.rewardmate-admin-actions .button,
+.rewardmate-tool-form .button,
+.rewardmate-campaign-actions .button,
+.rewardmate-tier-actions .button,
+.rewardmate-multiplier-actions .button,
+.rewardmate-admin-table .button,
+.rewardmate_page_rewardmate-settings p.submit .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--rm-admin-field-height);
+  box-sizing: border-box;
+  padding: 0 18px;
+  border: 1px solid var(--rm-admin-border-strong);
+  border-radius: var(--rm-admin-button-radius);
+  background: #fff;
+  color: var(--rm-admin-primary-dark);
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: none;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.rewardmate-admin-table-card {
+  overflow-x: auto;
+}
+
+.rewardmate-admin-table {
+  overflow: hidden;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: 14px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+}
+
+.rewardmate-admin-table th {
+  padding: 13px 14px;
+  border-bottom-color: var(--rm-admin-border);
+  background: var(--rm-admin-surface-soft);
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rewardmate-admin-table td {
+  padding: 14px;
+  vertical-align: middle;
+}
+
+.rewardmate-admin-table tbody tr:hover td {
+  background: #fbfdff;
+}
+
+.rewardmate-admin-table small {
+  display: block;
+  margin-top: 4px;
+  color: var(--rm-admin-muted);
+}
+
+.rewardmate-admin-user-cell a {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.rewardmate-admin-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 10px;
+  border: 1px solid rgba(31, 111, 104, 0.14);
+  border-radius: 999px;
+  background: rgba(31, 111, 104, 0.08);
+  color: var(--rm-admin-primary-dark);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.rewardmate-admin-points-plus {
+  color: var(--rm-admin-good);
+  font-weight: 800;
+}
+
+.rewardmate-admin-points-minus {
+  color: var(--rm-admin-bad);
+  font-weight: 800;
+}
+
+.rewardmate_page_rewardmate-settings .form-table {
+  max-width: var(--rm-admin-container-width);
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  box-shadow: var(--rm-admin-shadow-soft);
+}
+
+.rewardmate_page_rewardmate-settings .form-table th {
+  width: 240px;
+  padding: 18px 20px;
+  color: var(--rm-admin-text);
+  font-size: 14px;
+}
+
+.rewardmate_page_rewardmate-settings .form-table td {
+  padding: 18px 20px;
+}
+
+.rewardmate_page_rewardmate-settings .form-table tr {
+  transition: background 160ms ease;
+}
+
+.rewardmate_page_rewardmate-settings .form-table tr:hover {
+  background: #fbfdff;
+}
+
+.rewardmate_page_rewardmate-settings .form-table .description {
+  max-width: 720px;
+  color: var(--rm-admin-muted);
+  line-height: 1.55;
+}
+
+.rewardmate_page_rewardmate-settings .wp-picker-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--rm-admin-field-height);
+}
+
+.rewardmate_page_rewardmate-settings .wp-picker-container .wp-color-result.button {
+  min-height: var(--rm-admin-field-height);
+  margin: 0;
+  border-color: var(--rm-admin-border-strong);
+  border-radius: var(--rm-admin-button-radius);
+  box-shadow: none;
+}
+
+.rewardmate_page_rewardmate-settings .wp-picker-container .wp-color-result-text {
+  min-height: calc(var(--rm-admin-field-height) - 2px);
+  padding: 0 14px;
+  border-radius: 0 var(--rm-admin-button-radius) var(--rm-admin-button-radius) 0;
+  line-height: calc(var(--rm-admin-field-height) - 2px);
+}
+
+.rewardmate_page_rewardmate-settings .wp-picker-container input.wp-color-picker {
+  width: 110px !important;
+  min-height: 36px;
+}
+
+.rewardmate_page_rewardmate-settings .wp-picker-container .wp-picker-clear {
+  min-height: 36px;
+  border-color: var(--rm-admin-border-strong);
+  border-radius: var(--rm-admin-button-radius);
+}
+
+.rewardmate_page_rewardmate-settings textarea {
+  width: min(720px, 100%);
+  min-height: 120px;
+  padding: 12px 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.rewardmate_page_rewardmate-settings h2 {
+  max-width: var(--rm-admin-container-width);
+  margin: 30px 0 0;
+  color: var(--rm-admin-primary-dark);
+  font-size: 18px;
+}
+
+.rewardmate-number-control {
+  display: inline-flex;
+  align-items: stretch;
+  width: min(100%, var(--rm-admin-compact-control-width));
+  min-height: var(--rm-admin-field-height);
+  overflow: hidden;
+  border: 1px solid var(--rm-admin-border-strong);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.rewardmate-number-control input[type="number"] {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  min-height: calc(var(--rm-admin-field-height) - 2px);
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+}
+
+.rewardmate-number-control input[type="number"]:focus {
+  box-shadow: none;
+}
+
+.rewardmate-number-step {
+  flex: 0 0 54px;
+  width: 54px;
+  border: 0;
+  background: var(--rm-admin-surface-soft);
+  color: var(--rm-admin-primary-dark);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.rewardmate-number-step:hover,
+.rewardmate-number-step:focus {
+  background: rgba(31, 111, 104, 0.12);
+}
+
+.rewardmate-enhanced-select {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rewardmate-choice-control {
+  display: inline-flex;
+  gap: 4px;
+  width: min(100%, var(--rm-admin-compact-control-width));
+  min-height: var(--rm-admin-field-height);
+  padding: 4px;
+  border: 1px solid var(--rm-admin-border-strong);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.rewardmate-choice-control button {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: calc(var(--rm-admin-field-height) - 10px);
+  border: 0;
+  border-radius: var(--rm-admin-button-radius);
+  background: transparent;
+  color: var(--rm-admin-muted);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.rewardmate-choice-control button:hover,
+.rewardmate-choice-control button:focus {
+  color: var(--rm-admin-primary-dark);
+}
+
+.rewardmate-choice-control button.is-active {
+  background: var(--rm-admin-primary);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(31, 111, 104, 0.2);
+}
+
+.rewardmate-textarea-meta {
+  margin-top: 8px;
+  color: var(--rm-admin-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rewardmate-campaign-source,
+.rewardmate-tier-source,
+.rewardmate-multiplier-source,
+.rewardmate-id-source {
+  display: none;
+  margin-top: 14px;
+}
+
+.rewardmate-campaign-source.is-visible,
+.rewardmate-tier-source.is-visible,
+.rewardmate-multiplier-source.is-visible,
+.rewardmate-id-source.is-visible {
+  display: block;
+}
+
+.rewardmate-campaign-builder,
+.rewardmate-tier-builder,
+.rewardmate-multiplier-builder,
+.rewardmate-id-selector {
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
+  padding: 18px;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(200, 135, 25, 0.09), transparent 28%),
+    linear-gradient(145deg, #ffffff, #f8fbfc);
+  box-shadow: var(--rm-admin-shadow-soft);
+}
+
+.rewardmate-campaign-builder-head,
+.rewardmate-tier-builder-head,
+.rewardmate-multiplier-builder-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.rewardmate-campaign-builder-head p,
+.rewardmate-tier-builder-head p,
+.rewardmate-multiplier-builder-head p {
+  max-width: 660px;
+}
+
+.rewardmate-campaign-builder-head strong,
+.rewardmate-tier-builder-head strong,
+.rewardmate-multiplier-builder-head strong,
+.rewardmate-id-selector strong {
+  color: var(--rm-admin-primary-dark);
+  font-size: 16px;
+}
+
+.rewardmate-campaign-builder-head p,
+.rewardmate-campaign-note,
+.rewardmate-tier-builder-head p,
+.rewardmate-tier-note,
+.rewardmate-multiplier-builder-head p,
+.rewardmate-multiplier-note,
+.rewardmate-id-selector p {
+  margin: 4px 0 0;
+  color: var(--rm-admin-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.rewardmate-campaign-rows,
+.rewardmate-tier-rows,
+.rewardmate-multiplier-rows {
+  display: grid;
+  gap: 12px;
+}
+
+.rewardmate-campaign-row,
+.rewardmate-tier-row,
+.rewardmate-multiplier-row {
+  padding: 14px;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.rewardmate-campaign-row-head,
+.rewardmate-tier-row-head,
+.rewardmate-multiplier-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rewardmate-campaign-row-head strong,
+.rewardmate-tier-row-head strong,
+.rewardmate-multiplier-row-head strong {
+  color: var(--rm-admin-text);
+}
+
+.rewardmate-campaign-row-meta,
+.rewardmate-tier-row-meta,
+.rewardmate-multiplier-row-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rewardmate-campaign-status,
+.rewardmate-tier-status,
+.rewardmate-multiplier-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: var(--rm-admin-surface-soft);
+  color: var(--rm-admin-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-campaign-status.is-success,
+.rewardmate-tier-status.is-success,
+.rewardmate-multiplier-status.is-success {
+  background: rgba(23, 138, 76, 0.12);
+  color: var(--rm-admin-good);
+}
+
+.rewardmate-campaign-status.is-info,
+.rewardmate-tier-status.is-info,
+.rewardmate-multiplier-status.is-info {
+  background: rgba(31, 111, 104, 0.12);
+  color: var(--rm-admin-primary);
+}
+
+.rewardmate-campaign-status.is-warning {
+  background: rgba(200, 135, 25, 0.14);
+  color: var(--rm-admin-accent);
+}
+
+.rewardmate-campaign-status.is-error {
+  background: rgba(183, 53, 53, 0.12);
+  color: var(--rm-admin-bad);
+}
+
+.rewardmate-campaign-status.is-muted {
+  background: #eef2f5;
+  color: var(--rm-admin-muted);
+}
+
+.rewardmate-campaign-remove,
+.rewardmate-tier-remove,
+.rewardmate-multiplier-remove {
+  min-height: 30px;
+  color: var(--rm-admin-bad);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.rewardmate-campaign-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.rewardmate-campaign-fields label,
+.rewardmate-tier-fields label,
+.rewardmate-multiplier-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--rm-admin-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.rewardmate-campaign-fields input,
+.rewardmate-campaign-fields select,
+.rewardmate-tier-fields input,
+.rewardmate-multiplier-fields input,
+.rewardmate-multiplier-fields select,
+.rewardmate-id-selector select {
+  width: 100%;
+  min-height: var(--rm-admin-field-height);
+  border-color: var(--rm-admin-border-strong);
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: none;
+  font-size: 13px;
+}
+
+.rewardmate-campaign-fields .rewardmate-entity-select[multiple],
+.rewardmate-id-selector .rewardmate-entity-select[multiple] {
+  height: 132px;
+  min-height: 132px;
+  overflow: auto;
+}
+
+.rewardmate-campaign-fields input:focus,
+.rewardmate-campaign-fields select:focus,
+.rewardmate-tier-fields input:focus,
+.rewardmate-multiplier-fields input:focus,
+.rewardmate-multiplier-fields select:focus,
+.rewardmate-id-selector select:focus {
+  border-color: var(--rm-admin-primary);
+  box-shadow: 0 0 0 2px rgba(31, 111, 104, 0.15);
+  outline: 0;
+}
+
+.rewardmate-campaign-actions,
+.rewardmate-tier-actions,
+.rewardmate-multiplier-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.rewardmate-campaign-actions .button,
+.rewardmate-tier-actions .button,
+.rewardmate-multiplier-actions .button {
+  border-color: var(--rm-admin-border-strong);
+}
+
+.rewardmate-campaign-add,
+.rewardmate-tier-add,
+.rewardmate-multiplier-add {
+  color: var(--rm-admin-primary-dark);
+}
+
+.rewardmate-multiplier-fields {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.45fr) minmax(180px, 0.55fr);
+  gap: 10px;
+}
+
+.rewardmate-multiplier-fields .rewardmate-number-control,
+.rewardmate-campaign-fields .rewardmate-number-control {
+  width: 100%;
+}
+
+.rewardmate-entity-select[multiple] {
+  min-height: 122px;
+  padding: 8px;
+}
+
+.rewardmate-entity-select option {
+  padding: 7px 9px;
+}
+
+.rewardmate-id-selector {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+  max-width: 720px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(31, 111, 104, 0.08), transparent 28%),
+    linear-gradient(145deg, #ffffff, #f8fbfc);
+}
+
+.rewardmate-tier-source {
+  display: none;
+  margin-top: 14px;
+}
+
+.rewardmate-tier-source.is-visible {
+  display: block;
+}
+
+.rewardmate-tier-builder {
+  width: min(940px, 100%);
+  padding: 18px;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(31, 111, 104, 0.1), transparent 30%),
+    linear-gradient(145deg, #ffffff, #f8fbfc);
+  box-shadow: var(--rm-admin-shadow-soft);
+}
+
+.rewardmate-tier-builder-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.rewardmate-tier-builder-head strong {
+  color: var(--rm-admin-primary-dark);
+  font-size: 16px;
+}
+
+.rewardmate-tier-builder-head p,
+.rewardmate-tier-note {
+  margin: 4px 0 0;
+  color: var(--rm-admin-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.rewardmate-tier-rows {
+  display: grid;
+  gap: 12px;
+}
+
+.rewardmate-tier-row {
+  padding: 14px;
+  border: 1px solid var(--rm-admin-border);
+  border-radius: var(--rm-admin-radius);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.rewardmate-tier-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rewardmate-tier-row-head strong {
+  color: var(--rm-admin-text);
+}
+
+.rewardmate-tier-row-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rewardmate-tier-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: var(--rm-admin-surface-soft);
+  color: var(--rm-admin-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rewardmate-tier-status.is-success {
+  background: rgba(23, 138, 76, 0.12);
+  color: var(--rm-admin-good);
+}
+
+.rewardmate-tier-status.is-info {
+  background: rgba(31, 111, 104, 0.12);
+  color: var(--rm-admin-primary);
+}
+
+.rewardmate-tier-status.is-warning {
+  background: rgba(200, 135, 25, 0.14);
+  color: var(--rm-admin-accent);
+}
+
+.rewardmate-tier-remove {
+  min-height: 30px;
+  color: var(--rm-admin-bad);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.rewardmate-tier-fields {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.2fr) repeat(2, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.rewardmate-tier-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--rm-admin-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.rewardmate-tier-fields input {
+  width: 100%;
+  min-height: var(--rm-admin-field-height);
+  border-color: var(--rm-admin-border-strong);
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: none;
+  font-size: 13px;
+}
+
+.rewardmate-tier-fields .rewardmate-number-control {
+  width: 100%;
+}
+
+.rewardmate-tier-fields input:focus {
+  border-color: var(--rm-admin-primary);
+  box-shadow: 0 0 0 2px rgba(31, 111, 104, 0.15);
+  outline: 0;
+}
+
+.rewardmate-tier-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.rewardmate-tier-actions .button {
+  border-color: var(--rm-admin-border-strong);
+}
+
+.rewardmate-tier-add {
+  color: var(--rm-admin-primary-dark);
+}
+
+.rewardmate-tier-builder,
+.rewardmate-campaign-builder,
+.rewardmate-multiplier-builder,
+.rewardmate-id-selector {
+  width: 100%;
+  max-width: 960px;
+  box-sizing: border-box;
+}
+
+.rewardmate_page_rewardmate-settings p.submit .button-primary,
+.rewardmate-admin-filters .button-primary,
+.rewardmate-admin-actions .button-primary,
+.rewardmate-tool-form .button-primary,
+.rewardmate-admin-table .button-primary {
+  border-color: var(--rm-admin-primary);
+  background: var(--rm-admin-primary);
+  color: #fff;
+}
+
+.rewardmate_page_rewardmate-settings p.submit .button:hover,
+.rewardmate_page_rewardmate-settings p.submit .button:focus,
+.rewardmate-admin-filters .button:hover,
+.rewardmate-admin-filters .button:focus,
+.rewardmate-admin-actions .button:hover,
+.rewardmate-admin-actions .button:focus,
+.rewardmate-tool-form .button:hover,
+.rewardmate-tool-form .button:focus,
+.rewardmate-campaign-actions .button:hover,
+.rewardmate-campaign-actions .button:focus,
+.rewardmate-tier-actions .button:hover,
+.rewardmate-tier-actions .button:focus,
+.rewardmate-multiplier-actions .button:hover,
+.rewardmate-multiplier-actions .button:focus,
+.rewardmate-admin-table .button:hover,
+.rewardmate-admin-table .button:focus {
+  border-color: var(--rm-admin-primary);
+  background: rgba(31, 111, 104, 0.08);
+  color: var(--rm-admin-primary-dark);
+  transform: translateY(-1px);
+}
+
+.rewardmate_page_rewardmate-settings p.submit .button-primary:hover,
+.rewardmate_page_rewardmate-settings p.submit .button-primary:focus,
+.rewardmate-admin-filters .button-primary:hover,
+.rewardmate-admin-filters .button-primary:focus,
+.rewardmate-admin-actions .button-primary:hover,
+.rewardmate-admin-actions .button-primary:focus,
+.rewardmate-tool-form .button-primary:hover,
+.rewardmate-tool-form .button-primary:focus,
+.rewardmate-admin-table .button-primary:hover,
+.rewardmate-admin-table .button-primary:focus {
+  border-color: var(--rm-admin-primary-dark);
+  background: var(--rm-admin-primary-dark);
+  color: #fff;
+}
+
+@media (max-width: 1080px) {
+  .rewardmate-admin-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rewardmate-admin-panels,
+  .rewardmate-admin-dashboard-grid,
+  .rewardmate-bulk-primary-grid,
+  .points-adjustment-form .rewardmate-admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .points-adjustment-form .rewardmate-admin-field:last-child {
+    grid-column: auto;
+  }
+
+  .rewardmate-bulk-users {
+    grid-row: auto;
+  }
+
+  .rewardmate-filterable-form .rewardmate-filter-primary-inline,
+  .rewardmate-filterable-form .rewardmate-filter-advanced-inline,
+  .rewardmate-filter-advanced.rewardmate-admin-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 782px) {
+  .rewardmate-admin-brandbar,
+  .rewardmate-admin-title-row,
+  .rewardmate-admin-panel-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rewardmate-admin-brandbar {
+    padding: 22px;
+  }
+
+  .rewardmate-admin-brandcopy h1 {
+    font-size: 26px;
+  }
+
+  .rewardmate-admin-grid,
+  .rewardmate-admin-kpis,
+  .rewardmate-api-webhook-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rewardmate-admin-filters {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .rewardmate-filter-primary-inline,
+  .rewardmate-filter-advanced-inline,
+  .rewardmate-filterable-form .rewardmate-filter-primary-inline,
+  .rewardmate-filterable-form .rewardmate-filter-advanced-inline,
+  .rewardmate-filter-advanced.rewardmate-admin-grid,
+  .rewardmate-bulk-adjustment-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .rewardmate-filter-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .rewardmate-admin-filters label,
+  .rewardmate-admin-filters .button,
+  .rewardmate-filter-actions .button {
+    width: 100%;
+  }
+
+  .rewardmate_page_rewardmate-settings .form-table th,
+  .rewardmate_page_rewardmate-settings .form-table td {
+    display: block;
+    width: auto;
+    padding: 14px 16px;
+  }
+
+  .rewardmate-campaign-builder-head,
+  .rewardmate-campaign-row-head,
+  .rewardmate-tier-builder-head,
+  .rewardmate-tier-row-head,
+  .rewardmate-multiplier-builder-head,
+  .rewardmate-multiplier-row-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rewardmate-campaign-fields,
+  .rewardmate-tier-fields,
+  .rewardmate-multiplier-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .rewardmate-filter-actions-inline {
+    flex-direction: column;
+  }
+}
