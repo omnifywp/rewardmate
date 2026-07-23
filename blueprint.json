@@ -1,0 +1,33 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/admin.php?page=cartflush-settings",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "login": true,
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://downloads.wordpress.org/plugin/omnify-customer-rewards-woocommerce.latest-stable.zip"
+      }
+    },
+    {
+      "step": "activatePlugin",
+      "pluginPath": "woocommerce/woocommerce.php"
+    },
+    {
+      "step": "activatePlugin",
+      "pluginPath": "omnify-customer-rewards-woocommerce/rewardmate.php"
+    }
+  ]
+}
