@@ -1,6 +1,6 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-  "landingPage": "/wp-admin/admin.php?page=cartflush-settings",
+  "landingPage": "/wp-admin/admin.php?page=omnify-customer-rewards",
   "preferredVersions": {
     "php": "8.2",
     "wp": "latest"
