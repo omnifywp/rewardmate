@@ -27,7 +27,7 @@
     },
     {
       "step": "activatePlugin",
-      "pluginPath": "omnify-customer-rewards-woocommerce/rewardmate.php"
+      "pluginPath": "omnify-customer-rewards-woocommerce/omnify-customer-rewards-woocommerce.php"
     }
   ]
 }
