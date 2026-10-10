@@ -17,17 +17,26 @@ class rewardmate_Daily_Checkin {
 
     // Check-In Button on My Account Page
     public function add_checkin_option() {
-        $daily_checkin = get_option('rewardmate_daily_checkin');
+        $daily_checkin = strtolower((string) get_option('rewardmate_daily_checkin', 'no'));
         $user_id = get_current_user_id();
         $last_checkin = get_user_meta($user_id, '_last_checkin_date', true);
         $today = current_time('Y-m-d');
 
-        if ($daily_checkin === 'Yes') {
+        if ($daily_checkin === 'yes') {
             $checkin_points = (int) get_option('rewardmate_points_rewards_checkin_points', 10);
 
             $streak_info = '';
             if (get_option('rewardmate_checkin_streak_enabled', 'no') === 'yes') {
                 $consecutive = (int) get_user_meta($user_id, '_consecutive_checkins', true);
+                $yesterday = function_exists('current_datetime')
+                    ? current_datetime()->modify('-1 day')->format('Y-m-d')
+                    : gmdate('Y-m-d', strtotime('-1 day', (int) current_time('timestamp')));
+
+                // If streak was broken (last check-in was before yesterday and not today), display streak as 0
+                if (!empty($last_checkin) && $last_checkin < $yesterday) {
+                    $consecutive = 0;
+                }
+
                 $streak_days = max(2, absint(get_option('rewardmate_checkin_streak_days', 7)));
                 $streak_bonus = absint(get_option('rewardmate_checkin_streak_bonus', 50));
                 
@@ -68,10 +77,23 @@ class rewardmate_Daily_Checkin {
             wp_die();
         }
 
+        if (strtolower((string) get_option('rewardmate_daily_checkin', 'no')) !== 'yes') {
+            wp_send_json_error(['message' => esc_html__('Daily check-in is currently disabled.', 'omnify-customer-rewards')]);
+            wp_die();
+        }
+
+        $lock_key = 'rewardmate_checkin_lock_' . $user_id;
+        if (get_transient($lock_key)) {
+            wp_send_json_error(['message' => esc_html__('A check-in request is already being processed.', 'omnify-customer-rewards')]);
+            wp_die();
+        }
+        set_transient($lock_key, 1, 15);
+
         $last_checkin = get_user_meta($user_id, '_last_checkin_date', true);
         $today = current_time('Y-m-d');
 
         if (function_exists('rewardmate_allow_action_rate_limited') && !rewardmate_allow_action_rate_limited($user_id, 'checkin')) {
+            delete_transient($lock_key);
             wp_send_json_error(['message' => esc_html__('Too many check-in attempts. Please try again later.', 'omnify-customer-rewards')]);
             wp_die();
         }
@@ -82,7 +104,9 @@ class rewardmate_Daily_Checkin {
             
             // Streak calculation
             $consecutive = (int) get_user_meta($user_id, '_consecutive_checkins', true);
-            $yesterday = date('Y-m-d', strtotime('-1 day', current_time('timestamp')));
+            $yesterday = function_exists('current_datetime')
+                ? current_datetime()->modify('-1 day')->format('Y-m-d')
+                : gmdate('Y-m-d', strtotime('-1 day', (int) current_time('timestamp')));
             
             if (empty($last_checkin) || $last_checkin < $yesterday) {
                 $consecutive = 1;
@@ -109,6 +133,7 @@ class rewardmate_Daily_Checkin {
             update_user_meta($user_id, '_user_points', $new_points);
             update_user_meta($user_id, '_last_checkin_date', $today);
             update_user_meta($user_id, '_consecutive_checkins', $consecutive);
+            delete_transient($lock_key);
 
             // Log the points history
             if (function_exists('rewardmate_log_point_history')) {
@@ -144,6 +169,7 @@ class rewardmate_Daily_Checkin {
                 'message' => $msg,
             ]);
         } else {
+            delete_transient($lock_key);
             wp_send_json_error(['message' => __('You have already checked in today!', 'omnify-customer-rewards')]);
         }
 

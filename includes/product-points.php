@@ -43,6 +43,12 @@ function rewardmate_calculate_earnable_points(int $product_id, float $price, int
     $multiplier = 1.0;
     if (function_exists('rewardmate_get_item_multiplier_data')) {
         $multiplier_data = rewardmate_get_item_multiplier_data($product_id, $user_id);
+        if (empty($multiplier_data['multiplier'])) {
+            $parent_id = wp_get_post_parent_id($product_id);
+            if ($parent_id > 0) {
+                $multiplier_data = rewardmate_get_item_multiplier_data($parent_id, $user_id);
+            }
+        }
         $multiplier = isset($multiplier_data['multiplier']) ? max(0.0, (float) $multiplier_data['multiplier']) : 1.0;
     }
 

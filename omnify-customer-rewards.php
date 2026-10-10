@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: RewardMate - Points & Rewards for WooCommerce
-Description: A plugin that adds reward points and coin functionality to WooCommerce.
-Version: 1.0.0
+Plugin Name: RewardMate
+Description: Loyalty rewards, points, and coin functionality for WooCommerce — earn, redeem, check-in, and spin-to-win.
+Version: 1.1.0
 WC requires at least: 8.0
-WC tested up to: 10.5.2
+WC tested up to: 10.9.4
 Author: Omnify WP
 Author URI: https://omnifywp.com
 Text Domain: omnify-customer-rewards
@@ -21,11 +21,82 @@ if (!defined('MY_PLUGIN_PATH')) {
 }
 
 if (!defined('REWARDMATE_VERSION')) {
-    define('REWARDMATE_VERSION', '1.4.0');
+    define('REWARDMATE_VERSION', '1.1.0');
 }
 
 if (!defined('REWARDMATE_EDITION')) {
     define('REWARDMATE_EDITION', 'free');
+}
+
+/**
+ * Freemius SDK helper (free edition).
+ *
+ * Must live in the main plugin file so Freemius can resolve the plugin path.
+ *
+ * @return Freemius|false
+ */
+if (!function_exists('ocrp_fs')) {
+    // Create a helper function for easy SDK access.
+    function ocrp_fs() {
+        global $ocrp_fs;
+
+        if (!isset($ocrp_fs)) {
+            $freemius_start = dirname(__FILE__) . '/vendor/freemius/start.php';
+            if (!file_exists($freemius_start)) {
+                $ocrp_fs = false;
+                return $ocrp_fs;
+            }
+
+            // Include Freemius SDK.
+            require_once $freemius_start;
+
+            $ocrp_fs = fs_dynamic_init(array(
+                'id'                  => '35573',
+                'slug'                => 'omnify-customers-reward-pro',
+                'premium_slug'        => 'omnify-customers-reward-pro',
+                'type'                => 'plugin',
+                'public_key'          => 'pk_c48d3eb93f8eee53da8c10848016a',
+                // Free package ships with is_premium => false.
+                'is_premium'          => false,
+                'premium_suffix'      => 'Pro',
+                // If your plugin is a serviceware, set this option to false.
+                'has_premium_version' => true,
+                'has_addons'          => false,
+                'has_paid_plans'      => true,
+                'is_org_compliant'    => true,
+                'trial'               => array(
+                    'days'               => 7,
+                    'is_require_payment' => false,
+                ),
+                'menu'                => array(
+                    'slug'    => 'rewardmate',
+                    'support' => false,
+                ),
+            ));
+        }
+
+        return $ocrp_fs;
+    }
+
+    // Init Freemius.
+    ocrp_fs();
+    // Signal that SDK was initiated.
+    do_action('ocrp_fs_loaded');
+}
+
+/**
+ * Whether Freemius reports an active premium license or trial.
+ *
+ * @return bool
+ */
+function rewardmate_fs_can_use_premium() {
+    if (!function_exists('ocrp_fs')) {
+        return false;
+    }
+
+    $fs = ocrp_fs();
+
+    return is_object($fs) && method_exists($fs, 'can_use_premium_code') && $fs->can_use_premium_code();
 }
 
 function rewardmate_add_settings_link($links) {
@@ -52,14 +123,40 @@ register_deactivation_hook(__FILE__, 'rewardmate_points_rewards_deactivate');
 require_once MY_PLUGIN_PATH . 'includes/enqueue-javascript.php';
 require_once MY_PLUGIN_PATH . 'includes/enqueue-css.php';
 
-// Check if WooCommerce is active before loading WooCommerce-dependent files
-if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')), true)) {
+// Declare High-Performance Order Storage (HPOS) compatibility.
+add_action('before_woocommerce_init', function() {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
-    add_action('before_woocommerce_init', function() {
-        if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
-            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+/**
+ * Check whether WooCommerce is active (supports single site and network activation).
+ *
+ * @return bool
+ */
+function rewardmate_is_woocommerce_active() {
+    if (class_exists('WooCommerce')) {
+        return true;
+    }
+
+    $active_plugins = (array) apply_filters('active_plugins', (array) get_option('active_plugins', []));
+    if (in_array('woocommerce/woocommerce.php', $active_plugins, true)) {
+        return true;
+    }
+
+    if (is_multisite()) {
+        $sitewide_plugins = (array) get_site_option('active_sitewide_plugins', []);
+        if (isset($sitewide_plugins['woocommerce/woocommerce.php'])) {
+            return true;
         }
-    });
+    }
+
+    return false;
+}
+
+// Check if WooCommerce is active before loading WooCommerce-dependent files
+if (rewardmate_is_woocommerce_active()) {
 
     // Core classes
     require_once MY_PLUGIN_PATH . 'classes/omnify-customer-rewards.php';
@@ -101,8 +198,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     require_once MY_PLUGIN_PATH . 'includes/spin-button.php';
     require_once MY_PLUGIN_PATH . 'includes/spin-update-points.php';
 
+    // Shortcodes
+    require_once MY_PLUGIN_PATH . 'includes/shortcodes.php';
+
 } else {
     add_action('admin_notices', function () {
-        echo '<div class="notice notice-error"><p><strong>' . esc_html__('Omnify Customer Rewards WooCommerce requires WooCommerce to be installed and active.', 'omnify-customer-rewards') . '</strong></p></div>';
+        echo '<div class="notice notice-error"><p><strong>' . esc_html__('RewardMate requires WooCommerce to be installed and active.', 'omnify-customer-rewards') . '</strong></p></div>';
     });
 }

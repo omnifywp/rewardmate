@@ -35,34 +35,40 @@ function rewardmate_update_points_callback() {
         wp_die();
     }
 
-    if ($points <= 0) {
-        if (function_exists('rewardmate_flag_suspicious_activity')) {
-            rewardmate_flag_suspicious_activity($user_id, 'spin', 'invalid_points_payload');
-        }
-        wp_send_json_error(['message' => esc_html__('Invalid points value.', 'omnify-customer-rewards')]);
-        wp_die();
-    }
-
     if (!function_exists('rewardmate_user_can_spin') || !rewardmate_user_can_spin()) {
         wp_send_json_error(['message' => esc_html__('You are not eligible to spin right now.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
     $allowed_values = function_exists('rewardmate_get_spin_wheel_values') ? rewardmate_get_spin_wheel_values() : [];
-    if (empty($allowed_values) || !in_array($points, $allowed_values, true)) {
-        if (function_exists('rewardmate_flag_suspicious_activity')) {
-            rewardmate_flag_suspicious_activity($user_id, 'spin', 'points_not_in_allowed_values');
-        }
-        wp_send_json_error(['message' => esc_html__('Invalid spin result submitted.', 'omnify-customer-rewards')]);
+    if (empty($allowed_values)) {
+        $allowed_values = [10, 20, 30, 50, 10, 25, 40, 100];
+    }
+
+    // Securely determine the winning segment on the server side
+    $winning_key = array_rand($allowed_values);
+    $points = absint($allowed_values[$winning_key]);
+    $segment_index = (int) $winning_key;
+
+    if ($points <= 0) {
+        wp_send_json_error(['message' => esc_html__('Invalid spin configuration.', 'omnify-customer-rewards')]);
         wp_die();
     }
 
     // Update the user's points
     $current_points = (int) get_user_meta($user_id, '_user_points', true);
-    $new_points = $current_points + $points;
-    update_user_meta($user_id, '_user_points', $new_points);
+    if (function_exists('rewardmate_apply_points_change')) {
+        $applied_delta = rewardmate_apply_points_change($user_id, $points, 'earned', 'Spin wheel reward');
+        $new_points = (int) get_user_meta($user_id, '_user_points', true);
+    } else {
+        $new_points = $current_points + $points;
+        update_user_meta($user_id, '_user_points', $new_points);
+        if (function_exists('rewardmate_log_point_history')) {
+            rewardmate_log_point_history($user_id, $points, 'earned', 'Spin wheel reward');
+        }
+    }
 
-    // Mark latest eligible order as used for spin in the same request.
+    // Mark eligible order as used for spin in the same request.
     $spin_order_id = 0;
     if (function_exists('rewardmate_get_latest_completed_order_for_spin')) {
         $latest_order = rewardmate_get_latest_completed_order_for_spin($user_id);
@@ -72,14 +78,14 @@ function rewardmate_update_points_callback() {
         }
     }
 
-    if (function_exists('rewardmate_log_point_history')) {
-        rewardmate_log_point_history($user_id, $points, 'earned', 'Spin wheel reward');
-    }
-
     if ($spin_order_id > 0 && function_exists('rewardmate_add_order_ledger_entry')) {
         rewardmate_add_order_ledger_entry($spin_order_id, 'spin_reward', $points, 'Spin wheel reward', ['user_id' => $user_id]);
     }
 
-    wp_send_json_success(['new_points' => $new_points, 'points_won' => $points]);
+    wp_send_json_success([
+        'new_points'    => $new_points,
+        'points_won'    => $points,
+        'segment_index' => $segment_index,
+    ]);
     wp_die();
 }

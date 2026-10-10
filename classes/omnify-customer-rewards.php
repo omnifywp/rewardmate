@@ -1,6 +1,6 @@
 <?php
 /**
- * Omnify Customer Rewards Class
+ * RewardMate Class
  *
  * @since 1.0.0
  */
@@ -32,9 +32,70 @@ class rewardmate_Points_Rewards {
         add_action('woocommerce_order_status_failed', [$this, 'release_reserved_points_for_order'], 10, 1);
         add_action('woocommerce_order_status_cancelled', [$this, 'release_reserved_points_for_order'], 10, 1);
         add_action('woocommerce_order_status_refunded', [$this, 'release_reserved_points_for_order'], 10, 1);
+        add_action('woocommerce_order_status_cancelled', [$this, 'restore_redeemed_points_on_refund'], 11, 1);
+        add_action('woocommerce_order_status_refunded', [$this, 'restore_redeemed_points_on_refund'], 11, 1);
         add_action('woocommerce_account_dashboard', [$this, 'display_points_on_account']);
-        add_action('woocommerce_review_order_before_payment', [$this, 'display_points_on_account']);
         add_action('wp_ajax_rewardmate_set_redeem_points', [$this, 'set_redeem_points_ajax']);
+
+        // Register wallet endpoint and tab for all editions
+        add_action('init', [$this, 'register_wallet_endpoint']);
+        add_filter('woocommerce_account_menu_items', [$this, 'add_wallet_menu_item'], 20);
+        add_action('woocommerce_account_rewardmate-wallet_endpoint', [$this, 'render_wallet_tab']);
+    }
+
+    /**
+     * Register wallet rewrite endpoint.
+     */
+    public function register_wallet_endpoint() {
+        if (function_exists('add_rewrite_endpoint')) {
+            add_rewrite_endpoint('rewardmate-wallet', EP_ROOT | EP_PAGES);
+        }
+    }
+
+    /**
+     * Add wallet menu tab to WooCommerce My Account navigation.
+     *
+     * @param array $items Account menu items.
+     * @return array
+     */
+    public function add_wallet_menu_item($items) {
+        if (isset($items['rewardmate-wallet'])) {
+            return $items;
+        }
+
+        $logout = $items['customer-logout'] ?? null;
+        if ($logout !== null) {
+            unset($items['customer-logout']);
+        }
+
+        $items['rewardmate-wallet'] = __('Points Wallet', 'omnify-customer-rewards');
+
+        if ($logout !== null) {
+            $items['customer-logout'] = $logout;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Render wallet tab content in My Account if Pro class is not handling it.
+     */
+    public function render_wallet_tab() {
+        if (class_exists('Omnify_Customer_Rewards_Advanced_Features')) {
+            return;
+        }
+
+        $user_id = get_current_user_id();
+        if ($user_id <= 0) {
+            echo '<p>' . esc_html__('Please log in to view your rewards wallet.', 'omnify-customer-rewards') . '</p>';
+            return;
+        }
+
+        $this->display_points_on_account();
+
+        if (function_exists('rewardmate_display_points_history_on_my_account')) {
+            rewardmate_display_points_history_on_my_account();
+        }
     }
 
     /**
@@ -96,7 +157,7 @@ class rewardmate_Points_Rewards {
         $order->add_order_note(
             sprintf(
                 /* translators: %d is awarded points. */
-                __('Omnify Customer Rewards: Awarded %d points on order completion.', 'omnify-customer-rewards'),
+                __('RewardMate: Awarded %d points on order completion.', 'omnify-customer-rewards'),
                 $applied_points
             )
         );
@@ -129,8 +190,16 @@ class rewardmate_Points_Rewards {
             }
 
             $product_id = (int) $item->get_product_id();
+            $variation_id = (int) $item->get_variation_id();
             $quantity = max(1, (int) $item->get_quantity());
-            $custom_points = (int) get_post_meta($product_id, '_custom_product_points', true);
+
+            $custom_points = 0;
+            if ($variation_id > 0) {
+                $custom_points = (int) get_post_meta($variation_id, '_custom_product_points', true);
+            }
+            if ($custom_points <= 0) {
+                $custom_points = (int) get_post_meta($product_id, '_custom_product_points', true);
+            }
 
             if ($custom_points > 0) {
                 $base_points = $custom_points * $quantity;
@@ -526,7 +595,12 @@ class rewardmate_Points_Rewards {
                     continue;
                 }
 
-                if ((string) $fee->name !== $this->points_fee_label) {
+                $fee_name = (string) $fee->name;
+                $is_points_fee = ($fee_name === $this->points_fee_label) 
+                    || (strpos($fee_name, 'Points Discount') !== false) 
+                    || (strpos($fee_name, __('Points Discount', 'omnify-customer-rewards')) !== false);
+
+                if (!$is_points_fee) {
                     continue;
                 }
 
@@ -641,7 +715,7 @@ class rewardmate_Points_Rewards {
                 $order->add_order_note(
                     sprintf(
                         /* translators: %d points pending approval. */
-                        __('Omnify Customer Rewards: Redemption of %d points queued for manual approval.', 'omnify-customer-rewards'),
+                        __('RewardMate: Redemption of %d points queued for manual approval.', 'omnify-customer-rewards'),
                         $points_to_deduct
                     )
                 );
@@ -720,7 +794,7 @@ class rewardmate_Points_Rewards {
             $order->add_order_note(
                 sprintf(
                     /* translators: 1: deducted points, 2: expected points, 3: discount. */
-                    __('Omnify Customer Rewards: Reserved %1$d of %2$d requested points for redeemed discount (%3$s).', 'omnify-customer-rewards'),
+                    __('RewardMate: Reserved %1$d of %2$d requested points for redeemed discount (%3$s).', 'omnify-customer-rewards'),
                     $deduct_points,
                     $points_to_deduct,
                     $discount_display
@@ -730,7 +804,7 @@ class rewardmate_Points_Rewards {
             $order->add_order_note(
                 sprintf(
                     /* translators: 1: deducted points, 2: discount amount. */
-                    __('Omnify Customer Rewards: Reserved %1$d points for redeemed discount (%2$s).', 'omnify-customer-rewards'),
+                    __('RewardMate: Reserved %1$d points for redeemed discount (%2$s).', 'omnify-customer-rewards'),
                     $deduct_points,
                     $discount_display
                 )
@@ -782,7 +856,7 @@ class rewardmate_Points_Rewards {
 
         $order->update_meta_data('_rewardmate_points_deducted', 'yes');
         $order->update_meta_data('_rewardmate_points_reservation_finalized', 'yes');
-        $order->add_order_note(__('Omnify Customer Rewards: Reserved points finalized for this order.', 'omnify-customer-rewards'));
+        $order->add_order_note(__('RewardMate: Reserved points finalized for this order.', 'omnify-customer-rewards'));
 
         if (function_exists('rewardmate_add_order_ledger_entry')) {
             rewardmate_add_order_ledger_entry($order_id, 'redeem_finalized', 0, 'Reserved points finalized');
@@ -845,8 +919,87 @@ class rewardmate_Points_Rewards {
         $order->add_order_note(
             sprintf(
                 /* translators: %d points released. */
-                __('Omnify Customer Rewards: Released %d reserved points because the order did not complete.', 'omnify-customer-rewards'),
+                __('RewardMate: Released %d reserved points because the order did not complete.', 'omnify-customer-rewards'),
                 $reserved_points
+            )
+        );
+        $order->save();
+    }
+
+    /**
+     * Restore redeemed points to customer when a finalized order is refunded or cancelled.
+     *
+     * @param int $order_id Order ID.
+     * @return void
+     */
+    public function restore_redeemed_points_on_refund($order_id) {
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
+
+        $is_reservation_finalized = ((string) $order->get_meta('_rewardmate_points_reservation_finalized', true) === 'yes');
+        $is_redemption_approved   = ((string) $order->get_meta('_rewardmate_redemption_approved', true) === 'yes');
+        $is_reward_product_order  = ((string) $order->get_meta('_rewardmate_reward_product_redemption', true) === 'yes');
+
+        if (!$is_reservation_finalized && !$is_redemption_approved && !$is_reward_product_order) {
+            return;
+        }
+
+        if ((string) $order->get_meta('_rewardmate_redeemed_points_restored', true) === 'yes') {
+            return;
+        }
+
+        $user_id = (int) $order->get_user_id();
+        $redeemed_points = absint($order->get_meta('_rewardmate_points_redeem_used', true));
+        if ($redeemed_points <= 0) {
+            $redeemed_points = absint($order->get_meta('_rewardmate_reserved_points_amount', true));
+        }
+        if ($redeemed_points <= 0 && $is_reward_product_order) {
+            $redeemed_points = absint($order->get_meta('_rewardmate_reward_product_points', true));
+        }
+
+        if ($user_id <= 0 || $redeemed_points <= 0) {
+            return;
+        }
+
+        $reason = $is_reward_product_order
+            ? sprintf(__('Reward product points restored due to order #%d refund/cancellation', 'omnify-customer-rewards'), $order_id)
+            : sprintf(__('Redeemed points restored due to order #%d refund/cancellation', 'omnify-customer-rewards'), $order_id);
+
+        $ledger_event = $is_reward_product_order ? 'reward_product_refund_restored' : 'refund_redeemed_restored';
+
+        if (function_exists('rewardmate_apply_points_change')) {
+            rewardmate_apply_points_change(
+                $user_id,
+                $redeemed_points,
+                'earned',
+                $reason,
+                [
+                    'order_id' => $order_id,
+                    'ledger_event' => $ledger_event,
+                ]
+            );
+        } else {
+            $current_points = (int) get_user_meta($user_id, '_user_points', true);
+            update_user_meta($user_id, '_user_points', $current_points + $redeemed_points);
+
+            if (function_exists('rewardmate_log_point_history')) {
+                rewardmate_log_point_history(
+                    $user_id,
+                    $redeemed_points,
+                    'earned',
+                    $reason
+                );
+            }
+        }
+
+        $order->update_meta_data('_rewardmate_redeemed_points_restored', 'yes');
+        $order->add_order_note(
+            sprintf(
+                /* translators: %d points restored */
+                __('RewardMate: Restored %d redeemed points to customer because the order was refunded/cancelled.', 'omnify-customer-rewards'),
+                $redeemed_points
             )
         );
         $order->save();
@@ -929,7 +1082,7 @@ class rewardmate_Points_Rewards {
         echo '<section class="rewardmate-card rewardmate-points-display rewardmate-balance-card">';
         echo '<div class="rewardmate-card-icon" aria-hidden="true">R</div>';
         echo '<div class="rewardmate-balance-content">';
-        echo '<span class="rewardmate-eyebrow">' . esc_html__('Omnify Customer Rewards Balance', 'omnify-customer-rewards') . '</span>';
+        echo '<span class="rewardmate-eyebrow">' . esc_html__('RewardMate Balance', 'omnify-customer-rewards') . '</span>';
         echo '<h3>' . esc_html__('Your Points Balance', 'omnify-customer-rewards') . '</h3>';
         echo '<div class="rewardmate-balance-grid">';
         echo '<div><span>' . esc_html__('Available Points', 'omnify-customer-rewards') . '</span><strong>' . esc_html(number_format_i18n($points)) . '</strong><small>' . esc_html__('ready to use', 'omnify-customer-rewards') . '</small></div>';

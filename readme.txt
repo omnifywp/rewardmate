@@ -1,24 +1,20 @@
-=== RewardMate - Points & Rewards for WooCommerce ===
+=== RewardMate: Loyalty Program, Points & Rewards, & Referral for WooCommerce ===
 Contributors: omnifywp
 Tags: WooCommerce, reward points, loyalty program, discounts, points system
 Requires at least: 5.0
-Tested up to: 7.0
+Tested up to: 7.1
 WC requires at least: 8.0
-WC tested up to: 10.5.2
+WC tested up to: 10.9.4
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-RewardMate WooCommerce lets you reward customers with points and coins for purchases, with daily check-in features, product-specific rewards, and point redemption at checkout.
+WooCommerce loyalty points: earn rewards on purchases, check in daily, spin to win, and redeem points at checkout.
 
 == Description ==
 
 **RewardMate** is a comprehensive loyalty program plugin for WooCommerce that lets store owners reward customers with points for purchases, daily check-ins, and other interactions. These points can then be redeemed for discounts on future orders, providing an incentive for customers to return and make more purchases.
-
-== Live Demo ==
-
-[Try Live Demo (No Setup Required)](https://playground.wordpress.net/?https://raw.githubusercontent.com/omnifywp/rewardmate/refs/heads/main/blueprint.json)
 
 **RewardMate (Free Features):**
 * **Core Point Earning**: Set a global purchase earn ratio (e.g. 1 point per $1 spent).
@@ -93,8 +89,49 @@ Go to RewardMate -> Settings -> API, enable Webhooks, enter the webhook URL, cho
 
 == Changelog ==
 
+= 1.1.0 =
+* Security: Implemented secure server-side outcome determination for the Spin-to-Win wheel to prevent client-side tampering.
+* Security: Enforced daily check-in feature toggle check on AJAX endpoints with transient lock protection.
+* Feature: Added standard shortcodes for widgets and balances: `[rewardmate_wallet]`, `[rewardmate_points_balance]`, `[rewardmate_daily_checkin]`, `[rewardmate_spin_wheel]`, `[rewardmate_points_history]`, and `[rewardmate_referral_link]`.
+* Feature: Added dedicated "Points Wallet" tab endpoint to WooCommerce My Account dashboard in free core edition.
+* Feature: Added per-variation custom points reward field support on variable WooCommerce products.
+* Fix: Refined VIP Tier Free Shipping logic to apply only to standard/ground shipping rates and eliminated duplicate label tags.
+* Fix: Preserved public catalog visibility and SEO schema for tier-exclusive products, strictly gating add-to-cart action.
+* Fix: Optimized admin selectable users query with reduced defaults and search parameters to prevent high memory usage.
+* Fix: Wrapped transactional points update emails in WooCommerce branded HTML email templates (`WC()->mailer()->wrap_message`).
+* Fix: Restored customer's redeemed points to their balance upon full order refund or cancellation.
+* Fix: Added support for partial order refunds with proportional points deduction.
+* Fix: Automatically retract referee and referrer bonus points when a referral order is refunded or cancelled.
+* Fix: Accurate earnable points calculation at checkout based on actual discounted line totals and variations.
+* Fix: Resolved spin wheel order qualification logic to scan all recent unspun completed orders.
+* Fix: Re-bind checkout redemption slider events dynamically on WooCommerce AJAX checkout fragments updates.
+* Fix: Enforced script and localization asset enqueuing when widgets are embedded via shortcodes across non-account pages.
+* Fix: Standardized case-insensitivity on Daily Check-in setting to avoid disabled states from casing variations.
+* Fix: Recalculated displayed streak count dynamically when previous days are missed to avoid showing stale streak numbers.
+* Fix: Included product variation ID in legacy order refund points calculation.
+* Fix: Added live dynamic earnable points update on single product page when variations are selected.
+* Fix: Capped user meta `_point_history` at 500 entries to prevent database bloat, and unified core `rewardmate_apply_points_change`.
+* Fix: Hardened points gifting handler with enablement verification, input unslashing, user-friendly security notices, and rate limiting.
+* Fix: Restored redeemed points to customers when reward product orders are refunded or cancelled.
+* Fix: Enforced tier exclusivity requirements during cart review and checkout (`woocommerce_check_cart_items`).
+* Fix: Batched CSV user exports in memory-safe chunks to prevent PHP memory exhaustion on large customer databases.
+* Fix: Restored redeemed points to customers when manually approved redemption orders are refunded or cancelled.
+* Fix: Prevented over-deducting awarded points on full refunds following prior partial refunds.
+* Feature: Added variation-level loyalty tier exclusivity support for variable WooCommerce products.
+* Fix: Synchronized Pro settings schema keys for REST API limits and abuse protection.
+* Fix: Hardened `set_spun_flag` AJAX handler with action rate-limiting.
+* Fix: Improved mobile responsiveness and auto-scaling for lucky spin wheel canvas on narrow screens.
+
 = 1.0.0 =
-* Initial release.
+* Initial release with Freemius licensing, free loyalty features, and optional Pro upgrades.
+
+== Upgrade Notice ==
+
+= 1.1.0 =
+Important security updates for spin wheel, shortcodes addition, per-variation reward points, refund point restoration improvements, and WooCommerce AJAX checkout fixes.
+
+= 1.0.0 =
+Initial release.
 
 == License ==
 

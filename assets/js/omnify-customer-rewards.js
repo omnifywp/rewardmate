@@ -114,6 +114,10 @@
     }
 
     controls.forEach(function (control) {
+      if (control.getAttribute("data-rewardmate-bound") === "true") {
+        return;
+      }
+
       var range = control.querySelector(".rewardmate-redeem-range");
       var number = control.querySelector(".rewardmate-redeem-number");
       var button = control.querySelector(".rewardmate-redeem-apply");
@@ -124,6 +128,8 @@
       if (!range || !number || !button) {
         return;
       }
+
+      control.setAttribute("data-rewardmate-bound", "true");
 
       function setStatus(message, type) {
         if (!status) {
@@ -186,8 +192,70 @@
     });
   }
 
+  function initProductVariationPoints() {
+    var pointsContainer = document.querySelector(".rewardmate-earnable-points");
+    if (!pointsContainer || !window.jQuery) {
+      return;
+    }
+
+    var defaultPoints = pointsContainer.getAttribute("data-default-points") || "0";
+    var productId = pointsContainer.getAttribute("data-product-id") || "0";
+    var textElem = pointsContainer.querySelector(".rewardmate-earnable-points-text") || pointsContainer;
+    var params = getParams();
+
+    window.jQuery(document).on("found_variation", "form.variations_form", async function (event, variation) {
+      if (!variation) {
+        return;
+      }
+
+      var variationId = variation.variation_id || 0;
+      var price = variation.display_price || 0;
+
+      if (!params || !params.ajax_url) {
+        return;
+      }
+
+      try {
+        var body = new URLSearchParams();
+        body.append("action", "rewardmate_get_variation_points");
+        body.append("variation_id", variationId);
+        body.append("product_id", productId);
+        body.append("price", price);
+
+        var response = await fetch(params.ajax_url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+          body: body.toString(),
+        });
+
+        var result = await response.json();
+        if (result && result.success && result.data && result.data.points > 0) {
+          textElem.textContent = result.data.message;
+          pointsContainer.style.display = "";
+        }
+      } catch (err) {}
+    });
+
+    window.jQuery(document).on("reset_data", "form.variations_form", function () {
+      if (parseInt(defaultPoints, 10) > 0) {
+        pointsContainer.style.display = "";
+      } else {
+        pointsContainer.style.display = "none";
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initDailyCheckin();
     initRedeemControls();
+    initProductVariationPoints();
+
+    if (window.jQuery) {
+      window.jQuery(document.body).on("updated_checkout updated_wc_div wc_fragments_refreshed", function () {
+        initRedeemControls();
+      });
+    }
   });
 })();

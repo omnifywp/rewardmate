@@ -213,7 +213,7 @@
       drawWheel(currentRotation);
     });
 
-    spinButton.addEventListener("click", function (event) {
+    spinButton.addEventListener("click", async function (event) {
       event.preventDefault();
 
       if (isSpinning) {
@@ -233,52 +233,61 @@
       spinButton.textContent = messages.spinning || "Spinning...";
       setMessage(messages.spinning || "Spinning...", "info");
 
-      var selectedSegment = Math.floor(Math.random() * segments);
-      var baseRotation = targetRotationForIndex(selectedSegment);
-      var extraTurns = 6 + Math.floor(Math.random() * 3);
-      var deltaRotation = normalizeAngle(baseRotation - normalizeAngle(currentRotation));
-      var totalSpinAngle = currentRotation + extraTurns * 2 * Math.PI + deltaRotation;
+      try {
+        var spinResponse = await postToAjax({
+          action: "update_points",
+          nonce: spinData.spinNonce,
+        });
 
-      canvas.style.transform = "rotate(" + totalSpinAngle + "rad)";
-
-      window.setTimeout(async function () {
-        try {
-          var landedIndex = pointerIndexFromRotation(totalSpinAngle);
-          var landedPoints = values[landedIndex];
-
-          var updateResponse = await postToAjax({
-            action: "update_points",
-            points: landedPoints,
-            nonce: spinData.spinNonce,
-          });
-
-          if (updateResponse && updateResponse.success) {
-            setResult((messages.won || "You won %d points!").replace("%d", String(landedPoints)), "success");
-            setMessage((messages.balance || "New points balance: %d").replace("%d", String(updateResponse.data.new_points)), "success");
-            celebrate();
-
-            spinData.userCanSpin = false;
-            showSpinWheelButton.textContent = messages.spinCompleted || "Spin Completed";
-          } else {
-            var failureMessage = messages.errorUpdating || "Error updating points.";
-            if (updateResponse && updateResponse.data && updateResponse.data.message) {
-              failureMessage = updateResponse.data.message;
-            }
-            setResult(failureMessage, "error");
-            setMessage(messages.tryAgain || "Please try again.", "error");
-          }
-        } catch (error) {
-          setResult(messages.tryAgain || "Please try again.", "error");
-          setMessage(messages.networkError || "Network error while spinning.", "error");
-        } finally {
+        if (!spinResponse || !spinResponse.success || !spinResponse.data) {
+          var errorMsg = (spinResponse && spinResponse.data && spinResponse.data.message) ? spinResponse.data.message : (messages.tryAgain || "Please try again.");
+          setResult(errorMsg, "error");
+          setMessage(messages.tryAgain || "Please try again.", "error");
           isSpinning = false;
           spinWheel.classList.remove("is-spinning");
-          spinButton.disabled = !spinData.userCanSpin;
-          showSpinWheelButton.disabled = !spinData.userCanSpin;
-          spinButton.textContent = spinData.userCanSpin ? (messages.spinNow || "Spin Now") : (messages.spinCompleted || "Spin Completed");
-          currentRotation = normalizeAngle(totalSpinAngle);
+          spinButton.disabled = false;
+          showSpinWheelButton.disabled = false;
+          spinButton.textContent = messages.spinNow || "Spin Now";
+          return;
         }
-      }, 4050);
+
+        var landedIndex = typeof spinResponse.data.segment_index !== "undefined" ? Number(spinResponse.data.segment_index) : 0;
+        var landedPoints = Number(spinResponse.data.points_won) || values[landedIndex] || 0;
+        var newBalance = spinResponse.data.new_points;
+
+        var baseRotation = targetRotationForIndex(landedIndex);
+        var extraTurns = 6 + Math.floor(Math.random() * 3);
+        var deltaRotation = normalizeAngle(baseRotation - normalizeAngle(currentRotation));
+        var totalSpinAngle = currentRotation + extraTurns * 2 * Math.PI + deltaRotation;
+
+        canvas.style.transform = "rotate(" + totalSpinAngle + "rad)";
+
+        window.setTimeout(function () {
+          setResult((messages.won || "You won %d points!").replace("%d", String(landedPoints)), "success");
+          if (typeof newBalance !== "undefined") {
+            setMessage((messages.balance || "New points balance: %d").replace("%d", String(newBalance)), "success");
+          }
+          celebrate();
+
+          spinData.userCanSpin = false;
+          showSpinWheelButton.textContent = messages.spinCompleted || "Spin Completed";
+
+          isSpinning = false;
+          spinWheel.classList.remove("is-spinning");
+          spinButton.disabled = true;
+          showSpinWheelButton.disabled = false;
+          spinButton.textContent = messages.spinCompleted || "Spin Completed";
+          currentRotation = normalizeAngle(totalSpinAngle);
+        }, 4050);
+      } catch (err) {
+        setResult(messages.networkError || "Network error while spinning.", "error");
+        setMessage(messages.tryAgain || "Please try again.", "error");
+        isSpinning = false;
+        spinWheel.classList.remove("is-spinning");
+        spinButton.disabled = false;
+        showSpinWheelButton.disabled = false;
+        spinButton.textContent = messages.spinNow || "Spin Now";
+      }
     });
 
     drawWheel(currentRotation);

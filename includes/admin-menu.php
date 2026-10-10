@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Menu and Free Dashboard for Omnify Customer Rewards.
+ * Admin Menu and Free Dashboard for RewardMate.
  *
  * @since 1.4.0
  */
@@ -83,7 +83,7 @@ function rewardmate_get_admin_nav_items() {
 }
 
 /**
- * Render the Omnify Customer Rewards admin header used by all plugin pages.
+ * Render the RewardMate admin header used by all plugin pages.
  *
  * @param string $title Page title.
  * @param string $description Page description.
@@ -95,7 +95,9 @@ function rewardmate_render_admin_page_header($title, $description = '', $action_
     $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : 'rewardmate';
 
     $pro_badge = '';
-    if (function_exists('rewardmate_has_pro_addon') && rewardmate_has_pro_addon()) {
+    $show_pro_badge = (function_exists('rewardmate_is_pro') && rewardmate_is_pro())
+        || (function_exists('rewardmate_has_pro_addon') && rewardmate_has_pro_addon());
+    if ($show_pro_badge) {
         $pro_badge = ' <span class="rewardmate-pro-badge" style="background-color:#c88719; color:#fff; font-size:0.75em; padding:2px 6px; border-radius:4px; font-weight:bold; margin-left:5px; vertical-align:middle; text-transform:uppercase;">' . esc_html__('Pro', 'omnify-customer-rewards') . '</span>';
     }
 
@@ -103,7 +105,7 @@ function rewardmate_render_admin_page_header($title, $description = '', $action_
     echo '<div class="rewardmate-admin-brandbar">';
     echo '<div class="rewardmate-admin-brandmark"><span class="dashicons dashicons-awards"></span></div>';
     echo '<div class="rewardmate-admin-brandcopy">';
-    echo '<span>' . esc_html__('Omnify Customer Rewards', 'omnify-customer-rewards') . $pro_badge . '</span>';
+    echo '<span>' . esc_html__('RewardMate', 'omnify-customer-rewards') . $pro_badge . '</span>';
     echo '<h1>' . esc_html($title) . '</h1>';
     if ($description !== '') {
         echo '<p>' . esc_html($description) . '</p>';
@@ -115,7 +117,7 @@ function rewardmate_render_admin_page_header($title, $description = '', $action_
     }
 
     echo '</div>';
-    echo '<nav class="rewardmate-admin-tabs" aria-label="' . esc_attr__('Omnify Customer Rewards admin navigation', 'omnify-customer-rewards') . '">';
+    echo '<nav class="rewardmate-admin-tabs" aria-label="' . esc_attr__('RewardMate admin navigation', 'omnify-customer-rewards') . '">';
     foreach (rewardmate_get_admin_nav_items() as $item) {
         $is_active = $current_page === $item['slug'];
         echo '<a class="' . esc_attr($is_active ? 'is-active' : '') . '" href="' . esc_url($item['url']) . '">' . esc_html($item['label']) . '</a>';
@@ -158,7 +160,7 @@ function rewardmate_render_dashboard_page() {
         wp_die(esc_html__('You do not have permission to access this page.', 'omnify-customer-rewards'));
     }
 
-    if (function_exists('rewardmate_has_pro_addon') && rewardmate_has_pro_addon() && class_exists('Omnify_Customer_Rewards_Advanced_Features')) {
+    if (function_exists('rewardmate_is_pro') && rewardmate_is_pro() && class_exists('Omnify_Customer_Rewards_Advanced_Features')) {
         $pro_features = new Omnify_Customer_Rewards_Advanced_Features();
         $pro_features->render_dashboard_page();
     } else {
@@ -198,7 +200,7 @@ function rewardmate_render_free_dashboard_page() {
 
     // Welcome Box / Core stats
     echo '<div class="rewardmate-admin-card rewardmate-admin-dashboard" style="margin-bottom:20px;">';
-    echo '<h2>' . esc_html__('Welcome to Omnify Customer Rewards!', 'omnify-customer-rewards') . '</h2>';
+    echo '<h2>' . esc_html__('Welcome to RewardMate!', 'omnify-customer-rewards') . '</h2>';
     echo '<p>' . esc_html__('Your loyalty program is active. Customers can earn points on purchases, perform daily check-ins, and redeem points for discounts during checkout.', 'omnify-customer-rewards') . '</p>';
     echo '</div>';
 
@@ -219,7 +221,7 @@ function rewardmate_render_free_dashboard_page() {
 
     // Upgrade Banner Card
     echo '<div class="rewardmate-admin-card rewardmate-admin-dashboard" style="margin-top:20px; border-left: 4px solid #c88719;">';
-    echo '<h2 style="color:#c88719;">' . esc_html__('Upgrade to Omnify Customer Rewards WooCommerce Pro', 'omnify-customer-rewards') . '</h2>';
+    echo '<h2 style="color:#c88719;">' . esc_html__('Upgrade to RewardMate Pro', 'omnify-customer-rewards') . '</h2>';
     echo '<p>' . esc_html__('Unlock advanced features to maximize your shop\'s conversion rate and lifetime value:', 'omnify-customer-rewards') . '</p>';
     echo '<ul style="list-style-type:disc; margin-left:20px; margin-bottom:20px;">';
     echo '<li><strong>' . esc_html__('Referral System', 'omnify-customer-rewards') . '</strong>: ' . esc_html__('Acquire new customers with dual-sided viral referral rewards.', 'omnify-customer-rewards') . '</li>';

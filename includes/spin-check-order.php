@@ -24,16 +24,39 @@ function rewardmate_get_latest_completed_order_for_spin($user_id) {
     $orders = wc_get_orders([
         'customer_id' => $user_id,
         'status'      => 'completed',
-        'limit'       => 1,
+        'limit'       => 10,
         'orderby'     => 'date',
         'order'       => 'DESC',
     ]);
 
-    if (empty($orders) || !isset($orders[0])) {
+    if (empty($orders) || !is_array($orders)) {
         return null;
     }
 
-    return $orders[0];
+    $min_order_amount = (float) get_option('rewardmate_minimum_order_amount', 0);
+    $base_currency = (string) get_option('woocommerce_currency');
+
+    foreach ($orders as $order) {
+        if (!($order instanceof WC_Order)) {
+            continue;
+        }
+
+        $order_id = $order->get_id();
+        $has_spun = get_user_meta($user_id, 'rewardmate_has_spun_for_order_' . $order_id, true);
+        if ($has_spun) {
+            continue;
+        }
+
+        $order_total = (float) $order->get_total();
+        $order_currency = (string) $order->get_currency();
+        $converted_minimum = rewardmate_convert_amount($min_order_amount, $base_currency, $order_currency);
+
+        if ($order_total >= $converted_minimum) {
+            return $order;
+        }
+    }
+
+    return null;
 }
 
 function rewardmate_user_can_spin() {
@@ -42,28 +65,7 @@ function rewardmate_user_can_spin() {
         return false;
     }
 
-    $latest_order = rewardmate_get_latest_completed_order_for_spin($user_id);
-    if (!$latest_order) {
-        return false;
-    }
-
-    $latest_order_id = $latest_order->get_id();
-    $latest_order_total = (float) $latest_order->get_total();
-    $latest_order_currency = (string) $latest_order->get_currency();
-
-    // Minimum order amount from settings (default 0)
-    $min_order_amount = (float) get_option('rewardmate_minimum_order_amount', 0);
-    $base_currency = (string) get_option('woocommerce_currency');
-    $converted_minimum = rewardmate_convert_amount($min_order_amount, $base_currency, $latest_order_currency);
-
-    if ($latest_order_total < $converted_minimum) {
-        return false;
-    }
-
-    // Check if user already spun for this order
-    $has_spun = get_user_meta($user_id, 'rewardmate_has_spun_for_order_' . $latest_order_id, true);
-
-    return !$has_spun;
+    return rewardmate_get_latest_completed_order_for_spin($user_id) !== null;
 }
 
 // Mark the order as spun - AJAX handler with nonce verification
@@ -77,6 +79,11 @@ function rewardmate_set_spun_flag() {
         wp_send_json_error([
             'message' => esc_html__('User not logged in.', 'omnify-customer-rewards'),
         ]);
+        wp_die();
+    }
+
+    if (function_exists('rewardmate_allow_action_rate_limited') && !rewardmate_allow_action_rate_limited($user_id, 'spin')) {
+        wp_send_json_error(['message' => esc_html__('Too many requests. Please try again later.', 'omnify-customer-rewards')]);
         wp_die();
     }
 

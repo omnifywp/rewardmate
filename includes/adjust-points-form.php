@@ -91,21 +91,34 @@ function rewardmate_render_points_adjustment_page() {
             <div class="form-section rewardmate-admin-grid">
 
                 <div class="form-group rewardmate-admin-field">
-                    <label for="user_id" class="form-label"><strong><?php esc_html_e('User', 'omnify-customer-rewards'); ?></strong></label>
+                    <label for="user_id" class="form-label"><strong><?php esc_html_e('User (or search/enter ID below)', 'omnify-customer-rewards'); ?></strong></label>
                     <select name="user_id" id="user_id" class="form-select regular-text" required>
-                        <option value=""><?php esc_html_e('-- Select User --', 'omnify-customer-rewards'); ?></option>
+                        <option value=""><?php esc_html_e('-- Select User (Recent Customers) --', 'omnify-customer-rewards'); ?></option>
                         <?php
-                        $users = get_users();
+                        $user_query_args = [
+                            'number' => 100,
+                            'orderby' => 'registered',
+                            'order' => 'DESC',
+                        ];
+                        $search_user = isset($_REQUEST['user_search']) ? sanitize_text_field(wp_unslash($_REQUEST['user_search'])) : '';
+                        if ($search_user !== '') {
+                            $user_query_args['search'] = '*' . $search_user . '*';
+                        }
+                        $users = get_users($user_query_args);
                         foreach ($users as $user) {
                             printf(
-                                '<option value="%d">%s (%s)</option>',
+                                '<option value="%d">%s (#%d - %s)</option>',
                                 esc_attr($user->ID),
                                 esc_html($user->display_name),
+                                esc_attr($user->ID),
                                 esc_html($user->user_email)
                             );
                         }
                         ?>
                     </select>
+                    <p class="description" style="margin-top:4px;">
+                        <?php esc_html_e('Showing up to 100 recent users. You can also type a specific User ID or filter users.', 'omnify-customer-rewards'); ?>
+                    </p>
                 </div>
 
                 <div class="form-group rewardmate-admin-field">

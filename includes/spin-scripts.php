@@ -33,7 +33,13 @@ function rewardmate_get_spin_wheel_values() {
 }
 
 function rewardmate_enqueue_scripts() {
-    if (!is_account_page()) {
+    global $post;
+    $has_spin_shortcode = is_a($post, 'WP_Post') && (
+        has_shortcode($post->post_content, 'rewardmate_spin_wheel') ||
+        has_shortcode($post->post_content, 'rewardmate_wallet')
+    );
+
+    if (!is_account_page() && !$has_spin_shortcode) {
         return;
     }
 

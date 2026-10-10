@@ -1,6 +1,6 @@
 <?php
 /**
- * Enqueue JavaScript files for Omnify Customer Rewards plugin
+ * Enqueue JavaScript files for RewardMate plugin
  *
  * @since 1.0.1
  */
@@ -15,7 +15,13 @@ if (!defined('ABSPATH')) {
  * @return void
  */
 function rewardmate_enqueue_checkin_script() {
-    if ( is_account_page() || is_cart() || is_checkout() ) {
+    global $post;
+    $has_shortcode = is_a($post, 'WP_Post') && (
+        has_shortcode($post->post_content, 'rewardmate_daily_checkin') ||
+        has_shortcode($post->post_content, 'rewardmate_wallet')
+    );
+
+    if ( is_account_page() || is_cart() || is_checkout() || is_product() || $has_shortcode ) {
         $js_dir = plugin_dir_path(__FILE__) . '../assets/js/';
 
         wp_enqueue_script(

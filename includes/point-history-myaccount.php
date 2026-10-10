@@ -41,20 +41,27 @@ function rewardmate_display_points_history_on_my_account() {
         $point_history = array_reverse($point_history);
 
         foreach ($point_history as $history) {
-            $points = isset($history['new_points']) ? (int) $history['new_points'] : 0;
-            $type = isset($history['type']) ? (string) $history['type'] : 'unknown';
+            $points = isset($history['new_points']) ? (int) $history['new_points'] : (isset($history['gifted_points']) ? (int) $history['gifted_points'] : 0);
+            $type = isset($history['type']) ? (string) $history['type'] : (isset($history['action']) ? (string) $history['action'] : 'unknown');
+            if ($type === 'points_gifted' || isset($history['gifted_points'])) {
+                $type = 'gifted';
+            } elseif ($type === 'points_edited') {
+                $type = 'edited';
+            }
 
-            if (isset($history['previous_points'])) {
+            if (isset($history['previous_points']) && isset($history['action']) && $history['action'] === 'points_edited') {
                 $action_text = sprintf(
-                    __('Edited (From %d to %d)', 'omnify-customer-rewards'),
+                    __('Edited (From %1$d to %2$d)', 'omnify-customer-rewards'),
                     (int) $history['previous_points'],
-                    $points
+                    (int) $history['new_points']
                 );
+            } elseif ($type === 'edited') {
+                $action_text = __('Edited', 'omnify-customer-rewards');
             } elseif ($type === 'earned') {
                 $action_text = __('Earned', 'omnify-customer-rewards');
             } elseif ($type === 'spent') {
                 $reason_text = isset($history['reason']) ? (string) $history['reason'] : '';
-                if (strpos($reason_text, 'Points redeemed for order #') === 0) {
+                if (strpos($reason_text, 'Points redeemed for order #') === 0 || strpos($reason_text, 'Points reserved for order #') === 0) {
                     $action_text = __('Order Redemption', 'omnify-customer-rewards');
                 } else {
                     $action_text = __('Spent', 'omnify-customer-rewards');

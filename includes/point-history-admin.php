@@ -32,13 +32,19 @@ function rewardmate_render_point_history_page() {
         $to = '';
     }
 
+    $paged = max(1, isset($_GET['paged']) ? absint($_GET['paged']) : 1);
+    $per_page = 25;
+
     $args = [
         'meta_key'     => '_point_history',
         'meta_compare' => 'EXISTS',
+        'number'       => $per_page,
+        'paged'        => $paged,
     ];
 
     if ($user_filter > 0) {
         $args['include'] = [$user_filter];
+        unset($args['number'], $args['paged']);
     }
 
     $users_with_points = get_users($args);

@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Validate an Omnify Customer Rewards profile date.
+ * Validate an RewardMate profile date.
  *
  * @param string $date Date in YYYY-MM-DD format.
  * @return bool
@@ -73,7 +73,7 @@ function rewardmate_add_user_points_metabox($user) {
         </tr>
     </table>
 
-    <h3><?php esc_html_e('Omnify Customer Rewards WooCommerce Profile Dates', 'omnify-customer-rewards'); ?></h3>
+    <h3><?php esc_html_e('RewardMate Profile Dates', 'omnify-customer-rewards'); ?></h3>
     <p class="description"><?php esc_html_e('These dates are used for birthday, account anniversary, and first purchase anniversary rewards when those automation settings are enabled.', 'omnify-customer-rewards'); ?></p>
     <table class="form-table rewardmate-profile-fields" role="presentation">
         <tr>
@@ -119,39 +119,35 @@ function rewardmate_save_user_points_metabox($user_id) {
         return;
     }
 
-    // Sanitize inputs
-    $new_points = isset($_POST['edit_user_points']) ? absint(wp_unslash($_POST['edit_user_points'])) : false;
-    $gift_points = isset($_POST['gift_points']) ? absint(wp_unslash($_POST['gift_points'])) : 0;
-    $reason = isset($_POST['admin_reason']) ? sanitize_text_field(wp_unslash($_POST['admin_reason'])) : '';
+    // Validate and sanitize inputs
+    $previous_points = (int) get_user_meta($user_id, '_user_points', true);
+    $new_points      = isset($_POST['edit_user_points']) ? absint(wp_unslash($_POST['edit_user_points'])) : $previous_points;
+    $gift_points     = isset($_POST['gift_points']) ? absint(wp_unslash($_POST['gift_points'])) : 0;
+    $reason          = isset($_POST['admin_reason']) ? sanitize_text_field(wp_unslash($_POST['admin_reason'])) : '';
     $date_fields = [
         'rewardmate_birthday' => '_rewardmate_birthday',
         'rewardmate_account_anniversary_date' => '_rewardmate_account_anniversary_date',
         'rewardmate_first_purchase_date' => '_rewardmate_first_purchase_date',
     ];
 
-    if ($new_points !== false) {
-        // Update user's points
-        update_user_meta($user_id, '_user_points', $new_points);
+    $working_balance = $previous_points;
+
+    if ($new_points !== $previous_points) {
+        $delta = $new_points - $previous_points;
+        $working_balance = $new_points;
+        update_user_meta($user_id, '_user_points', $working_balance);
+
+        if (function_exists('rewardmate_log_point_history')) {
+            rewardmate_log_point_history($user_id, $delta, 'edited', $reason !== '' ? $reason : 'Admin point balance adjustment');
+        }
     }
 
     if ($gift_points > 0) {
-        // Add gifted points to existing points
-        $current_points = (int) get_user_meta($user_id, '_user_points', true);
-        $updated_points = $current_points + $gift_points;
-        update_user_meta($user_id, '_user_points', $updated_points);
+        $working_balance += $gift_points;
+        update_user_meta($user_id, '_user_points', $working_balance);
 
-        // Optionally log the gift reason
-        if (!empty($reason)) {
-            $log_entry = sprintf(
-                '[%s] Gifted %d points by admin. Reason: %s',
-                current_time('mysql'),
-                $gift_points,
-                $reason
-            );
-            $existing_log = get_user_meta($user_id, '_rewardmate_points_log', true);
-            $existing_log = is_array($existing_log) ? $existing_log : [];
-            $existing_log[] = $log_entry;
-            update_user_meta($user_id, '_rewardmate_points_log', $existing_log);
+        if (function_exists('rewardmate_log_point_history')) {
+            rewardmate_log_point_history($user_id, $gift_points, 'gifted', $reason !== '' ? $reason : 'Admin gifted points');
         }
     }
 
@@ -163,7 +159,7 @@ add_action('personal_options_update', 'rewardmate_save_user_points_metabox');
 add_action('edit_user_profile_update', 'rewardmate_save_user_points_metabox');
 
 /**
- * Render customer-editable Omnify Customer Rewards dates on My Account > Account details.
+ * Render customer-editable RewardMate dates on My Account > Account details.
  *
  * @return void
  */
@@ -178,7 +174,7 @@ function rewardmate_render_account_profile_date_fields() {
     $max_date = current_time('Y-m-d');
     ?>
     <fieldset class="rewardmate-account-profile-fields">
-        <legend><?php esc_html_e('Omnify Customer Rewards Dates', 'omnify-customer-rewards'); ?></legend>
+        <legend><?php esc_html_e('RewardMate Dates', 'omnify-customer-rewards'); ?></legend>
         <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
             <label for="rewardmate_birthday"><?php esc_html_e('Birthday', 'omnify-customer-rewards'); ?></label>
             <input type="date" class="woocommerce-Input woocommerce-Input--text input-text" name="rewardmate_birthday" id="rewardmate_birthday" value="<?php echo esc_attr($birthday); ?>" max="<?php echo esc_attr($max_date); ?>" />
@@ -196,7 +192,7 @@ function rewardmate_render_account_profile_date_fields() {
 add_action('woocommerce_edit_account_form', 'rewardmate_render_account_profile_date_fields');
 
 /**
- * Save customer-editable Omnify Customer Rewards dates from My Account.
+ * Save customer-editable RewardMate dates from My Account.
  *
  * @param int $user_id User ID.
  * @return void

@@ -1242,6 +1242,18 @@ tr.points-redeem td {
     padding: 14px;
   }
 
+  .rewardmate-spin-stage {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  #wheel {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+  }
+
   #spin-button,
   #show-spin-wheel,
   #daily-checkin-btn,

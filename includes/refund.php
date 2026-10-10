@@ -56,9 +56,21 @@ function rewardmate_deduct_points_on_order_refund($order_id, $old_status = '', $
         return; // No points to deduct
     }
 
+    // Check if points were already partially or fully deducted on prior refunds.
+    $already_deducted = absint($order->get_meta('_rewardmate_refund_points_deducted_amount', true));
+    if ($already_deducted >= $total_points_deducted) {
+        $order->update_meta_data('_rewardmate_refund_points_deducted', 'yes');
+        $order->save();
+        return;
+    }
+
+    $remaining_to_deduct = $total_points_deducted - $already_deducted;
+
     $current_points = (int) get_user_meta($user_id, '_user_points', true);
-    $points_to_deduct = min($current_points, $total_points_deducted);
+    $points_to_deduct = min($current_points, $remaining_to_deduct);
     if ($points_to_deduct <= 0) {
+        $order->update_meta_data('_rewardmate_refund_points_deducted', 'yes');
+        $order->save();
         return;
     }
 
@@ -102,15 +114,165 @@ function rewardmate_deduct_points_on_order_refund($order_id, $old_status = '', $
     $order->add_order_note(
         sprintf(
             /* translators: %d is deducted points. */
-            __('Omnify Customer Rewards: Deducted %d points after refund/cancellation.', 'omnify-customer-rewards'),
+            __('RewardMate: Deducted %d points after refund/cancellation.', 'omnify-customer-rewards'),
             $points_to_deduct
         )
     );
 
     $order->update_meta_data('_rewardmate_refund_points_deducted', 'yes');
+    $order->update_meta_data('_rewardmate_refund_points_deducted_amount', $total_points_deducted);
     $order->save();
+
+    rewardmate_retract_referral_rewards_on_refund($order, $order_id);
 }
 add_action('woocommerce_order_status_changed', 'rewardmate_deduct_points_on_order_refund', 10, 4);
+
+/**
+ * Handle partial refunds created in WooCommerce.
+ *
+ * @param int $order_id Order ID.
+ * @param int $refund_id Refund ID.
+ * @return void
+ */
+function rewardmate_handle_order_refund_created($order_id, $refund_id) {
+    $order = wc_get_order($order_id);
+    $refund = wc_get_order($refund_id);
+    if (!$order || !$refund) {
+        return;
+    }
+
+    $user_id = $order->get_user_id();
+    if (!$user_id) {
+        return;
+    }
+
+    $decrease_point = get_option('rewardmate_adjust_on_refund', 'no');
+    if ($decrease_point !== 'yes') {
+        return;
+    }
+
+    $awarded_points = absint($order->get_meta('_rewardmate_awarded_points_amount', true));
+    if ($awarded_points <= 0) {
+        return;
+    }
+
+    $already_deducted = absint($order->get_meta('_rewardmate_refund_points_deducted_amount', true));
+    if ($already_deducted >= $awarded_points) {
+        return;
+    }
+
+    $order_total = (float) $order->get_total();
+    $refund_amount = abs((float) $refund->get_amount());
+    if ($order_total <= 0 || $refund_amount <= 0) {
+        return;
+    }
+
+    $proportional_points = (int) round(($refund_amount / $order_total) * $awarded_points);
+    $points_to_deduct = min($proportional_points, $awarded_points - $already_deducted);
+
+    if ($points_to_deduct <= 0) {
+        return;
+    }
+
+    $current_points = (int) get_user_meta($user_id, '_user_points', true);
+    $actual_deduct = min($current_points, $points_to_deduct);
+
+    if ($actual_deduct > 0) {
+        if (function_exists('rewardmate_apply_points_change')) {
+            rewardmate_apply_points_change(
+                $user_id,
+                -$actual_deduct,
+                'spent',
+                sprintf(__('Points deducted on partial refund for order #%d', 'omnify-customer-rewards'), $order_id),
+                ['order_id' => $order_id, 'ledger_event' => 'refund_partial']
+            );
+        } else {
+            update_user_meta($user_id, '_user_points', max(0, $current_points - $actual_deduct));
+            if (function_exists('rewardmate_log_point_history')) {
+                rewardmate_log_point_history(
+                    $user_id,
+                    -$actual_deduct,
+                    'spent',
+                    sprintf(__('Points deducted on partial refund for order #%d', 'omnify-customer-rewards'), $order_id)
+                );
+            }
+        }
+    }
+
+    $new_deducted = $already_deducted + $points_to_deduct;
+    $order->update_meta_data('_rewardmate_refund_points_deducted_amount', $new_deducted);
+    if ($new_deducted >= $awarded_points) {
+        $order->update_meta_data('_rewardmate_refund_points_deducted', 'yes');
+    }
+    $order->add_order_note(
+        sprintf(__('RewardMate: Deducted %d points for partial refund #%d.', 'omnify-customer-rewards'), $actual_deduct, $refund_id)
+    );
+    $order->save();
+}
+add_action('woocommerce_order_refunded', 'rewardmate_handle_order_refund_created', 10, 2);
+
+/**
+ * Retract referral bonus points from referrer and referee when an order is refunded or cancelled.
+ *
+ * @param WC_Order $order WooCommerce order.
+ * @param int      $order_id Order ID.
+ * @return void
+ */
+function rewardmate_retract_referral_rewards_on_refund($order, $order_id) {
+    if ((string) $order->get_meta('_rewardmate_referral_awarded', true) !== 'yes') {
+        return;
+    }
+
+    if ((string) $order->get_meta('_rewardmate_referral_retracted', true) === 'yes') {
+        return;
+    }
+
+    $user_id = (int) $order->get_user_id();
+    $referrer_id = absint(get_user_meta($user_id, '_rewardmate_referrer_id', true));
+
+    $referrer_points = absint(get_option('rewardmate_referral_referrer_points', 500));
+    $referee_points = absint(get_option('rewardmate_referral_referee_points', 200));
+
+    if ($referrer_id > 0 && $referrer_points > 0) {
+        $referrer_current = (int) get_user_meta($referrer_id, '_user_points', true);
+        $referrer_deduct = min($referrer_current, $referrer_points);
+        if ($referrer_deduct > 0) {
+            if (function_exists('rewardmate_apply_points_change')) {
+                rewardmate_apply_points_change(
+                    $referrer_id,
+                    -$referrer_deduct,
+                    'spent',
+                    sprintf(__('Referral bonus retracted due to order #%d refund', 'omnify-customer-rewards'), $order_id),
+                    ['order_id' => $order_id, 'ledger_event' => 'referral_retracted']
+                );
+            } else {
+                update_user_meta($referrer_id, '_user_points', max(0, $referrer_current - $referrer_deduct));
+            }
+        }
+    }
+
+    if ($user_id > 0 && $referee_points > 0) {
+        $referee_current = (int) get_user_meta($user_id, '_user_points', true);
+        $referee_deduct = min($referee_current, $referee_points);
+        if ($referee_deduct > 0) {
+            if (function_exists('rewardmate_apply_points_change')) {
+                rewardmate_apply_points_change(
+                    $user_id,
+                    -$referee_deduct,
+                    'spent',
+                    sprintf(__('Referee welcome bonus retracted due to order #%d refund', 'omnify-customer-rewards'), $order_id),
+                    ['order_id' => $order_id, 'ledger_event' => 'referral_retracted']
+                );
+            } else {
+                update_user_meta($user_id, '_user_points', max(0, $referee_current - $referee_deduct));
+            }
+        }
+    }
+
+    $order->update_meta_data('_rewardmate_referral_retracted', 'yes');
+    $order->add_order_note(__('RewardMate: Retracted referral bonuses for this order due to refund/cancellation.', 'omnify-customer-rewards'));
+    $order->save();
+}
 
 /**
  * Estimate awarded points for legacy orders that don't store awarded meta amount.
@@ -136,8 +298,17 @@ function rewardmate_estimate_awarded_points_for_order($order) {
         }
 
         $product_id = (int) $item->get_product_id();
+        $variation_id = (int) $item->get_variation_id();
         $quantity = max(1, (int) $item->get_quantity());
-        $custom_points = (int) get_post_meta($product_id, '_custom_product_points', true);
+
+        $custom_points = 0;
+        if ($variation_id > 0) {
+            $custom_points = (int) get_post_meta($variation_id, '_custom_product_points', true);
+        }
+        if ($custom_points <= 0) {
+            $custom_points = (int) get_post_meta($product_id, '_custom_product_points', true);
+        }
+
         $base_points = 0;
 
         if ($custom_points > 0) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Omnify Customer Rewards edition helpers.
+ * RewardMate edition helpers.
  *
  * @since 1.4.0
  */
@@ -34,12 +34,29 @@ function rewardmate_get_edition() {
 }
 
 /**
- * Check whether the current package is the pro edition.
+ * Check whether premium features should be available.
+ *
+ * True when:
+ * - Package edition is Pro, or
+ * - Separate Pro add-on is active, or
+ * - Freemius reports an active premium license / trial.
  *
  * @return bool
  */
 function rewardmate_is_pro() {
-    return rewardmate_get_edition() === 'pro';
+    if (rewardmate_get_edition() === 'pro') {
+        return true;
+    }
+
+    if (rewardmate_has_pro_addon()) {
+        return true;
+    }
+
+    if (function_exists('rewardmate_fs_can_use_premium') && rewardmate_fs_can_use_premium()) {
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -55,7 +72,7 @@ function rewardmate_feature_enabled($feature) {
         return false;
     }
 
-    if (rewardmate_is_pro() || rewardmate_has_pro_addon()) {
+    if (rewardmate_is_pro()) {
         return true;
     }
 
@@ -99,7 +116,7 @@ function rewardmate_settings_tab_enabled($tab) {
 function rewardmate_settings_tab_is_pro($tab) {
     $tab = sanitize_key((string) $tab);
 
-    if ($tab === '' || rewardmate_is_pro() || rewardmate_has_pro_addon()) {
+    if ($tab === '' || rewardmate_is_pro()) {
         return false;
     }
 
@@ -121,7 +138,7 @@ function rewardmate_setting_enabled($setting_id) {
         return true;
     }
 
-    if (rewardmate_is_pro() || rewardmate_has_pro_addon()) {
+    if (rewardmate_is_pro()) {
         return true;
     }
 
@@ -149,6 +166,7 @@ function rewardmate_setting_enabled($setting_id) {
         'rewardmate_abuse_daily_checkin_limit',
         'rewardmate_abuse_spin_limit',
         'rewardmate_abuse_referral_limit',
+        'rewardmate_abuse_gift_limit',
         'rewardmate_abuse_cancelled_order_limit',
         'rewardmate_abuse_shared_ip_user_limit',
         'rewardmate_points_expiry_enabled',
@@ -156,8 +174,11 @@ function rewardmate_setting_enabled($setting_id) {
         'rewardmate_points_expiry_grace_days',
         'rewardmate_points_expiry_reminder_days',
         'rewardmate_birthday_rewards_enabled',
+        'rewardmate_birthday_reward_points',
         'rewardmate_birthday_rewards_points',
+        'rewardmate_account_anniversary_enabled',
         'rewardmate_anniversary_rewards_enabled',
+        'rewardmate_account_anniversary_points',
         'rewardmate_anniversary_rewards_points',
         'rewardmate_first_purchase_anniversary_enabled',
         'rewardmate_first_purchase_anniversary_points',
@@ -182,6 +203,8 @@ function rewardmate_setting_enabled($setting_id) {
         'rewardmate_rest_api_enabled',
         'rewardmate_rest_api_write_enabled',
         'rewardmate_rest_api_max_change',
+        'rewardmate_rest_api_max_points_per_request',
+        'rewardmate_rest_api_allowed_ips',
         'rewardmate_rest_api_key',
         'rewardmate_webhooks_enabled',
         'rewardmate_webhook_url',
@@ -212,7 +235,7 @@ function rewardmate_admin_page_enabled($slug) {
         return false;
     }
 
-    if (rewardmate_is_pro() || rewardmate_has_pro_addon()) {
+    if (rewardmate_is_pro()) {
         return true;
     }
 
